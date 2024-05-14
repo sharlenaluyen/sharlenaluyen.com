@@ -10007,6 +10007,10 @@ textarea.form-control-lg {
     padding-top: 3rem !important;
   }
 
+  .pt-lg-6 {
+    padding-top: 6rem !important;
+  }
+
   .pe-lg-0 {
     padding-right: 0 !important;
   }
@@ -11607,21 +11611,105 @@ body {
 .projects-section .featured-text {
   padding: 2rem;
 }
+
+.projects-section .title-text {
+  padding-right: 2em;
+}
+
+
 @media (min-width: 992px) {
   .projects-section .featured-text {
     padding: 0 0 0 2rem;
     border-left: 0.5rem solid #64a19d;
   }
 }
-.projects-section .project-text {
+.projects-section .projects-text {
   padding: 3rem;
   font-size: 90%;
 }
 @media (min-width: 992px) {
-  .projects-section .project-text {
-    padding: 5rem;
+  .projects: 5rem;
   }
-  .projects-section .project-text hr {
+  .projects-section .projects-text hr {
+    border-color: #64a19d;
+    border-width: 0.25rem;
+    width: 30%;
+  }
+}
+
+.projects-section {
+  padding: 10rem 0;
+  /*background: linear-gradient(to bottom, rgba(0, 0, 0, 0.1) 0%, rgba(0, 0, 0, 0.5) 75%, #000 100%), url("../assets/img/.jpg");*/
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: scroll;
+  background-size: cover;
+}
+.projects-section .form-projects input {
+  box-shadow: 0 0.1875rem 0.1875rem 0 rgba(0, 0, 0, 0.1) !important;
+  padding: 1.25rem 2rem;
+  height: auto;
+  font-family: "Varela Round", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+  font-size: 80%;
+  text-transform: uppercase;
+  letter-spacing: 0.15rem;
+  border: 0;
+}
+
+.philanthropy-section {
+  padding: 2rem 0;
+}
+.philanthropy-section .featured-text {
+  padding: 2rem;
+}
+@media (min-width: 992px) {
+  .philanthropy-section .featured-text {
+    padding: 0 0 0 2rem;
+    border-left: 0.5rem solid #64a19d;
+  }
+}
+.philanthropy-section .philanthropy-text {
+  padding: 3rem;
+  font-size: 90%;
+}
+@media (min-width: 992px) {
+  .philanthropy: 5rem;
+  }
+  .philanthropy-section .philanthropy-text hr {
+    border-color: #64a19d;
+    border-width: 0.25rem;
+    width: 30%;
+  }
+}
+
+.philanthropy-section {
+  padding: 10rem 0;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: scroll;
+  background-size: cover;
+}
+
+.hobbies-section {
+  padding: 1rem 0;
+}
+.hobbies-section .featured-text {
+  padding: 2rem;
+}
+@media (min-width: 992px) {
+  .hobbies-section .featured-text {
+    padding: 0 0 0 2rem;
+    border-left: 0.5rem solid #64a19d;
+  }
+}
+.hobbies-section .hobbies-text {
+  padding: 3rem;
+  font-size: 90%;
+}
+@media (min-width: 992px) {
+  .hobbies: 5rem;
+  }
+  .hobbies-section .hobbies-text hr {
     border-color: #64a19d;
     border-width: 0.25rem;
     width: 30%;
@@ -11670,6 +11758,7 @@ body {
 }
 .contact-section .social a {
   text-align: center;
+  align-content: center;
   height: 2rem;
   width: 2rem;
   background: rgba(255, 255, 255, 0.1);
@@ -11694,3 +11783,29 @@ body {
 .footer {
   padding: 1rem 0;
 }
+
+
+.col-12 img {
+/*  opacity: 0.7;
+  cursor: pointer;*/
+  margin: 2rem;
+  width: 100%;
+  overflow: hidden;
+  display: flex;
+}
+
+.col-12 img:hover {
+  /*opacity: 1;*/
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+.row-img img {
+    flex: 1;
+    display: flex;
+    overflow: hidden;
+}
+/*
+row d-flex flex-wrap align-items-center
+
+.box {
+    display: flex;
+    min-height: min-content; /* needs vendor prefixes */
