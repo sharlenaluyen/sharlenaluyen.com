@@ -11809,3 +11809,9 @@ row d-flex flex-wrap align-items-center
 .box {
     display: flex;
     min-height: min-content; /* needs vendor prefixes */
+
+.about-li {
+  display: list-item;
+  list-style-type: disc;
+  margin-left: 2em;
+}
