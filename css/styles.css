@@ -11815,3 +11815,205 @@ row d-flex flex-wrap align-items-center
   list-style-type: disc;
   margin-left: 2em;
 }
+
+/* Cursive name - single line, no shimmer */
+.cursive-name {
+  font-family: 'Cormorant Garamond', serif !important;
+  font-size: 10vw !important;
+  letter-spacing: 0.02em !important;
+  text-transform: lowercase !important;
+  line-height: 1.1 !important;
+  width: 100%;
+  margin: 0 auto !important;
+  font-weight: 300 !important;
+  white-space: nowrap !important;
+}
+
+.shimmer-text {
+  color: rgba(255, 255, 255, 0.9);
+}
+
+/* Ensure the masthead centers properly */
+.masthead h1.cursive-name {
+  max-width: 100%;
+}
+
+@media (max-width: 992px) {
+  .cursive-name {
+    font-size: 12vw !important;
+  }
+}
+
+@media (max-width: 768px) {
+  .cursive-name {
+    font-size: 14vw !important;
+  }
+}
+
+@media (max-width: 576px) {
+  .cursive-name {
+    font-size: 16vw !important;
+    white-space: normal !important;
+  }
+}
+
+/* About section spacing */
+.about-section .row {
+  gap: 3rem;
+}
+
+.about-section .col-lg-6 {
+  padding-left: 2rem;
+  padding-right: 2rem;
+}
+
+/* Travel Section Styles */
+.travel-section {
+  padding: 5rem 0;
+}
+
+.world-map-container {
+  position: relative;
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+#worldMap {
+  width: 100%;
+  height: auto;
+  border: 2px solid #dee2e6;
+  border-radius: 10px;
+  background: #fff;
+}
+
+.travel-marker {
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.travel-marker:hover circle {
+  r: 12;
+  fill: #64a19d;
+}
+
+.travel-marker:hover text {
+  font-weight: bold;
+  font-size: 14px;
+}
+
+.travel-photos-container {
+  position: fixed;
+  z-index: 1000;
+  background: white;
+  padding: 1rem;
+  border-radius: 10px;
+  box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+  max-width: 500px;
+}
+
+.travel-photos {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.5rem;
+}
+
+.travel-photo {
+  width: 100%;
+  height: 150px;
+  object-fit: cover;
+  border-radius: 8px;
+  transition: transform 0.3s ease;
+}
+
+.travel-photo:hover {
+  transform: scale(1.05);
+  cursor: pointer;
+}
+
+/* Events Section Styles */
+.events-section {
+  padding: 5rem 0;
+  background: linear-gradient(to bottom, #fff 0%, #f8f9fa 100%);
+}
+
+.event-gallery {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 1.5rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.event-item {
+  position: relative;
+  height: 300px;
+  border-radius: 12px;
+  overflow: hidden;
+  cursor: pointer;
+  transition: transform 0.3s ease;
+}
+
+.event-item:hover {
+  transform: scale(1.02);
+}
+
+.event-item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.event-overlay {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: linear-gradient(to top, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0.7) 50%, transparent 100%);
+  padding: 2rem 1.5rem 1.5rem;
+  transform: translateY(100%);
+  transition: transform 0.3s ease;
+}
+
+.event-item:hover .event-overlay {
+  transform: translateY(0);
+}
+
+.event-overlay h3 {
+  color: white;
+  font-size: 1.3rem;
+  margin-bottom: 0.5rem;
+  font-weight: 600;
+}
+
+.event-overlay .event-date {
+  color: #64a19d;
+  font-size: 0.9rem;
+  margin-bottom: 0.5rem;
+  font-weight: 500;
+}
+
+.event-overlay p {
+  color: rgba(255,255,255,0.9);
+  font-size: 0.95rem;
+  margin: 0;
+  line-height: 1.4;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .travel-photos {
+    grid-template-columns: 1fr;
+  }
+  
+  .travel-photo {
+    height: 200px;
+  }
+  
+  .world-map-container {
+    padding: 1rem;
+  }
+  
+  .event-gallery {
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  }
+}

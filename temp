@@ -13,3 +13,97 @@ Featured Project previously first
                         </div>
                     </div>
                 </div>
+
+
+
+                    <!-- Events Section -->
+    <section class="events-section text-center" id="events">
+        <div class="container px-4 px-lg-5">
+            <h2 class="text-black mb-4">Events & Celebrations</h2>
+            <p class="text-black-50 mb-5">From annual birthday bashes to special gatherings - life's best moments captured 🎉</p>
+            
+            <div class="event-gallery" id="eventGallery">
+                <!-- Example event items - replace with your actual events -->
+                <div class="event-item">
+                    <img src="assets/img/event1.jpg" alt="Birthday Party 2024">
+                    <div class="event-overlay">
+                        <h3>Birthday Bash 2024</h3>
+                        <div class="event-date">October 15, 2024</div>
+                        <p>Annual themed birthday party with friends and family celebrating another trip around the sun!</p>
+                    </div>
+                </div>
+                
+                <div class="event-item">
+                    <img src="assets/img/event2.jpg" alt="CASA Fundraiser">
+                    <div class="event-overlay">
+                        <h3>CASA Fundraising Event</h3>
+                        <div class="event-date">June 8, 2023</div>
+                        <p>Fundraiser featuring Caesar the No Drama Llama supporting foster youth advocacy</p>
+                    </div>
+                </div>
+                
+                <div class="event-item">
+                    <img src="assets/img/event3.jpg" alt="Birthday Party 2023">
+                    <div class="event-overlay">
+                        <h3>Birthday Celebration 2023</h3>
+                        <div class="event-date">October 15, 2023</div>
+                        <p>Unforgettable memories with loved ones at this year's themed celebration</p>
+                    </div>
+                </div>
+                
+                <!-- Add more event items here following the same pattern -->
+            </div>
+        </div>
+    </section>
+
+
+
+    <!-- Travel Section -->
+    <section class="travel-section bg-light" id="travel">
+        <div class="container px-4 px-lg-5">
+            <div class="text-center mb-5">
+                <h2 class="text-black mb-4">Travel Adventures</h2>
+                <p class="text-black-50">Hover over the markers to see highlights from my travels around the world</p>
+            </div>
+            <div class="world-map-container">
+                <svg id="worldMap" viewBox="0 0 1000 500" xmlns="http://www.w3.org/2000/svg">
+                    <!-- Simplified world map outline -->
+                    <rect width="1000" height="500" fill="#e8f4f3"/>
+                    <!-- Continents (simplified shapes) -->
+                    <path d="M 150 150 L 300 150 L 320 200 L 280 250 L 200 240 L 150 200 Z" fill="#64a19d" opacity="0.3"/>
+                    <path d="M 400 100 L 600 100 L 650 150 L 600 250 L 450 240 L 400 180 Z" fill="#64a19d" opacity="0.3"/>
+                    <path d="M 700 200 L 850 180 L 900 250 L 850 300 L 750 280 Z" fill="#64a19d" opacity="0.3"/>
+                    
+                    <!-- Travel markers - customize coordinates for your locations -->
+                    <g class="travel-marker" data-location="tahiti">
+                        <circle cx="100" cy="350" r="8" fill="#a16468" stroke="#fff" stroke-width="2"/>
+                        <text x="100" y="370" text-anchor="middle" font-size="12" fill="#000">Tahiti</text>
+                    </g>
+                    
+                    <g class="travel-marker" data-location="peru">
+                        <circle cx="250" cy="320" r="8" fill="#a16468" stroke="#fff" stroke-width="2"/>
+                        <text x="250" y="340" text-anchor="middle" font-size="12" fill="#000">Peru</text>
+                    </g>
+                    
+                    <g class="travel-marker" data-location="australia">
+                        <circle cx="820" cy="370" r="8" fill="#a16468" stroke="#fff" stroke-width="2"/>
+                        <text x="820" y="390" text-anchor="middle" font-size="12" fill="#000">Australia</text>
+                    </g>
+                    
+                    <g class="travel-marker" data-location="europe">
+                        <circle cx="520" cy="150" r="8" fill="#a16468" stroke="#fff" stroke-width="2"/>
+                        <text x="520" y="170" text-anchor="middle" font-size="12" fill="#000">Europe</text>
+                    </g>
+                </svg>
+                
+                <!-- Photo galleries for each location -->
+                <div id="travelPhotos" class="travel-photos-container" style="display: none;">
+                    <div class="travel-photos">
+                        <img src="" alt="" class="travel-photo">
+                        <img src="" alt="" class="travel-photo">
+                        <img src="" alt="" class="travel-photo">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
