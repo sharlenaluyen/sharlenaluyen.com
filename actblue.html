@@ -83,7 +83,6 @@
         radial-gradient(ellipse 60% 60% at 80% 20%, rgba(26,86,219,0.25) 0%, transparent 60%),
         radial-gradient(ellipse 40% 40% at 10% 80%, rgba(79,142,247,0.15) 0%, transparent 60%);
     }
-    /* Subtle star/dot pattern */
     .hero::after {
       content: '';
       position: absolute; inset: 0;
@@ -139,7 +138,6 @@
     }
     .btn-outline-ab:hover { border-color: var(--white); background: rgba(255,255,255,0.08); transform: translateY(-2px); }
 
-    /* scroll indicator */
     .scroll-hint {
       position: absolute; bottom: 2.5rem; left: 50%; transform: translateX(-50%);
       display: flex; flex-direction: column; align-items: center; gap: 6px;
@@ -177,48 +175,46 @@
     /* ── VIDEO SECTION ── */
     .video-section { background: var(--off-white); }
     .video-layout {
-      display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center;
+      display: grid; grid-template-columns: 280px 1fr; gap: 4rem; align-items: center;
     }
     @media (max-width: 768px) {
       .video-layout { grid-template-columns: 1fr; }
       .navbar-links { display: none; }
+      .video-frame { max-width: 280px; margin: 0 auto; }
     }
     .video-frame {
-      position: relative; padding-bottom: 56.25%;
+      position: relative; aspect-ratio: 9 / 16;
+      width: 100%;
       background: var(--navy);
       border-radius: 12px;
       overflow: hidden;
       box-shadow: 0 20px 60px rgba(0,38,84,0.2);
     }
-    .video-frame iframe {
+    .video-frame iframe,
+    .video-frame video {
       position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-      border: none;
+      border: none; object-fit: cover;
     }
-    .video-placeholder {
+    .video-overlay {
       position: absolute; inset: 0;
-      display: flex; flex-direction: column; align-items: center; justify-content: center;
-      gap: 1rem;
-      background: linear-gradient(135deg, var(--navy) 0%, #0a3070 100%);
-      color: rgba(255,255,255,0.7);
-      font-size: 0.9rem; text-align: center; padding: 2rem;
+      display: flex; align-items: center; justify-content: center;
+      background: linear-gradient(135deg, rgba(0,22,64,0.55) 0%, rgba(10,48,112,0.45) 100%);
+      cursor: pointer;
+      transition: opacity 0.25s;
     }
-    .video-placeholder .play-icon {
-      width: 64px; height: 64px;
-      background: rgba(255,255,255,0.12);
-      border: 2px solid rgba(255,255,255,0.3);
+    .video-overlay.hidden { opacity: 0; pointer-events: none; }
+    .play-icon {
+      width: 68px; height: 68px;
+      background: rgba(255,255,255,0.15);
+      border: 2px solid rgba(255,255,255,0.5);
       border-radius: 50%;
       display: flex; align-items: center; justify-content: center;
-      font-size: 1.8rem;
-      cursor: pointer; transition: all 0.2s;
+      font-size: 1.8rem; color: #fff;
+      transition: all 0.2s; pointer-events: none;
     }
-    .video-placeholder .play-icon:hover {
-      background: rgba(255,255,255,0.2); transform: scale(1.05);
+    .video-overlay:hover .play-icon {
+      background: rgba(255,255,255,0.28); transform: scale(1.07);
     }
-    .video-placeholder small {
-      font-size: 0.75rem; color: rgba(255,255,255,0.4);
-      font-style: italic;
-    }
-    /* Replace this comment with a real YouTube embed src when ready */
     .video-note {
       background: var(--blue-pale); border-left: 3px solid var(--blue);
       padding: 0.8rem 1rem; border-radius: 0 6px 6px 0;
@@ -244,7 +240,6 @@
       display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 2rem;
       text-align: center;
     }
-    .stat-item {}
     .stat-number {
       font-family: 'Libre Baskerville', serif;
       font-size: 2.4rem; font-weight: 700;
@@ -262,15 +257,12 @@
       content: '';
       display: block; width: 24px; height: 2px; background: var(--blue);
     }
-
     .game-card {
       background: var(--off-white); border: 1px solid var(--border);
       border-radius: 16px; padding: 2.5rem;
       max-width: 720px; margin: 0 auto;
       box-shadow: 0 4px 24px rgba(0,38,84,0.06);
     }
-
-    /* Progress bar */
     .game-progress-bar {
       height: 4px; background: var(--border); border-radius: 2px; margin-bottom: 2rem; overflow: hidden;
     }
@@ -287,7 +279,6 @@
       background: var(--blue-pale); color: var(--blue);
       padding: 4px 12px; border-radius: 100px; font-size: 0.78rem;
     }
-
     .question-text {
       font-family: 'Libre Baskerville', serif;
       font-size: clamp(1.05rem, 2.5vw, 1.25rem);
@@ -325,7 +316,6 @@
     }
     .option-btn.wrong .opt-letter { background: var(--red); color: #fff; border-color: var(--red); }
     .option-btn:disabled { cursor: default; }
-
     .game-feedback {
       margin-top: 1.2rem; padding: 1rem 1.25rem;
       border-radius: 8px; font-size: 0.88rem; line-height: 1.6;
@@ -334,7 +324,6 @@
     .game-feedback.show { display: block; }
     .game-feedback.correct { background: #f0fdf4; color: #15803d; border: 1px solid #bbf7d0; }
     .game-feedback.wrong { background: var(--red-light); color: #991b1b; border: 1px solid #fecaca; }
-
     .game-next-btn {
       margin-top: 1.5rem; width: 100%;
       background: var(--blue); color: var(--white);
@@ -345,24 +334,16 @@
     }
     .game-next-btn:hover { background: var(--blue-light); transform: translateY(-1px); }
     .game-next-btn.show { display: block; }
-
-    /* Result screen */
-    .game-result {
-      text-align: center; display: none;
-    }
+    .game-result { text-align: center; display: none; }
     .game-result.show { display: block; }
     .result-emoji { font-size: 4rem; margin-bottom: 1rem; }
     .result-title {
       font-family: 'Libre Baskerville', serif;
       font-size: 1.8rem; font-weight: 700; color: var(--navy); margin-bottom: 0.5rem;
     }
-    .result-score {
-      font-size: 3rem; font-weight: 800; color: var(--blue); margin: 0.5rem 0;
-    }
+    .result-score { font-size: 3rem; font-weight: 800; color: var(--blue); margin: 0.5rem 0; }
     .result-body { font-size: 0.95rem; color: var(--muted); line-height: 1.7; max-width: 500px; margin: 0 auto 2rem; }
-    .result-share {
-      display: flex; gap: 0.75rem; justify-content: center; flex-wrap: wrap;
-    }
+    .result-share { display: flex; gap: 0.75rem; justify-content: center; flex-wrap: wrap; }
     .share-btn {
       background: var(--navy); color: var(--white);
       padding: 0.7rem 1.5rem; border-radius: 6px;
@@ -374,8 +355,6 @@
       background: transparent; color: var(--navy); border: 2px solid var(--border);
     }
     .share-btn.outline:hover { border-color: var(--blue); color: var(--blue); }
-
-    /* Question area wrapper for transitions */
     #game-question-area { transition: opacity 0.3s; }
 
     /* ── ABOUT ME STRIP ── */
@@ -405,11 +384,7 @@
     }
 
     /* ── FOOTER ── */
-    footer {
-      background: var(--navy-deep);
-      padding: 2.5rem 2rem;
-      text-align: center;
-    }
+    footer { background: var(--navy-deep); padding: 2.5rem 2rem; text-align: center; }
     .footer-inner { max-width: 600px; margin: 0 auto; }
     .footer-logo { font-weight: 800; color: var(--white); font-size: 1rem; margin-bottom: 0.5rem; }
     .footer-copy { font-size: 0.8rem; color: rgba(255,255,255,0.35); line-height: 1.6; }
@@ -494,17 +469,15 @@
   <div class="container">
     <div class="video-layout">
 
-      <!-- VIDEO EMBED -->
-      <div class="video-frame">
-         <iframe src="assets/vid/act_blue.mp4" allowfullscreen></iframe>
-          <div class="play-icon">▶</div>
-          <p><strong>Video Coming Soon</strong></p>
-          <small>Replace this placeholder with a YouTube or Vimeo embed<br/>
-          (see the HTML comment in this file)</small>
+      <div class="video-frame" id="videoFrame">
+        <video id="myVideo" playsinline controls>
+          <source src="../assets/vid/act_blue_h264.mp4" type="video/mp4">
+        </video>
+        <div class="video-overlay" id="videoOverlay">
+          <div class="play-icon" id="playIcon">▶</div>
         </div>
       </div>
 
-      <!-- TEXT -->
       <div>
         <div class="section-label">Why ActBlue</div>
         <h2 class="section-title">I don't just want a job — I want a mission.</h2>
@@ -515,9 +488,9 @@
         </p>
         <ul class="why-list">
           <li>I've seen firsthand how under-resourced advocacy work is. ActBlue levels the playing field.</li>
-          <li>I believe engineering empathy — building for stressed-out campaign staffers and first-time donors — is just as important as technical skill.</li>
-          <li>After 7 years of CASA work, I understand deeply why protecting democratic institutions matters.</li>
-          <li>I bring a culture of trust, humility, and shared accountability — the same values ActBlue builds their team around.</li>
+          <li>I believe engineering empathy: building for stressed-out campaign staffers and first-time donors is just as important as technical skill.</li>
+          <li>After 7+ years of CASA work, I understand deeply why protecting democratic institutions matters.</li>
+          <li>I bring a culture of trust, humility, and shared accountability; the same values ActBlue builds their team around.</li>
         </ul>
         <div class="video-note">
           📎 Full résumé: <a href="https://bit.ly/sharresume" target="_blank" style="color:var(--blue)">bit.ly/sharresume</a>
@@ -534,15 +507,13 @@
   <div class="container">
     <div class="game-header">
       <div class="section-label">Interactive</div>
-      <h2 class="section-title" style="text-align:center">Are You Democracy Certified?</h2>
+      <h2 class="section-title" style="text-align:center">Do you know the answers?</h2>
       <p class="section-body" style="margin:0 auto; text-align:center">
-        A quick civics challenge to prove your commitment to the democratic process.
-        (Or just to have fun. Either works.)
+        A quick quiz to play that's mildly related to civic engagement and my background.
       </p>
     </div>
 
     <div class="game-card">
-      <!-- Progress -->
       <div class="game-progress-bar">
         <div class="game-progress-fill" id="progressFill" style="width:0%"></div>
       </div>
@@ -551,22 +522,20 @@
         <span class="game-score-badge" id="scoreDisplay">Score: 0</span>
       </div>
 
-      <!-- Question area -->
       <div id="game-question-area">
         <p class="question-text" id="questionText">Loading...</p>
         <div class="options-grid" id="optionsGrid"></div>
         <div class="game-feedback" id="feedback"></div>
-        <button class="game-next-btn" id="nextBtn" onclick="nextQuestion()">Next Question →</button>
+        <button class="game-next-btn" id="nextBtn">Next Question →</button>
       </div>
 
-      <!-- Result -->
       <div class="game-result" id="gameResult">
         <div class="result-emoji" id="resultEmoji">🗳️</div>
         <div class="result-title" id="resultTitle">Democracy Champion!</div>
         <div class="result-score" id="resultScore">7/7</div>
         <p class="result-body" id="resultBody">You're certified ready to power the grassroots.</p>
         <div class="result-share">
-          <button class="share-btn" onclick="restartGame()">Play Again ↺</button>
+          <button class="share-btn" id="restartBtn">Play Again ↺</button>
           <a class="share-btn outline" href="https://secure.actblue.com/directory" target="_blank">Support a Cause ↗</a>
         </div>
       </div>
@@ -608,13 +577,15 @@
     <p class="footer-copy">
       Made with purpose for the ActBlue team. ·
       <a href="https://sharlenaluyen.com">sharlenaluyen.com</a> ·
-      <a href="mailto:sharlenaluyen@gmail.com">sharlenaluyen@gmail.com</a>
+      <a href="/cdn-cgi/l/email-protection#2d5e454c5f4148434c41585448436d4a404c4441034e4240"><span class="__cf_email__" data-cfemail="67140f06150b0209060b121e020927000a060e0b4904080a">[email&#160;protected]</span></a>
     </p>
   </div>
 </footer>
 
 
-<script>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+document.addEventListener('DOMContentLoaded', function() {
+
   // ── TRIVIA GAME ──
   const questions = [
     {
@@ -687,11 +658,11 @@
   let score = 0;
   let answered = false;
 
-  function renderQuestion() {
+  function renderQuestion(animate) {
     const q = questions[current];
     const area = document.getElementById('game-question-area');
-    area.style.opacity = '0';
-    setTimeout(() => {
+
+    const doRender = () => {
       document.getElementById('questionText').textContent = q.q;
       document.getElementById('questionCounter').textContent = `Question ${current + 1} of ${questions.length}`;
       document.getElementById('scoreDisplay').textContent = `Score: ${score}`;
@@ -715,9 +686,15 @@
       nextBtn.className = 'game-next-btn';
       nextBtn.textContent = current === questions.length - 1 ? 'See My Results 🗳️' : 'Next Question →';
       answered = false;
-
       area.style.opacity = '1';
-    }, 200);
+    };
+
+    if (animate) {
+      area.style.opacity = '0';
+      setTimeout(doRender, 80);
+    } else {
+      doRender();
+    }
   }
 
   function selectAnswer(selected) {
@@ -748,7 +725,7 @@
     if (current >= questions.length) {
       showResult();
     } else {
-      renderQuestion();
+      renderQuestion(true);
     }
   }
 
@@ -784,11 +761,50 @@
     current = 0; score = 0;
     document.getElementById('gameResult').classList.remove('show');
     document.getElementById('game-question-area').style.display = 'block';
-    renderQuestion();
+    renderQuestion(false);
   }
 
-  // Init
-  renderQuestion();
+  // ── VIDEO PLAY/PAUSE ──
+  function toggleVideo() {
+    const video = document.getElementById('myVideo');
+    const overlay = document.getElementById('videoOverlay');
+    const icon = document.getElementById('playIcon');
+    if (video.paused) {
+      const playPromise = video.play();
+      if (playPromise !== undefined) {
+        playPromise
+          .then(() => { overlay.classList.add('hidden'); })
+          .catch(() => {
+            overlay.classList.remove('hidden');
+            icon.textContent = '▶';
+          });
+      }
+    } else {
+      video.pause();
+      overlay.classList.remove('hidden');
+      icon.textContent = '▶';
+    }
+  }
+
+  // Wire up all event listeners here — no inline onclick attributes
+  document.getElementById('nextBtn').addEventListener('click', nextQuestion);
+  document.getElementById('restartBtn').addEventListener('click', restartGame);
+
+  const overlay = document.getElementById('videoOverlay');
+  if (overlay) overlay.addEventListener('click', toggleVideo);
+
+  const vid = document.getElementById('myVideo');
+  if (vid) {
+    vid.addEventListener('ended', () => {
+      document.getElementById('videoOverlay').classList.remove('hidden');
+      document.getElementById('playIcon').textContent = '↺';
+    });
+  }
+
+  // Init — render first question immediately, no delay
+  renderQuestion(false);
+
+}); // end DOMContentLoaded
 </script>
 </body>
 </html>
