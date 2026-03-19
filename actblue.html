@@ -1,0 +1,794 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sharlena Luyen × ActBlue</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;600;700;800&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --navy:       #002654;
+      --navy-deep:  #001840;
+      --blue:       #1a56db;
+      --blue-light: #4f8ef7;
+      --blue-pale:  #e8f0fe;
+      --red:        #cc0000;
+      --red-light:  #fff0f0;
+      --white:      #ffffff;
+      --off-white:  #f4f7ff;
+      --text:       #111827;
+      --muted:      #4b5563;
+      --border:     #dde6f8;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Sora', sans-serif;
+      background: var(--white);
+      color: var(--text);
+      overflow-x: hidden;
+    }
+
+    /* ── NAVBAR ── */
+    .navbar {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      background: var(--navy);
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 2.5rem;
+      height: 60px;
+      box-shadow: 0 2px 16px rgba(0,0,0,0.3);
+    }
+    .navbar-logo {
+      display: flex; align-items: center; gap: 10px;
+      color: var(--white); font-weight: 800; font-size: 1.15rem; letter-spacing: 0.02em;
+      text-decoration: none;
+    }
+    .navbar-logo-badge {
+      background: var(--blue);
+      color: var(--white);
+      font-size: 0.65rem; font-weight: 700; letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 3px 8px;
+      border-radius: 4px;
+    }
+    .navbar-tagline {
+      color: rgba(255,255,255,0.55);
+      font-size: 0.8rem; font-weight: 300;
+    }
+    .navbar-links { display: flex; gap: 2rem; }
+    .navbar-links a {
+      color: rgba(255,255,255,0.75); font-size: 0.85rem; text-decoration: none;
+      font-weight: 400; transition: color 0.2s;
+    }
+    .navbar-links a:hover { color: var(--white); }
+
+    /* ── HERO ── */
+    .hero {
+      background: linear-gradient(135deg, var(--navy-deep) 0%, var(--navy) 55%, #0a3070 100%);
+      min-height: 100vh;
+      display: flex; align-items: center; justify-content: center;
+      padding: 100px 2rem 4rem;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero::before {
+      content: '';
+      position: absolute; inset: 0;
+      background:
+        radial-gradient(ellipse 60% 60% at 80% 20%, rgba(26,86,219,0.25) 0%, transparent 60%),
+        radial-gradient(ellipse 40% 40% at 10% 80%, rgba(79,142,247,0.15) 0%, transparent 60%);
+    }
+    /* Subtle star/dot pattern */
+    .hero::after {
+      content: '';
+      position: absolute; inset: 0;
+      background-image: radial-gradient(circle, rgba(255,255,255,0.07) 1px, transparent 1px);
+      background-size: 40px 40px;
+    }
+    .hero-inner {
+      position: relative; z-index: 2;
+      max-width: 860px; text-align: center;
+    }
+    .hero-eyebrow {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.15);
+      border-radius: 100px;
+      padding: 6px 18px; margin-bottom: 2rem;
+      color: rgba(255,255,255,0.8); font-size: 0.8rem; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase;
+      animation: fadeUp 0.8s ease forwards;
+    }
+    .hero-eyebrow-dot { width: 8px; height: 8px; background: var(--blue-light); border-radius: 50%; }
+    .hero-title {
+      font-family: 'Libre Baskerville', serif;
+      font-size: clamp(2.6rem, 6vw, 4.5rem);
+      font-weight: 700; line-height: 1.12;
+      color: var(--white);
+      margin-bottom: 1.5rem;
+      animation: fadeUp 0.8s 0.1s ease both;
+    }
+    .hero-title em { font-style: italic; color: var(--blue-light); }
+    .hero-sub {
+      font-size: clamp(1rem, 2vw, 1.2rem);
+      font-weight: 300; color: rgba(255,255,255,0.7);
+      line-height: 1.7; max-width: 620px; margin: 0 auto 2.5rem;
+      animation: fadeUp 0.8s 0.2s ease both;
+    }
+    .hero-cta {
+      display: inline-flex; gap: 1rem; flex-wrap: wrap; justify-content: center;
+      animation: fadeUp 0.8s 0.3s ease both;
+    }
+    .btn-primary-ab {
+      background: var(--blue); color: var(--white);
+      padding: 0.85rem 2.2rem; border-radius: 6px;
+      font-size: 0.9rem; font-weight: 600; text-decoration: none; letter-spacing: 0.03em;
+      border: 2px solid var(--blue);
+      transition: all 0.2s; display: inline-block;
+    }
+    .btn-primary-ab:hover { background: var(--blue-light); border-color: var(--blue-light); transform: translateY(-2px); }
+    .btn-outline-ab {
+      background: transparent; color: var(--white);
+      padding: 0.85rem 2.2rem; border-radius: 6px;
+      font-size: 0.9rem; font-weight: 600; text-decoration: none; letter-spacing: 0.03em;
+      border: 2px solid rgba(255,255,255,0.35);
+      transition: all 0.2s; display: inline-block;
+    }
+    .btn-outline-ab:hover { border-color: var(--white); background: rgba(255,255,255,0.08); transform: translateY(-2px); }
+
+    /* scroll indicator */
+    .scroll-hint {
+      position: absolute; bottom: 2.5rem; left: 50%; transform: translateX(-50%);
+      display: flex; flex-direction: column; align-items: center; gap: 6px;
+      color: rgba(255,255,255,0.4); font-size: 0.7rem; letter-spacing: 0.1em; text-transform: uppercase;
+      animation: pulse 2s infinite;
+    }
+    .scroll-hint::after {
+      content: '↓';
+      font-size: 1.1rem;
+    }
+
+    /* ── SECTION SHARED ── */
+    section { padding: 6rem 2rem; }
+    .container { max-width: 1000px; margin: 0 auto; }
+    .section-label {
+      display: inline-flex; align-items: center; gap: 8px;
+      font-size: 0.75rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase;
+      color: var(--blue); margin-bottom: 1rem;
+    }
+    .section-label::before {
+      content: '';
+      display: block; width: 24px; height: 2px; background: var(--blue);
+    }
+    .section-title {
+      font-family: 'Libre Baskerville', serif;
+      font-size: clamp(1.8rem, 4vw, 2.8rem);
+      font-weight: 700; line-height: 1.2;
+      color: var(--navy); margin-bottom: 1.2rem;
+    }
+    .section-body {
+      font-size: 1.05rem; line-height: 1.8;
+      color: var(--muted); max-width: 700px;
+    }
+
+    /* ── VIDEO SECTION ── */
+    .video-section { background: var(--off-white); }
+    .video-layout {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center;
+    }
+    @media (max-width: 768px) {
+      .video-layout { grid-template-columns: 1fr; }
+      .navbar-links { display: none; }
+    }
+    .video-frame {
+      position: relative; padding-bottom: 56.25%;
+      background: var(--navy);
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 20px 60px rgba(0,38,84,0.2);
+    }
+    .video-frame iframe {
+      position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+      border: none;
+    }
+    .video-placeholder {
+      position: absolute; inset: 0;
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      gap: 1rem;
+      background: linear-gradient(135deg, var(--navy) 0%, #0a3070 100%);
+      color: rgba(255,255,255,0.7);
+      font-size: 0.9rem; text-align: center; padding: 2rem;
+    }
+    .video-placeholder .play-icon {
+      width: 64px; height: 64px;
+      background: rgba(255,255,255,0.12);
+      border: 2px solid rgba(255,255,255,0.3);
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.8rem;
+      cursor: pointer; transition: all 0.2s;
+    }
+    .video-placeholder .play-icon:hover {
+      background: rgba(255,255,255,0.2); transform: scale(1.05);
+    }
+    .video-placeholder small {
+      font-size: 0.75rem; color: rgba(255,255,255,0.4);
+      font-style: italic;
+    }
+    /* Replace this comment with a real YouTube embed src when ready */
+    .video-note {
+      background: var(--blue-pale); border-left: 3px solid var(--blue);
+      padding: 0.8rem 1rem; border-radius: 0 6px 6px 0;
+      font-size: 0.82rem; color: var(--blue); margin-top: 1.5rem;
+      font-weight: 500;
+    }
+    .why-list { list-style: none; margin-top: 1.5rem; display: flex; flex-direction: column; gap: 1rem; }
+    .why-list li {
+      display: flex; align-items: flex-start; gap: 12px;
+      font-size: 0.95rem; line-height: 1.6; color: var(--muted);
+    }
+    .why-list li::before {
+      content: '✦';
+      color: var(--blue); font-size: 0.7rem; margin-top: 5px; flex-shrink: 0;
+    }
+
+    /* ── STATS STRIP ── */
+    .stats-strip {
+      background: var(--navy); padding: 4rem 2rem;
+    }
+    .stats-grid {
+      max-width: 900px; margin: 0 auto;
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 2rem;
+      text-align: center;
+    }
+    .stat-item {}
+    .stat-number {
+      font-family: 'Libre Baskerville', serif;
+      font-size: 2.4rem; font-weight: 700;
+      color: var(--blue-light);
+      display: block; margin-bottom: 0.3rem;
+    }
+    .stat-label { font-size: 0.82rem; color: rgba(255,255,255,0.55); line-height: 1.4; font-weight: 300; }
+
+    /* ── GAME SECTION ── */
+    .game-section { background: var(--white); }
+    .game-header { text-align: center; margin-bottom: 3rem; }
+    .game-header .section-label { justify-content: center; }
+    .game-header .section-label::before { display: none; }
+    .game-header .section-label::after {
+      content: '';
+      display: block; width: 24px; height: 2px; background: var(--blue);
+    }
+
+    .game-card {
+      background: var(--off-white); border: 1px solid var(--border);
+      border-radius: 16px; padding: 2.5rem;
+      max-width: 720px; margin: 0 auto;
+      box-shadow: 0 4px 24px rgba(0,38,84,0.06);
+    }
+
+    /* Progress bar */
+    .game-progress-bar {
+      height: 4px; background: var(--border); border-radius: 2px; margin-bottom: 2rem; overflow: hidden;
+    }
+    .game-progress-fill {
+      height: 100%; background: linear-gradient(90deg, var(--blue), var(--blue-light));
+      border-radius: 2px; transition: width 0.5s ease;
+    }
+    .game-meta {
+      display: flex; justify-content: space-between; align-items: center;
+      margin-bottom: 1.5rem;
+      font-size: 0.82rem; font-weight: 600; color: var(--muted); letter-spacing: 0.04em; text-transform: uppercase;
+    }
+    .game-score-badge {
+      background: var(--blue-pale); color: var(--blue);
+      padding: 4px 12px; border-radius: 100px; font-size: 0.78rem;
+    }
+
+    .question-text {
+      font-family: 'Libre Baskerville', serif;
+      font-size: clamp(1.05rem, 2.5vw, 1.25rem);
+      line-height: 1.55; color: var(--navy);
+      margin-bottom: 1.8rem; font-weight: 700;
+    }
+    .options-grid { display: flex; flex-direction: column; gap: 0.75rem; }
+    .option-btn {
+      background: var(--white); border: 2px solid var(--border);
+      border-radius: 10px; padding: 1rem 1.25rem;
+      text-align: left; font-family: 'Sora', sans-serif;
+      font-size: 0.92rem; font-weight: 400; color: var(--text);
+      cursor: pointer; transition: all 0.15s;
+      display: flex; align-items: center; gap: 12px;
+    }
+    .option-btn .opt-letter {
+      display: inline-flex; align-items: center; justify-content: center;
+      width: 28px; height: 28px; border-radius: 6px;
+      background: var(--off-white); border: 1px solid var(--border);
+      font-size: 0.75rem; font-weight: 700; color: var(--muted); flex-shrink: 0;
+      transition: all 0.15s;
+    }
+    .option-btn:hover:not(:disabled) {
+      border-color: var(--blue-light); background: var(--blue-pale);
+    }
+    .option-btn:hover:not(:disabled) .opt-letter {
+      background: var(--blue); color: var(--white); border-color: var(--blue);
+    }
+    .option-btn.correct {
+      border-color: #16a34a; background: #f0fdf4; color: #15803d;
+    }
+    .option-btn.correct .opt-letter { background: #16a34a; color: #fff; border-color: #16a34a; }
+    .option-btn.wrong {
+      border-color: var(--red); background: var(--red-light); color: var(--red);
+    }
+    .option-btn.wrong .opt-letter { background: var(--red); color: #fff; border-color: var(--red); }
+    .option-btn:disabled { cursor: default; }
+
+    .game-feedback {
+      margin-top: 1.2rem; padding: 1rem 1.25rem;
+      border-radius: 8px; font-size: 0.88rem; line-height: 1.6;
+      display: none;
+    }
+    .game-feedback.show { display: block; }
+    .game-feedback.correct { background: #f0fdf4; color: #15803d; border: 1px solid #bbf7d0; }
+    .game-feedback.wrong { background: var(--red-light); color: #991b1b; border: 1px solid #fecaca; }
+
+    .game-next-btn {
+      margin-top: 1.5rem; width: 100%;
+      background: var(--blue); color: var(--white);
+      border: none; border-radius: 8px; padding: 0.9rem 1.5rem;
+      font-family: 'Sora', sans-serif; font-size: 0.9rem; font-weight: 600; letter-spacing: 0.02em;
+      cursor: pointer; transition: all 0.2s;
+      display: none;
+    }
+    .game-next-btn:hover { background: var(--blue-light); transform: translateY(-1px); }
+    .game-next-btn.show { display: block; }
+
+    /* Result screen */
+    .game-result {
+      text-align: center; display: none;
+    }
+    .game-result.show { display: block; }
+    .result-emoji { font-size: 4rem; margin-bottom: 1rem; }
+    .result-title {
+      font-family: 'Libre Baskerville', serif;
+      font-size: 1.8rem; font-weight: 700; color: var(--navy); margin-bottom: 0.5rem;
+    }
+    .result-score {
+      font-size: 3rem; font-weight: 800; color: var(--blue); margin: 0.5rem 0;
+    }
+    .result-body { font-size: 0.95rem; color: var(--muted); line-height: 1.7; max-width: 500px; margin: 0 auto 2rem; }
+    .result-share {
+      display: flex; gap: 0.75rem; justify-content: center; flex-wrap: wrap;
+    }
+    .share-btn {
+      background: var(--navy); color: var(--white);
+      padding: 0.7rem 1.5rem; border-radius: 6px;
+      font-size: 0.82rem; font-weight: 600; text-decoration: none; border: none;
+      cursor: pointer; font-family: 'Sora', sans-serif; transition: all 0.2s;
+    }
+    .share-btn:hover { background: var(--blue); }
+    .share-btn.outline {
+      background: transparent; color: var(--navy); border: 2px solid var(--border);
+    }
+    .share-btn.outline:hover { border-color: var(--blue); color: var(--blue); }
+
+    /* Question area wrapper for transitions */
+    #game-question-area { transition: opacity 0.3s; }
+
+    /* ── ABOUT ME STRIP ── */
+    .about-strip {
+      background: linear-gradient(135deg, var(--navy-deep) 0%, var(--navy) 100%);
+      padding: 6rem 2rem;
+    }
+    .about-strip-inner {
+      max-width: 900px; margin: 0 auto;
+      display: grid; grid-template-columns: 1fr 2fr; gap: 4rem; align-items: center;
+    }
+    @media (max-width: 768px) { .about-strip-inner { grid-template-columns: 1fr; } }
+    .about-avatar {
+      width: 180px; height: 180px; border-radius: 50%;
+      background: linear-gradient(135deg, var(--blue), var(--blue-light));
+      display: flex; align-items: center; justify-content: center;
+      font-size: 4rem; margin: 0 auto;
+      box-shadow: 0 0 0 6px rgba(255,255,255,0.1);
+    }
+    .about-text .section-title { color: var(--white); }
+    .about-text .section-body { color: rgba(255,255,255,0.65); }
+    .tag-row { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 1.5rem; }
+    .tag {
+      background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.15);
+      color: rgba(255,255,255,0.75);
+      padding: 5px 14px; border-radius: 100px; font-size: 0.78rem; font-weight: 500;
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      background: var(--navy-deep);
+      padding: 2.5rem 2rem;
+      text-align: center;
+    }
+    .footer-inner { max-width: 600px; margin: 0 auto; }
+    .footer-logo { font-weight: 800; color: var(--white); font-size: 1rem; margin-bottom: 0.5rem; }
+    .footer-copy { font-size: 0.8rem; color: rgba(255,255,255,0.35); line-height: 1.6; }
+    .footer-copy a { color: rgba(255,255,255,0.5); text-decoration: none; }
+    .footer-copy a:hover { color: var(--white); }
+
+    /* ── ANIMATIONS ── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(24px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes pulse {
+      0%, 100% { opacity: 0.4; }
+      50% { opacity: 1; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ── NAVBAR ── -->
+<nav class="navbar">
+  <a class="navbar-logo" href="#">
+    <span class="navbar-logo-badge">ActBlue</span>
+    <span style="color:rgba(255,255,255,0.6); font-weight:300">×</span>
+    <span>Sharlena Luyen</span>
+  </a>
+  <nav class="navbar-links">
+    <a href="#video">My Story</a>
+    <a href="#game">Democracy Game</a>
+    <a href="#about">About Me</a>
+    <a href="https://sharlenaluyen.com" target="_blank">Portfolio ↗</a>
+  </nav>
+</nav>
+
+<!-- ── HERO ── -->
+<section class="hero" id="top">
+  <div class="hero-inner">
+    <div class="hero-eyebrow">
+      <span class="hero-eyebrow-dot"></span>
+      A message for the ActBlue team
+    </div>
+    <h1 class="hero-title">
+      Democracy deserves<br/><em>great engineers.</em>
+    </h1>
+    <p class="hero-sub">
+      I'm Sharlena Luyen — software engineer, 7-year CASA volunteer, and someone
+      who believes that the infrastructure powering grassroots movements is
+      just as important as the movements themselves.
+    </p>
+    <div class="hero-cta">
+      <a href="#video" class="btn-primary-ab">Watch My Video ↓</a>
+      <a href="#game" class="btn-outline-ab">Play the Democracy Game</a>
+    </div>
+  </div>
+  <div class="scroll-hint">Scroll</div>
+</section>
+
+<!-- ── STATS STRIP ── -->
+<div class="stats-strip">
+  <div class="stats-grid">
+    <div class="stat-item">
+      <span class="stat-number">7+</span>
+      <span class="stat-label">years as a CASA volunteer advocating for foster youth</span>
+    </div>
+    <div class="stat-item">
+      <span class="stat-number">2</span>
+      <span class="stat-label">counties served — Benton & Multnomah, Oregon</span>
+    </div>
+    <div class="stat-item">
+      <span class="stat-number">$1.8B</span>
+      <span class="stat-label">raised by ActBlue in 2025 alone — infrastructure I want to help build</span>
+    </div>
+    <div class="stat-item">
+      <span class="stat-number">∞</span>
+      <span class="stat-label">belief that civic tech is the most important software in the world</span>
+    </div>
+  </div>
+</div>
+
+<!-- ── VIDEO SECTION ── -->
+<section class="video-section" id="video">
+  <div class="container">
+    <div class="video-layout">
+
+      <!-- VIDEO EMBED -->
+      <div class="video-frame">
+         <iframe src="assets/vid/act_blue.mp4" allowfullscreen></iframe>
+          <div class="play-icon">▶</div>
+          <p><strong>Video Coming Soon</strong></p>
+          <small>Replace this placeholder with a YouTube or Vimeo embed<br/>
+          (see the HTML comment in this file)</small>
+        </div>
+      </div>
+
+      <!-- TEXT -->
+      <div>
+        <div class="section-label">Why ActBlue</div>
+        <h2 class="section-title">I don't just want a job — I want a mission.</h2>
+        <p class="section-body">
+          ActBlue is the platform that turns grassroots energy into democratic action.
+          As an engineer and longtime civic volunteer, I want to build systems that matter
+          — ones that help millions of ordinary people participate in their democracy.
+        </p>
+        <ul class="why-list">
+          <li>I've seen firsthand how under-resourced advocacy work is. ActBlue levels the playing field.</li>
+          <li>I believe engineering empathy — building for stressed-out campaign staffers and first-time donors — is just as important as technical skill.</li>
+          <li>After 7 years of CASA work, I understand deeply why protecting democratic institutions matters.</li>
+          <li>I bring a culture of trust, humility, and shared accountability — the same values ActBlue builds their team around.</li>
+        </ul>
+        <div class="video-note">
+          📎 Full résumé: <a href="https://bit.ly/sharresume" target="_blank" style="color:var(--blue)">bit.ly/sharresume</a>
+          &nbsp;·&nbsp;
+          LinkedIn: <a href="https://bit.ly/sharlinkedin" target="_blank" style="color:var(--blue)">bit.ly/sharlinkedin</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── GAME SECTION ── -->
+<section class="game-section" id="game">
+  <div class="container">
+    <div class="game-header">
+      <div class="section-label">Interactive</div>
+      <h2 class="section-title" style="text-align:center">Are You Democracy Certified?</h2>
+      <p class="section-body" style="margin:0 auto; text-align:center">
+        A quick civics challenge to prove your commitment to the democratic process.
+        (Or just to have fun. Either works.)
+      </p>
+    </div>
+
+    <div class="game-card">
+      <!-- Progress -->
+      <div class="game-progress-bar">
+        <div class="game-progress-fill" id="progressFill" style="width:0%"></div>
+      </div>
+      <div class="game-meta">
+        <span id="questionCounter">Question 1 of 7</span>
+        <span class="game-score-badge" id="scoreDisplay">Score: 0</span>
+      </div>
+
+      <!-- Question area -->
+      <div id="game-question-area">
+        <p class="question-text" id="questionText">Loading...</p>
+        <div class="options-grid" id="optionsGrid"></div>
+        <div class="game-feedback" id="feedback"></div>
+        <button class="game-next-btn" id="nextBtn" onclick="nextQuestion()">Next Question →</button>
+      </div>
+
+      <!-- Result -->
+      <div class="game-result" id="gameResult">
+        <div class="result-emoji" id="resultEmoji">🗳️</div>
+        <div class="result-title" id="resultTitle">Democracy Champion!</div>
+        <div class="result-score" id="resultScore">7/7</div>
+        <p class="result-body" id="resultBody">You're certified ready to power the grassroots.</p>
+        <div class="result-share">
+          <button class="share-btn" onclick="restartGame()">Play Again ↺</button>
+          <a class="share-btn outline" href="https://secure.actblue.com/directory" target="_blank">Support a Cause ↗</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── ABOUT STRIP ── -->
+<div class="about-strip" id="about">
+  <div class="about-strip-inner">
+    <div>
+      <div class="about-avatar">🐋</div>
+    </div>
+    <div class="about-text">
+      <div class="section-label" style="color:var(--blue-light)">About Me</div>
+      <h2 class="section-title">Engineer. Advocate. Whale enthusiast.</h2>
+      <p class="section-body">
+        I'm a software engineer with a deep background in building inclusive, high-trust team cultures.
+        Beyond code, I've spent over 7 years advocating for foster youth as a CASA volunteer and
+        2 years on Multnomah County's Citizens Review Board. I also snorkel with wild humpback whales,
+        hike mountains in Peru, and believe the best teams are built on humility and direct communication.
+      </p>
+      <div class="tag-row">
+        <span class="tag">CASA Volunteer (7 yrs)</span>
+        <span class="tag">Citizen's Review Board</span>
+        <span class="tag">Portrait Photographer</span>
+        <span class="tag">Scuba Diver</span>
+        <span class="tag">Machu Picchu Hiker</span>
+        <span class="tag">Whale Snorkeler</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ── FOOTER ── -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-logo">Sharlena Luyen</div>
+    <p class="footer-copy">
+      Made with purpose for the ActBlue team. ·
+      <a href="https://sharlenaluyen.com">sharlenaluyen.com</a> ·
+      <a href="mailto:sharlenaluyen@gmail.com">sharlenaluyen@gmail.com</a>
+    </p>
+  </div>
+</footer>
+
+
+<script>
+  // ── TRIVIA GAME ──
+  const questions = [
+    {
+      q: "Which amendment to the U.S. Constitution granted women the right to vote?",
+      options: ["15th Amendment", "17th Amendment", "19th Amendment", "24th Amendment"],
+      answer: 2,
+      correct: "That's right! The 19th Amendment (1920) guaranteed women the right to vote, after decades of suffragist activism.",
+      wrong: "Not quite — the 19th Amendment (1920) granted women the right to vote, one of the most significant expansions of democracy in U.S. history."
+    },
+    {
+      q: "ActBlue was founded in 2004. Roughly how many unique donors has its platform processed contributions from since then?",
+      options: ["2 million", "10 million", "28 million+", "50 million"],
+      answer: 2,
+      correct: "Correct! More than 28 million Americans have given through ActBlue since 2004 — a powerful grassroots fundraising network.",
+      wrong: "The answer is 28 million+. ActBlue has processed contributions from over 28 million donors, building one of the most impressive small-dollar donor networks in history."
+    },
+    {
+      q: "CASA stands for Court Appointed Special Advocate. What is the primary role of a CASA volunteer?",
+      options: [
+        "Legal representation for parents in family court",
+        "To speak in the best interest of children brought before the court for abuse or neglect",
+        "To manage foster care placements",
+        "To review judicial decisions for legal accuracy"
+      ],
+      answer: 1,
+      correct: "Exactly right. CASAs are appointed by judges to advocate for the best interests of children — giving vulnerable youth a voice in the judicial system.",
+      wrong: "CASA volunteers are appointed by judges to speak in the best interest of children who come before the court due to abuse or neglect. They're a crucial voice for vulnerable youth."
+    },
+    {
+      q: "Oregon was the first state in the U.S. to adopt which voting method statewide, making civic participation more accessible?",
+      options: ["Ranked-choice voting", "Automatic voter registration", "Vote-by-mail for all elections", "Same-day voter registration"],
+      answer: 2,
+      correct: "Yes! Oregon pioneered statewide vote-by-mail in 2000, dramatically increasing voter participation and accessibility.",
+      wrong: "Oregon became the first state to adopt vote-by-mail for all elections in 2000, a model that has since been adopted by several other states to boost turnout."
+    },
+    {
+      q: "The Voting Rights Act of 1965 was a landmark piece of federal legislation. What did it primarily do?",
+      options: [
+        "It lowered the voting age to 18",
+        "It prohibited literacy tests and other discriminatory barriers to voting",
+        "It established the Electoral College",
+        "It created the Federal Election Commission"
+      ],
+      answer: 1,
+      correct: "Correct! The Voting Rights Act prohibited discriminatory practices like literacy tests that had been used to disenfranchise Black voters — a crucial milestone in American democracy.",
+      wrong: "The Voting Rights Act of 1965 outlawed discriminatory barriers to voting, like literacy tests, which had been systematically used to suppress Black voter turnout in the South."
+    },
+    {
+      q: "Small-dollar donors (under $200) are considered crucial to grassroots democracy. In 2025, how much did ActBlue-powered small-dollar donors raise?",
+      options: ["~$400 million", "~$800 million", "~$1.2 billion", "~$1.8 billion"],
+      answer: 3,
+      correct: "Incredible — nearly $1.8 billion raised by small-dollar donors in 2025! That's the power of people-powered fundraising at scale.",
+      wrong: "Small-dollar donors raised nearly $1.8 billion through ActBlue in 2025 — a record-breaking demonstration of grassroots democratic participation."
+    },
+    {
+      q: "True civic engagement means showing up consistently, even without glory. Which of the following best describes that commitment?",
+      options: [
+        "Voting once in a presidential election",
+        "Sharing political opinions on social media",
+        "7+ years of volunteer advocacy for foster youth in the court system",
+        "Attending a single town hall meeting"
+      ],
+      answer: 2,
+      correct: "You already know this one. 😄 Consistent, unglamorous civic work — like 7 years of CASA volunteering — is what real democratic commitment looks like.",
+      wrong: "Real civic engagement is sustained, unglamorous, and consistent — like 7+ years of CASA volunteer work advocating for vulnerable children in the court system."
+    }
+  ];
+
+  let current = 0;
+  let score = 0;
+  let answered = false;
+
+  function renderQuestion() {
+    const q = questions[current];
+    const area = document.getElementById('game-question-area');
+    area.style.opacity = '0';
+    setTimeout(() => {
+      document.getElementById('questionText').textContent = q.q;
+      document.getElementById('questionCounter').textContent = `Question ${current + 1} of ${questions.length}`;
+      document.getElementById('scoreDisplay').textContent = `Score: ${score}`;
+      document.getElementById('progressFill').style.width = `${(current / questions.length) * 100}%`;
+
+      const grid = document.getElementById('optionsGrid');
+      grid.innerHTML = '';
+      const letters = ['A', 'B', 'C', 'D'];
+      q.options.forEach((opt, i) => {
+        const btn = document.createElement('button');
+        btn.className = 'option-btn';
+        btn.innerHTML = `<span class="opt-letter">${letters[i]}</span><span>${opt}</span>`;
+        btn.onclick = () => selectAnswer(i);
+        grid.appendChild(btn);
+      });
+
+      const fb = document.getElementById('feedback');
+      fb.className = 'game-feedback';
+      fb.textContent = '';
+      const nextBtn = document.getElementById('nextBtn');
+      nextBtn.className = 'game-next-btn';
+      nextBtn.textContent = current === questions.length - 1 ? 'See My Results 🗳️' : 'Next Question →';
+      answered = false;
+
+      area.style.opacity = '1';
+    }, 200);
+  }
+
+  function selectAnswer(selected) {
+    if (answered) return;
+    answered = true;
+    const q = questions[current];
+    const buttons = document.querySelectorAll('.option-btn');
+    buttons.forEach(b => b.disabled = true);
+
+    const fb = document.getElementById('feedback');
+    if (selected === q.answer) {
+      score++;
+      buttons[selected].classList.add('correct');
+      fb.className = 'game-feedback correct show';
+      fb.innerHTML = `✓ ${q.correct}`;
+    } else {
+      buttons[selected].classList.add('wrong');
+      buttons[q.answer].classList.add('correct');
+      fb.className = 'game-feedback wrong show';
+      fb.innerHTML = `✗ ${q.wrong}`;
+    }
+    document.getElementById('scoreDisplay').textContent = `Score: ${score}`;
+    document.getElementById('nextBtn').classList.add('show');
+  }
+
+  function nextQuestion() {
+    current++;
+    if (current >= questions.length) {
+      showResult();
+    } else {
+      renderQuestion();
+    }
+  }
+
+  function showResult() {
+    document.getElementById('game-question-area').style.display = 'none';
+    const result = document.getElementById('gameResult');
+    result.classList.add('show');
+
+    const pct = score / questions.length;
+    let emoji, title, body;
+    if (pct === 1) {
+      emoji = '🏆'; title = 'Democracy Champion!';
+      body = `Perfect score! You're fully certified. The democratic process needs people who understand it this deeply. Welcome to the movement.`;
+    } else if (pct >= 0.7) {
+      emoji = '🗳️'; title = 'Solid Civic Citizen';
+      body = `Strong showing! You clearly care about democracy and its history. A little more reading and you'll be at the polls in spirit and letter.`;
+    } else if (pct >= 0.4) {
+      emoji = '📚'; title = 'Democracy Apprentice';
+      body = `Not bad — civic knowledge takes practice! The important thing is showing up, learning, and staying engaged.`;
+    } else {
+      emoji = '🌱'; title = 'Budding Democrat';
+      body = `Every expert was once a beginner. Democracy is a practice, not a test. Try again — or just register to vote!`;
+    }
+
+    document.getElementById('resultEmoji').textContent = emoji;
+    document.getElementById('resultTitle').textContent = title;
+    document.getElementById('resultScore').textContent = `${score}/${questions.length}`;
+    document.getElementById('resultBody').textContent = body;
+    document.getElementById('progressFill').style.width = '100%';
+  }
+
+  function restartGame() {
+    current = 0; score = 0;
+    document.getElementById('gameResult').classList.remove('show');
+    document.getElementById('game-question-area').style.display = 'block';
+    renderQuestion();
+  }
+
+  // Init
+  renderQuestion();
+</script>
+</body>
+</html>
