@@ -1,0 +1,943 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Sharlena x PostHog 🦔</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Fredoka:wght@300;400;500;600&family=IBM+Plex+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet"/>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --ph-yellow:#F9BD2B;
+  --ph-orange:#F54E00;
+  --ph-dark:#1A1A1A;
+  --ka-teal:#40BCB5;
+  --ka-d:#2E9890;
+  --ka-l:#62D4CE;
+}
+html,body{width:100%;overflow-x:hidden;font-family:'Fredoka',sans-serif;background:var(--ph-dark)}
+
+/* ── HEADER ── */
+.hdr{background:var(--ph-dark);padding:2.2rem 2rem 1.8rem;text-align:center;border-bottom:4px solid var(--ph-yellow)}
+.hdr-chip{display:inline-flex;align-items:center;gap:8px;background:rgba(249,189,43,.13);border:1.5px solid rgba(249,189,43,.3);border-radius:100px;padding:5px 18px;margin-bottom:.9rem;color:var(--ph-yellow);font-size:.78rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase}
+.hdr h1{font-family:'Fredoka One',sans-serif;font-size:clamp(2rem,5vw,3.4rem);color:#fff;line-height:1.1}
+.hdr h1 span{color:var(--ph-yellow)}
+.hdr-sub{color:rgba(255,255,255,.55);font-size:clamp(.95rem,2vw,1.1rem);font-weight:300;margin:.7rem auto 0;max-width:560px;line-height:1.6}
+.hdr-hint{margin-top:1.4rem;color:rgba(255,255,255,.35);font-size:.82rem;display:flex;align-items:center;justify-content:center;gap:8px}
+.bob{display:inline-block;animation:bob 1.6s ease-in-out infinite}
+
+/* ── SCENE ── */
+.scene-wrap{width:100%;background:var(--ph-dark);padding-bottom:2.5rem}
+.room{width:100%;max-width:1300px;margin:0 auto;position:relative;aspect-ratio:1300/700;min-height:400px;overflow:hidden}
+
+/* ── ROOM ── */
+.wall{
+  position:absolute;top:0;left:0;right:0;height:56%;
+  background:linear-gradient(180deg,#FFF8DC 0%,#FFE878 100%);
+  background-image:radial-gradient(circle,rgba(200,150,0,.1) 1px,transparent 1px),linear-gradient(180deg,#FFF8DC 0%,#FFE878 100%);
+  background-size:28px 28px,100% 100%;
+}
+.baseboard{position:absolute;top:55.5%;left:0;right:0;height:1.2%;background:linear-gradient(180deg,#D4A860,#B8904A);z-index:5}
+.floor{
+  position:absolute;top:56.7%;bottom:0;left:0;right:0;
+  background:linear-gradient(180deg,#C88860,#A06840);
+  background-image:
+    repeating-linear-gradient(90deg,transparent 0,transparent 220px,rgba(0,0,0,.07) 220px,rgba(0,0,0,.07) 222px),
+    repeating-linear-gradient(0deg,transparent 0,transparent 42px,rgba(0,0,0,.04) 42px,rgba(0,0,0,.04) 43px),
+    linear-gradient(180deg,#C88860,#A06840);
+}
+
+/* ── DESK ── */
+.desk{position:absolute;top:46%;left:2%;right:2%;height:11%;z-index:10;display:flex;flex-direction:column}
+.desk-top{flex:0 0 35%;background:linear-gradient(180deg,#E0A870,#C07848);border-radius:5px 5px 0 0;box-shadow:0 -2px 0 rgba(255,255,255,.18) inset;position:relative;overflow:visible}
+.desk-front{flex:1;background:linear-gradient(180deg,#A86540,#884820);border-radius:0 0 3px 3px;position:relative}
+.desk-leg{position:absolute;bottom:calc(-100% - 10px);width:5%;height:120%;background:#7A4028;border-radius:0 0 4px 4px}
+.desk-leg.left{left:9%}.desk-leg.right{right:9%}
+
+/* ── WINDOW ── */
+.wwindow{
+  position:absolute;top:5%;left:11%;width:16%;aspect-ratio:1/1.1;
+  background:linear-gradient(135deg,#B0D8F5,#E8F6FF 60%,#90C0E8);
+  border:7px solid #C8955A;border-radius:4px;
+  box-shadow:inset 0 0 15px rgba(150,200,240,.2),0 4px 14px rgba(0,0,0,.22);
+  overflow:hidden;
+}
+.wwindow::before{content:'';position:absolute;inset:0;background:linear-gradient(#C8955A,#C8955A) center/5px 100% no-repeat,linear-gradient(#C8955A,#C8955A) center/100% 5px no-repeat}
+.wwindow::after{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 60% 30%,rgba(255,248,220,.2),transparent 70%)}
+
+/* BOOKSHELF */
+.wshelf{position:absolute;top:30%;left:1.5%;width:8%;z-index:2}
+.wshelf-board{height:5px;background:#B08050;border-radius:2px;box-shadow:0 2px 5px rgba(0,0,0,.18)}
+.wshelf-items{display:flex;align-items:flex-end;gap:2px;height:clamp(20px,4vh,40px);padding:0 3px}
+.wbook{width:14%;border-radius:1px 2px 2px 1px}
+
+/* ── OBJECT BASE ── */
+.obj{position:absolute;bottom:100%;cursor:pointer;transition:transform .28s cubic-bezier(.34,1.56,.64,1);z-index:20}
+.obj:hover{transform:translateY(-12px)!important}
+.obj-static{position:absolute;bottom:100%;z-index:20;pointer-events:none}
+
+/* ── SPEECH BUBBLE ── */
+.sbub{position:absolute;bottom:calc(100% + 10px);left:50%;transform:translateX(-50%) scale(.8);background:#fff;border:2.5px solid var(--ph-dark);border-radius:12px;padding:5px 12px;font-size:clamp(.48rem,.95vw,.78rem);font-weight:600;white-space:nowrap;color:var(--ph-dark);opacity:0;pointer-events:none;transition:all .22s ease;box-shadow:3px 3px 0 var(--ph-dark);z-index:30}
+.sbub::after{content:'';position:absolute;top:100%;left:50%;transform:translateX(-50%);border:6px solid transparent;border-top-color:var(--ph-dark)}
+.sbub::before{content:'';position:absolute;top:calc(100% - 2px);left:50%;transform:translateX(-50%);z-index:1;border:6px solid transparent;border-top-color:#fff}
+.obj:hover .sbub{opacity:1;transform:translateX(-50%) scale(1)}
+
+/* ── GOOGLY EYES — vertically oval ── */
+.geyes{display:flex;justify-content:center;position:absolute;pointer-events:none}
+.geye{background:#fff;border-radius:50%;border:1.5px solid #333;position:relative;overflow:hidden;transition:transform .08s}
+.pupil{width:44%;height:44%;background:#1a1a1a;border-radius:50%;position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);transition:transform .12s ease}
+.geye.blink{transform:scaleY(.07)!important}
+
+/* ── CSS PLANT ── */
+.desk-plant{position:absolute;bottom:100%;right:.5%;width:4.5%;z-index:21;pointer-events:none}
+.plant-leaves-wrap{position:relative;width:100%;height:clamp(28px,5.5vw,52px)}
+.leaf{position:absolute;bottom:0}
+.lf1{width:38%;height:80%;background:linear-gradient(135deg,#3D9A2E,#256820);border-radius:50% 5% 50% 5%;left:50%;transform:rotate(-30deg);transform-origin:bottom left}
+.lf2{width:42%;height:90%;background:linear-gradient(135deg,#48A83A,#2C7620);border-radius:50% 5% 50% 5%;right:8%;transform:rotate(24deg);transform-origin:bottom right}
+.lf3{width:32%;height:66%;background:linear-gradient(135deg,#3D9A2E,#256820);border-radius:50% 5% 50% 5%;left:12%;transform:rotate(-58deg);transform-origin:bottom left}
+.lf4{width:27%;height:56%;background:linear-gradient(135deg,#4AAD3A,#306E20);border-radius:50% 5% 50% 5%;right:26%;transform:rotate(52deg);transform-origin:bottom right}
+.lfc{width:25%;height:70%;background:linear-gradient(180deg,#58BD3C,#2C7A1E);border-radius:50% 50% 12% 12%;left:50%;transform:translateX(-50%);transform-origin:bottom center}
+.plant-soil{width:64%;margin:0 auto;height:4px;background:#5A3016;border-radius:50%;margin-bottom:-1px}
+.plant-rim{width:76%;margin:0 auto;height:clamp(4px,.85vw,7px);background:linear-gradient(180deg,#CA6828,#A04818);border-radius:2px}
+.plant-pot{width:60%;margin:0 auto;height:clamp(13px,2.6vw,24px);background:linear-gradient(160deg,#C86826,#A04618);clip-path:polygon(8% 0%,92% 0%,100% 100%,0% 100%)}
+
+/* ── CASE FILE ── */
+.casefile{left:15%;width:6.5%}
+/* Papers sticking out top */
+.cf-papers{position:relative;width:82%;margin:0 auto;height:clamp(14px,2.8vw,26px)}
+.cf-p{position:absolute;bottom:0;width:100%;height:100%;border-radius:1px;border:1px solid #C8C8C8}
+.cf-p1{background:#F2F2EE;left:-4%;transform:rotate(-2.5deg);z-index:1}
+.cf-p2{background:#EEEEEA;left:2%;transform:rotate(1.8deg);z-index:2}
+.cf-p3{background:#F8F8F4;left:0;z-index:3}
+.cf-p3::before{content:'';position:absolute;top:20%;left:12%;right:12%;height:1.5px;background:#C0C0C0;box-shadow:0 5px 0 #C0C0C0,0 10px 0 #C0C0C0}
+/* Red folder */
+.cf-folder{width:100%;background:linear-gradient(155deg,#C41C1C,#921010);border-radius:1px 8px 2px 2px;position:relative;box-shadow:3px 3px 0 #700A0A,0 5px 14px rgba(0,0,0,.28)}
+.cf-folder-h{aspect-ratio:.68/1}
+/* Tab */
+.cf-tab{position:absolute;top:-15%;left:8%;width:34%;height:17%;background:#AE1818;border:2.5px solid #880A0A;border-bottom:none;border-radius:4px 4px 0 0}
+/* Binder clip */
+.cf-clip{position:absolute;top:-7%;right:14%;width:15%;height:13%;background:linear-gradient(180deg,#D8D8D8,#A8A8A8);border-radius:1px 1px 0 0;border:1px solid #989898}
+.cf-clip::before{content:'';position:absolute;top:-38%;left:14%;right:14%;height:40%;background:#BFBFBF;border:1px solid #999;border-bottom:none;border-radius:2px 2px 0 0}
+/* Label */
+.cf-label{position:absolute;top:10%;left:9%;right:9%;background:rgba(255,248,240,.92);border:1px solid rgba(180,80,80,.2);border-radius:2px;padding:4% 5%}
+.cf-label-bar{height:2.5px;background:#8B0000;border-radius:1px;margin-bottom:4px}
+.cf-label-line{height:1.5px;background:rgba(140,100,100,.35);margin:3.5px 0;border-radius:1px}
+.cf-stamp{position:absolute;bottom:5%;left:50%;transform:translateX(-50%);font-family:'IBM Plex Mono',monospace;font-size:clamp(.18rem,.4vw,.32rem);color:rgba(255,255,255,.38);font-weight:700;letter-spacing:.08em;text-transform:uppercase;white-space:nowrap}
+/* Side photo - was supposed to be me and kids but i don't like it */
+/* .cf-sideframe{position:absolute;bottom:1%;right:-26%;width:80%;background:#FFF;padding:4% 4% 9%;box-shadow:2px 2px 9px rgba(0,0,0,.25);transform:rotate(4deg)}
+.cf-sideframe-inner{width:100%;aspect-ratio:3/4;background:linear-gradient(140deg,#E8D8C0,#F4ECD4);border-radius:1px;overflow:hidden;position:relative}
+.cf-glare{position:absolute;inset:0;background:linear-gradient(115deg,rgba(255,255,255,0) 12%,rgba(255,255,255,.92) 38%,rgba(255,255,255,0) 64%)}
+
+ */
+ /* eyes */
+.casefile .geyes{top:52%;left:10%;right:10%;gap:22%}
+.casefile .geye{width:clamp(5px,.95vw,9.5px);height:clamp(8px,1.55vw,15.5px)}
+
+/* ── CRT COMPUTER ── */
+.crt{left:4%;width:8%}
+.crt-mon{width:100%;aspect-ratio:1/.95;background:linear-gradient(180deg,#EDE5CC,#D8CCA8);border-radius:7px 7px 3px 3px;border:3px solid #C0AE88;box-shadow:3px 3px 0 #A89868,0 4px 12px rgba(0,0,0,.22);position:relative}
+.crt-scr{position:absolute;top:7%;left:7%;right:7%;height:60%;background:#08120A;border-radius:3px;border:2px solid #1a1a1a;overflow:hidden}
+.crt-scanlines{position:absolute;inset:0;background:repeating-linear-gradient(0deg,rgba(0,0,0,.18) 0,rgba(0,0,0,.18) 1px,transparent 1px,transparent 3px)}
+.crt-txt{color:#39FF14;font-family:'IBM Plex Mono',monospace;font-size:clamp(.22rem,.55vw,.45rem);padding:6% 5%;line-height:1.7;position:relative;z-index:1}
+.crt-brand{position:absolute;bottom:10%;left:50%;transform:translateX(-50%);font-family:'IBM Plex Mono',monospace;font-size:clamp(.22rem,.5vw,.4rem);color:#888;white-space:nowrap}
+.crt-btn{position:absolute;bottom:6%;right:10%;width:9%;aspect-ratio:1;background:radial-gradient(circle at 40% 35%,#ccc,#888);border-radius:50%;border:1px solid #666}
+.crt-stand{width:28%;height:13%;background:#C0AE88;margin:0 auto;border-radius:0 0 3px 3px}
+.crt-base{width:58%;height:7%;background:#D8CCA8;margin:0 auto;border:2px solid #C0AE88;border-radius:2px}
+.crt-kb{width:115%;margin-left:-7.5%;height:clamp(7px,1.4vw,16px);background:linear-gradient(180deg,#D8CCA8,#C0AE88);border-radius:2px;border:2px solid #A89868;margin-top:3px;position:relative}
+.crt-kb::before{content:'';position:absolute;inset:15% 4%;background:repeating-linear-gradient(90deg,#B8A880 0,#B8A880 4%,transparent 4%,transparent 6.5%);border-radius:1px}
+.crt .geyes{top:70%;left:18%;right:18%;gap:20%}
+.crt .geye{width:clamp(5px,.95vw,9.5px);height:clamp(8px,1.55vw,15.5px)}
+
+/* ── KITCHENAID STAND MIXER (teal) ── */
+.mixer{left:24%;width:8%}
+.mx-wrap{position:relative;width:100%}
+/* whisk attachment */
+.mx-whisk-zone{width:24%;margin:0 auto}
+.mx-whisk-stem{width:30%;margin:0 auto;height:clamp(7px,1.4vw,14px);background:linear-gradient(180deg,#CCC,#999);border-radius:2px}
+.mx-whisk-head{width:100%;aspect-ratio:.7/1;background:linear-gradient(180deg,#ccc,#aaa);border-radius:40% 40% 50% 50%;border:1.5px solid #999;position:relative}
+.mx-whisk-head::before{content:'';position:absolute;top:22%;left:18%;right:18%;height:1.5px;background:rgba(0,0,0,.2);box-shadow:0 6px 0 rgba(0,0,0,.2)}
+.mx-hub-top{width:30%;margin:0 auto;height:clamp(3px,.65vw,6px);background:linear-gradient(180deg,#D0D0D0,#A8A8A8);border-radius:2px 2px 0 0}
+/* Motor head — wide rounded teal shape */
+.mx-head{
+  width:96%;margin:0 auto;aspect-ratio:2.1/1;
+  background:linear-gradient(145deg,var(--ka-l) 0%,var(--ka-teal) 52%,var(--ka-d) 100%);
+  border-radius:32% 45% 45% 32% / 48% 48% 48% 48%;
+  border:2.5px solid var(--ka-d);
+  position:relative;
+  box-shadow:3px 3px 0 rgba(0,0,0,.12),0 4px 12px rgba(0,0,0,.18);
+  margin-top:-1%;
+}
+/* Speed dial */
+.mx-dial{position:absolute;top:20%;left:5%;width:18%;aspect-ratio:1;background:radial-gradient(circle at 40% 38%,#D8D8D8,#A8A8A8);border-radius:50%;border:2px solid #888}
+.mx-dial::after{content:'';position:absolute;top:20%;left:50%;transform:translateX(-50%);width:3px;height:42%;background:#555;border-radius:2px}
+/* Hub at bottom center */
+.mx-attach-hub{position:absolute;bottom:-18%;left:50%;transform:translateX(-50%);width:12%;aspect-ratio:1;background:radial-gradient(circle at 40% 38%,#D0D0D0,#A0A0A0);border-radius:50%;border:1.5px solid #909090}
+/* Brand text */
+.mx-brand{position:absolute;bottom:18%;left:50%;transform:translateX(-50%);font-family:'Fredoka',sans-serif;font-size:clamp(.52rem,.88vw,.72rem);font-weight:600;color:rgba(255,255,255,.85);white-space:nowrap;letter-spacing:.04em;text-shadow:0 1px 2px rgba(0,0,0,.2)}
+/* Column */
+.mx-column{width:26%;margin:0 auto;height:clamp(11px,2.2vw,21px);background:linear-gradient(180deg,var(--ka-teal),var(--ka-d));border-radius:3px 3px 2px 2px;border:2px solid var(--ka-d);margin-top:-1px}
+/* Base/foot */
+.mx-foot{width:90%;margin:0 auto;height:clamp(7px,1.4vw,13px);background:linear-gradient(180deg,var(--ka-d),#206860);border-radius:5px 5px 7px 7px;border:2px solid #1A6058}
+/* Bowl */
+.mx-bowl-outer{width:114%;margin-left:-7%;margin-top:3px}
+.mx-bowl{width:100%;aspect-ratio:2.5/.95;background:linear-gradient(180deg,#E2E2E2 0%,#BABABA 55%,#D4D4D4 100%);border-radius:5% 5% 54% 54%;border:2.5px solid #AAAAAAAA;border-top:none;position:relative;box-shadow:inset 0 4px 10px rgba(0,0,0,.07)}
+.mx-bowl-rim{position:absolute;top:-7%;left:0;right:0;height:14%;background:linear-gradient(180deg,#D4D4D4,#B4B4B4);border-radius:4px;border:1.5px solid #A4A4A4}
+.mx-bowl-shine{position:absolute;top:8%;left:8%;width:16%;height:55%;background:rgba(255,255,255,.55);border-radius:50%;transform:rotate(-28deg)}
+.mixer .geyes{top:18%;left:24%;right:18%;gap:28%}
+.mixer .geye{width:clamp(4px,.8vw,8px);height:clamp(6.5px,1.3vw,13px)}
+
+/* ── LAPTOP ── */
+.laptop{left:36%;width:20%;z-index:25!important}
+.lp-screen-unit{width:92%;margin:0 auto;aspect-ratio:1.62/1;background:var(--ph-dark);border-radius:8px 8px 0 0;border:3px solid #2A2A2A;border-bottom:none;position:relative;overflow:hidden;box-shadow:0 -4px 20px rgba(0,0,0,.45)}
+.lp-display{width:100%;height:100%;background:linear-gradient(145deg,#0D1520,#101825);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5%;padding:6%}
+.lp-hog{font-size:clamp(.9rem,2vw,1.9rem);line-height:1}
+.lp-code{color:var(--ph-yellow);font-family:'IBM Plex Mono',monospace;font-size:clamp(.28rem,.65vw,.56rem);text-align:center;line-height:1.6}
+.cursor-blink{display:inline-block;animation:cursor-blink 1s step-end infinite}
+.lp-camera{position:absolute;top:0;left:50%;transform:translateX(-50%);width:12%;height:7%;background:#1a1a1a;border-radius:0 0 5px 5px}
+.lp-base{width:100%;height:clamp(7px,1.4vw,14px);background:linear-gradient(180deg,#2A2A2A,#1A1A1A);border-radius:0 0 6px 6px;border:3px solid #2A2A2A;border-top:none;position:relative}
+.lp-base::before{content:'';position:absolute;bottom:1px;left:30%;right:30%;height:3px;background:#3A3A3A;border-radius:2px}
+.laptop .geyes{top:10%;left:5%;right:55%;gap:18%}
+.laptop .geye{width:clamp(5px,.95vw,9.5px);height:clamp(8px,1.6vw,16px)}
+.laptop .sbub{font-size:clamp(.52rem,1vw,.82rem)}
+
+/* ── AUNT PHOTO (static) ── */
+.aunt{left:57.5%;width:5.5%;cursor:default}
+.aunt-frame-outer{width:100%;aspect-ratio:.85/1;background:linear-gradient(135deg,#D4A060,#B07830);border-radius:3px;padding:7%;box-shadow:2px 2px 8px rgba(0,0,0,.25)}
+.aunt-frame-inner{width:100%;height:100%;background:#E8D4B8;border-radius:1px;overflow:hidden}
+.aunt-frame-inner img{width:100%;height:100%;object-fit:cover;display:block}
+.aunt-caption{position:absolute;bottom:-22%;left:50%;transform:translateX(-50%);font-size:clamp(.38rem,.72vw,.58rem);color:rgba(255,255,255,.42);white-space:nowrap;font-style:italic;font-weight:300}
+
+/* ── SUITCASE ON FLOOR ── */
+.suitcase-floor{position:absolute;right:3%;bottom:7%;width:9%;z-index:22;cursor:pointer;transition:transform .28s cubic-bezier(.34,1.56,.64,1)}
+.suitcase-floor:hover{transform:translateY(-10px) scale(1.04)}
+.sf-sbub{position:absolute;bottom:calc(100% + 10px);left:50%;transform:translateX(-50%) scale(.8);background:#fff;border:2.5px solid var(--ph-dark);border-radius:12px;padding:5px 12px;font-size:clamp(.48rem,.95vw,.78rem);font-weight:600;white-space:nowrap;color:var(--ph-dark);opacity:0;pointer-events:none;transition:all .22s ease;box-shadow:3px 3px 0 var(--ph-dark);z-index:40}
+.sf-sbub::after{content:'';position:absolute;top:100%;left:50%;transform:translateX(-50%);border:6px solid transparent;border-top-color:var(--ph-dark)}
+.sf-sbub::before{content:'';position:absolute;top:calc(100% - 2px);left:50%;transform:translateX(-50%);z-index:1;border:6px solid transparent;border-top-color:#fff}
+.suitcase-floor:hover .sf-sbub{opacity:1;transform:translateX(-50%) scale(1)}
+.lg-body{width:100%;aspect-ratio:.78/1;background:linear-gradient(135deg,#FFB8CE,#FF88A8);border-radius:8px;border:3px solid #EE85A5;box-shadow:3.5px 3.5px 0 #CC5070,0 4px 12px rgba(0,0,0,.2);position:relative}
+.lg-handle{position:absolute;top:-28%;left:50%;transform:translateX(-50%);width:35%;height:32%;border:3.5px solid #D06080;border-bottom:none;border-radius:6px 6px 0 0;background:transparent}
+.lg-stripe{position:absolute;inset:0;background:linear-gradient(90deg,transparent 28%,rgba(255,255,255,.28) 28%,rgba(255,255,255,.28) 72%,transparent 72%);border-radius:inherit;border-left:1.5px solid rgba(255,255,255,.4);border-right:1.5px solid rgba(255,255,255,.4)}
+.lg-zip{position:absolute;top:12%;left:8%;right:8%;height:3px;background:rgba(200,100,120,.45);border-radius:2px}
+.lg-tag{position:absolute;bottom:14%;right:-14%;width:28%;aspect-ratio:.72/1;background:var(--ph-yellow);border-radius:2px;border:1.5px solid #CC9900;box-shadow:1px 1px 3px rgba(0,0,0,.2)}
+.lg-wheel{position:absolute;bottom:-8%;width:18%;aspect-ratio:1;background:#333;border-radius:50%;border:2px solid #111}
+.lg-wheel.l{left:12%}.lg-wheel.r{right:12%}
+.suitcase-floor .geyes{position:absolute;top:35%;left:8%;right:42%;gap:24%}
+.suitcase-floor .geye{width:clamp(4px,.8vw,8px);height:clamp(6.5px,1.3vw,13px)}
+
+/* ── CATS ON FLOOR — side by side ── */
+.floor-cats{position:absolute;bottom:39%;left:2%;display:flex;align-items:flex-end;gap:.6%;z-index:30}
+.cat-obj{cursor:pointer;position:relative;transition:transform .3s cubic-bezier(.34,1.56,.64,1)}
+.cat-obj:nth-child(1):hover{transform:scale(1.08) rotate(2.5deg)}
+.cat-obj:nth-child(2):hover{transform:scale(1.08) rotate(-2.5deg)}
+.cat-sbub{position:absolute;bottom:calc(100% + 8px);left:50%;transform:translateX(-50%) scale(.8);background:#fff;border:2.5px solid var(--ph-dark);border-radius:12px;padding:4px 11px;font-size:clamp(.42rem,.85vw,.68rem);font-weight:600;white-space:nowrap;color:var(--ph-dark);opacity:0;pointer-events:none;transition:all .22s ease;box-shadow:3px 3px 0 var(--ph-dark);z-index:35}
+.cat-sbub::after{content:'';position:absolute;top:100%;left:50%;transform:translateX(-50%);border:5px solid transparent;border-top-color:var(--ph-dark)}
+.cat-sbub::before{content:'';position:absolute;top:calc(100% - 2px);left:50%;transform:translateX(-50%);z-index:1;border:5px solid transparent;border-top-color:#fff}
+.cat-obj:hover .cat-sbub{opacity:1;transform:translateX(-50%) scale(1)}
+
+/* ──── BUMBUM: white/grey, Persian-Siberian, VERY FLUFFY ──── */
+.bb-wrap{width:clamp(60px,8.5vw,110px);position:relative}
+.bb-fig{position:relative;width:100%}
+/* Fluffy tail */
+.bb-tail{position:absolute;right:-24%;bottom:4%;width:52%;aspect-ratio:1;background:radial-gradient(ellipse,#fff 22%,#E8E8E8 58%,#D0D0D0 100%);border-radius:50%;border:2.5px solid #CCCCCC;box-shadow:-1px 0 0 3px rgba(215,215,215,.45);z-index:0}
+/* Very fluffy body */
+.bb-body{
+  width:96%;margin:0 auto;aspect-ratio:1.14/1;
+  background:radial-gradient(ellipse 54% 60% at 42% 42%,#FFFFFF,#EBEBEB 55%,#D4D4D4 100%);
+  border-radius:46% 52% 40% 40%;border:2.5px solid #CCCCCC;
+  position:relative;z-index:1;
+  box-shadow:0 -5px 0 1px #FAFAFA,-5px -2px 0 0 #F0F0F0,5px -2px 0 0 #F0F0F0,-6px 3px 0 -1px #E8E8E8,6px 3px 0 -1px #E8E8E8,0 0 0 3px rgba(195,195,195,.28),0 5px 14px rgba(0,0,0,.1);
+}
+/* Gray patch */
+.bb-body::before{content:'';position:absolute;top:4%;left:52%;width:40%;height:36%;background:rgba(148,148,158,.35);border-radius:50%;transform:rotate(18deg)}
+.bb-body::after{content:'';position:absolute;bottom:8%;right:6%;width:28%;height:26%;background:rgba(158,158,168,.24);border-radius:50%}
+.bb-chest{position:absolute;bottom:0;left:18%;right:18%;height:48%;background:radial-gradient(ellipse,#fff 34%,rgba(248,248,248,.4));border-radius:50%}
+/* Round Persian head */
+.bb-head{
+  width:60%;margin:0 auto;margin-bottom:-9%;aspect-ratio:1.07/1;
+  background:radial-gradient(ellipse,#FFFFFF 26%,#EBEBEB 64%,#D6D6D6 100%);
+  border-radius:54% 54% 44% 44%;border:2px solid #CCCCCC;
+  position:relative;z-index:2;
+  box-shadow:-2px -2px 0 0 #F0F0F0,2px -2px 0 0 #F0F0F0,0 0 0 2.5px rgba(215,215,215,.45),0 3px 9px rgba(0,0,0,.09);
+}
+.bb-head::before{content:'';position:absolute;top:2%;left:18%;right:18%;height:36%;background:rgba(148,148,162,.25);border-radius:50% 50% 12% 12%}
+.bb-nose{position:absolute;bottom:28%;left:50%;transform:translateX(-50%);width:17%;height:10%;background:#FFA8A8;border-radius:50%;z-index:3}
+.bb-mouth{position:absolute;bottom:16%;left:34%;right:34%;height:7%;border-bottom:1.5px solid #C09090;border-left:1px solid transparent;border-right:1px solid transparent;border-radius:0 0 50% 50%}
+/* Small persian ears */
+.bb-ear{position:absolute;width:21%;aspect-ratio:1;border-radius:50%;border:2px solid #C4C4C4;top:-26%}
+.bb-ear.l{left:6%;background:linear-gradient(160deg,#F2F2F2,#DCDCDC);transform:rotate(-14deg)}
+.bb-ear.r{right:6%;background:linear-gradient(160deg,#F2F2F2,#DCDCDC);transform:rotate(14deg)}
+.bb-ear::before{content:'';position:absolute;top:18%;left:22%;right:22%;bottom:14%;background:rgba(255,175,185,.32);border-radius:50%}
+/* Oval eyes */
+.bb-eyes-row{position:absolute;top:27%;left:10%;right:10%;display:flex;justify-content:center;gap:14%;pointer-events:none}
+.bb-eye{background:#fff;border-radius:50%;border:1.5px solid #555;position:relative;overflow:hidden;width:clamp(6px,1.1vw,11px);height:clamp(9.5px,1.82vw,18.2px)}
+.bb-eye .pupil{width:44%;height:44%;background:#111;border-radius:50%;position:absolute;top:50%;left:50%;transform:translate(-50%,-50%)}
+.bb-eye.blink{transform:scaleY(.07)!important}
+.bb-paws{display:flex;justify-content:center;gap:10%;margin-top:-3%;position:relative;z-index:2}
+.bb-paw{width:23%;aspect-ratio:1.6/1;background:linear-gradient(180deg,#EAEAEA,#D2D2D2);border-radius:50%;border:1.5px solid #C8C8C8;box-shadow:0 1px 0 1px #E8E8E8}
+
+/* ──── DODO: black/white, fluffy ──── */
+.dd-wrap{width:clamp(55px,7.8vw,100px);position:relative}
+.dd-fig{position:relative;width:100%}
+.dd-tail{position:absolute;right:-20%;bottom:6%;width:42%;aspect-ratio:.95/1;background:radial-gradient(ellipse,#2C2C2C 36%,#111 80%);border-radius:50%;border:2px solid #101010;box-shadow:-1px 0 0 2px rgba(0,0,0,.3);z-index:0}
+.dd-body{
+  width:90%;margin:0 auto;aspect-ratio:1.06/1;
+  background:radial-gradient(ellipse 58% 62% at 50% 46%,#2A2A2A,#1A1A1A 72%,#0E0E0E 100%);
+  border-radius:44% 44% 36% 36%;border:2.5px solid #111;
+  position:relative;z-index:1;
+  box-shadow:0 -3px 0 1px #333,-3px 0 0 0 #282828,3px 0 0 0 #282828,0 0 0 2.5px rgba(0,0,0,.25),0 5px 14px rgba(0,0,0,.18);
+}
+/* White tuxedo bib */
+.dd-chest{position:absolute;bottom:0;left:20%;right:20%;height:58%;background:radial-gradient(ellipse,#FFFFFF 40%,rgba(242,242,242,.5) 80%,transparent 100%);border-radius:38% 38% 52% 52%}
+.dd-head{
+  width:55%;margin:0 auto;margin-bottom:-8%;aspect-ratio:1.02/1;
+  background:radial-gradient(ellipse,#2A2A2A 36%,#1A1A1A 78%,#0E0E0E 100%);
+  border-radius:54% 54% 42% 42%;border:2.5px solid #111;
+  position:relative;z-index:2;
+  box-shadow:-2px -1px 0 0 #333,2px -1px 0 0 #333,0 3px 9px rgba(0,0,0,.2);
+}
+.dd-head::before{content:'';position:absolute;top:8%;left:32%;right:32%;height:22%;background:rgba(255,255,255,.1);border-radius:50%}
+.dd-nose{position:absolute;bottom:28%;left:50%;transform:translateX(-50%);width:16%;height:10%;background:#FF9898;border-radius:50%;z-index:3}
+.dd-mouth{position:absolute;bottom:16%;left:36%;right:36%;height:7%;border-bottom:1.5px solid #CC8888;border-left:1px solid transparent;border-right:1px solid transparent;border-radius:0 0 50% 50%}
+.dd-ear{position:absolute;width:23%;aspect-ratio:.82/1;border-radius:50% 50% 20% 20%;border:2px solid #0E0E0E;top:-28%}
+.dd-ear.l{left:4%;background:linear-gradient(160deg,#222,#111);transform:rotate(-12deg)}
+.dd-ear.r{right:4%;background:linear-gradient(160deg,#222,#111);transform:rotate(12deg)}
+.dd-ear::before{content:'';position:absolute;top:20%;left:22%;right:22%;bottom:14%;background:rgba(255,140,140,.2);border-radius:50%}
+/* White paws */
+.dd-paws{display:flex;justify-content:center;gap:12%;margin-top:-4%;position:relative;z-index:2}
+.dd-paw{width:25%;aspect-ratio:1.6/1;background:linear-gradient(180deg,#fff,#DCDCDC);border-radius:50%;border:1.5px solid #D0D0D0}
+/* Oval eyes */
+.dd-eyes-row{position:absolute;top:25%;left:10%;right:10%;display:flex;justify-content:center;gap:16%;pointer-events:none}
+.dd-eye{background:#fff;border-radius:50%;border:1.5px solid #444;position:relative;overflow:hidden;width:clamp(5.5px,1vw,10px);height:clamp(8.8px,1.62vw,16.2px)}
+.dd-eye .pupil{width:44%;height:44%;background:#111;border-radius:50%;position:absolute;top:50%;left:50%;transform:translate(-50%,-50%)}
+.dd-eye.blink{transform:scaleY(.07)!important}
+
+/* ── CLIPPY (fixed bottom-left) ── */
+.clippy-wrap{position:fixed;bottom:24px;left:24px;z-index:800;display:flex;flex-direction:column;align-items:flex-start;gap:10px}
+.clippy-bubble{background:#fff;border:2.5px solid var(--ph-dark);border-radius:12px 12px 12px 0;padding:10px 14px;font-size:.8rem;font-weight:500;max-width:200px;color:var(--ph-dark);line-height:1.5;box-shadow:3px 3px 0 var(--ph-dark);animation:clippy-appear .5s ease forwards;position:relative}
+.clippy-bubble strong{font-weight:700}
+.clippy-x{position:absolute;top:6px;right:8px;background:none;border:none;font-size:.75rem;color:#999;cursor:pointer;font-family:'Fredoka',sans-serif;font-weight:600}
+.clippy-x:hover{color:#333}
+.clippy-char{width:56px;height:72px;position:relative;animation:clippy-bob 2.5s ease-in-out infinite;cursor:pointer}
+.clip-outer{position:absolute;inset:0;background:linear-gradient(145deg,#D8D8E2,#B8B8C8);border:4.5px solid #9898A8;border-radius:28px 28px 10px 10px;box-shadow:2px 2px 6px rgba(0,0,0,.15)}
+.clip-inner{position:absolute;top:20px;left:10px;right:10px;bottom:8px;background:linear-gradient(145deg,#E0E0EA,#C0C0D0);border:4px solid #9898A8;border-radius:18px 18px 6px 6px}
+.clip-face{position:absolute;top:7px;left:0;right:0;display:flex;justify-content:center;gap:7px}
+/* Clippy eyes also vertically oval */
+.clip-eye{width:6px;height:10px;background:#2A2A2A;border-radius:50%;border:1px solid rgba(255,255,255,.3)}
+.clip-brows{position:absolute;top:4px;left:0;right:0;display:flex;justify-content:center;gap:18px}
+.clip-brow{width:6px;height:2px;background:#5A5A6A;border-radius:2px;transform:rotate(-12deg)}
+.clip-brow:last-child{transform:rotate(12deg)}
+.clip-mouth{position:absolute;top:18px;left:50%;transform:translateX(-50%);width:12px;height:6px;border:2px solid #5A5A6A;border-top:none;border-radius:0 0 8px 8px}
+.clip-feet{position:absolute;bottom:-8px;left:50%;transform:translateX(-50%);display:flex;gap:8px}
+.clip-foot{width:9px;height:8px;background:#9898A8;border-radius:0 0 50% 50%;border:2px solid #7878A0}
+
+/* ── MODAL ── */
+.modal-bg{position:fixed;inset:0;background:rgba(0,0,0,.72);z-index:200;opacity:0;pointer-events:none;transition:opacity .25s ease;display:flex;align-items:center;justify-content:center;padding:1rem}
+.modal-bg.open{opacity:1;pointer-events:all}
+.modal{background:#fff;border-radius:18px;border:3px solid var(--ph-dark);box-shadow:8px 8px 0 var(--ph-dark);max-width:580px;width:100%;max-height:87vh;overflow-y:auto;transform:scale(.88) translateY(24px);transition:transform .28s cubic-bezier(.34,1.56,.64,1)}
+.modal-bg.open .modal{transform:scale(1) translateY(0)}
+.modal-hdr{padding:1.5rem 1.5rem 0;display:flex;align-items:flex-start;justify-content:space-between;gap:1rem}
+.modal-icon-big{font-size:2.8rem;line-height:1;flex-shrink:0}
+.modal-title-wrap{flex:1}
+.modal-chip{display:inline-block;background:var(--ph-yellow);color:var(--ph-dark);font-size:.72rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;padding:3px 10px;border-radius:100px;margin-bottom:.35rem}
+.modal-title{font-family:'Fredoka One',sans-serif;font-size:clamp(1.2rem,3vw,1.6rem);color:var(--ph-dark);line-height:1.2}
+.modal-x{background:none;border:2px solid #ddd;border-radius:8px;width:36px;height:36px;cursor:pointer;font-size:1rem;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:all .18s;color:#666;font-family:'Fredoka',sans-serif}
+.modal-x:hover{background:#f5f5f5;border-color:#999;color:#333}
+.modal-body{padding:1.1rem 1.5rem 1.5rem}
+.modal-body p{font-size:.95rem;line-height:1.75;color:#444;margin-bottom:1rem;font-weight:300}
+.modal-body p strong{color:var(--ph-dark);font-weight:600}
+.modal-body p:last-child{margin-bottom:0}
+.mdivider{height:3px;background:linear-gradient(90deg,var(--ph-yellow),var(--ph-orange));border:none;border-radius:2px;margin:1rem 0}
+.mhighlight{background:#FFFAEE;border-left:4px solid var(--ph-yellow);padding:.75rem 1rem;border-radius:0 8px 8px 0;font-size:.9rem;font-style:italic;color:#555;margin:1rem 0;line-height:1.65;font-weight:300}
+.mhighlight.info{background:#F0F8FF;border-left-color:#60A0E0;font-style:normal;color:#334}
+.mtags{display:flex;flex-wrap:wrap;gap:.45rem;margin-top:1rem}
+.mtag{background:#f2f2f2;color:#333;padding:4px 12px;border-radius:100px;font-size:.76rem;font-weight:500;border:1.5px solid #e0e0e0}
+.mbtn-row{display:flex;gap:.75rem;flex-wrap:wrap;margin-top:1.25rem}
+.mbtn{background:var(--ph-yellow);color:var(--ph-dark);padding:8px 18px;border-radius:7px;font-size:.85rem;font-weight:700;text-decoration:none;border:2px solid var(--ph-dark);box-shadow:3px 3px 0 var(--ph-dark);display:inline-block;transition:all .18s;font-family:'Fredoka',sans-serif}
+.mbtn:hover{transform:translate(-2px,-2px);box-shadow:5px 5px 0 var(--ph-dark)}
+.mbtn.outline{background:#fff}
+.carousel{border-radius:10px;overflow:hidden;margin:1rem 0;background:#f0f0f0;border:2px solid #e0e0e0}
+.car-track{display:flex;transition:transform .4s cubic-bezier(.25,.46,.45,.94)}
+.car-slide{flex-shrink:0;width:100%}
+.car-slide img{width:100%;height:190px;object-fit:cover;display:block}
+.car-cap{text-align:center;padding:.45rem .5rem;font-size:.8rem;color:#666;font-style:italic;font-weight:300}
+.car-nav{display:flex;align-items:center;justify-content:center;gap:.5rem;margin-top:.7rem}
+.car-btn{background:var(--ph-dark);color:#fff;border:none;border-radius:6px;width:30px;height:30px;cursor:pointer;font-size:.85rem;display:flex;align-items:center;justify-content:center;transition:background .18s}
+.car-btn:hover{background:var(--ph-orange)}
+.car-dots{display:flex;gap:4px}
+.car-dot{width:6px;height:6px;border-radius:50%;background:#ddd;cursor:pointer;transition:background .18s}
+.car-dot.on{background:var(--ph-yellow)}
+.modal::-webkit-scrollbar{width:5px}
+.modal::-webkit-scrollbar-thumb{background:#e0e0e0;border-radius:3px}
+
+/* ── ABOUT ME SECTION ── */
+.people-section{background:var(--ph-dark);padding:5rem 2rem;border-top:4px solid var(--ph-yellow)}
+.people-inner{max-width:900px;margin:0 auto}
+.people-eyebrow{display:inline-block;background:rgba(249,189,43,.12);border:1.5px solid rgba(249,189,43,.28);border-radius:100px;padding:5px 18px;margin-bottom:1rem;color:var(--ph-yellow);font-size:.76rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase}
+.people-title{font-family:'Fredoka One',sans-serif;font-size:clamp(1.8rem,4vw,2.8rem);color:#fff;margin-bottom:.5rem;line-height:1.1}
+.people-sub{color:rgba(255,255,255,.5);font-size:1rem;font-weight:300;margin-bottom:3rem;max-width:500px}
+.person-card{display:grid;grid-template-columns:auto 1fr;gap:3rem;align-items:start;background:rgba(255,255,255,.04);border:1.5px solid rgba(255,255,255,.08);border-radius:16px;padding:2.5rem}
+@media(max-width:640px){.person-card{grid-template-columns:1fr}}
+.person-media{position:relative;width:180px;flex-shrink:0}
+@media(max-width:640px){.person-media{width:140px;margin:0 auto}}
+.person-photo-frame{width:100%;aspect-ratio:1;border-radius:12px;overflow:hidden;border:3px solid rgba(249,189,43,.4);box-shadow:0 0 0 1px rgba(249,189,43,.15),0 8px 24px rgba(0,0,0,.3)}
+.person-photo-frame img{width:100%;height:100%;object-fit:cover;display:block}
+/* Badges */
+.p-badge{display:inline-flex;align-items:center;gap:3px;background:#fff;border:2.5px solid var(--ph-dark);border-radius:10px;padding:5px 9px;font-size:.88rem;font-weight:700;box-shadow:3px 3px 0 var(--ph-dark)}
+.badge-row{display:flex;gap:.5rem;margin-top:1.2rem;flex-wrap:wrap}
+.badge-tooltip-wrap{position:relative;display:inline-block}
+.badge-tip{position:absolute;bottom:calc(100% + 8px);left:50%;transform:translateX(-50%);background:var(--ph-dark);color:#fff;padding:4px 10px;border-radius:6px;font-size:.72rem;font-weight:600;white-space:nowrap;opacity:0;pointer-events:none;transition:opacity .18s;box-shadow:0 2px 8px rgba(0,0,0,.3)}
+.badge-tip::after{content:'';position:absolute;top:100%;left:50%;transform:translateX(-50%);border:4px solid transparent;border-top-color:var(--ph-dark)}
+.badge-tooltip-wrap:hover .badge-tip{opacity:1}
+.person-name{font-family:'Fredoka One',sans-serif;font-size:1.8rem;color:#fff;margin-bottom:.3rem}
+.person-role{color:var(--ph-yellow);font-size:1rem;font-weight:600;margin-bottom:.8rem}
+.person-bio{color:rgba(255,255,255,.65);font-size:.95rem;line-height:1.7;font-weight:300;margin-bottom:1.5rem;max-width:440px}
+.person-links{display:flex;gap:.75rem;flex-wrap:wrap}
+.person-link{background:var(--ph-yellow);color:var(--ph-dark);padding:8px 18px;border-radius:7px;font-size:.85rem;font-weight:700;text-decoration:none;border:2px solid var(--ph-dark);box-shadow:3px 3px 0 var(--ph-dark);transition:all .18s;font-family:'Fredoka',sans-serif;display:inline-block}
+.person-link:hover{transform:translate(-2px,-2px);box-shadow:5px 5px 0 var(--ph-dark)}
+.person-link.out{background:rgba(255,255,255,.08);color:#fff;border-color:rgba(255,255,255,.2);box-shadow:3px 3px 0 rgba(255,255,255,.1)}
+.person-link.out:hover{background:rgba(255,255,255,.15)}
+/* Homies */
+.homies-section{margin-top:3rem;border-top:1px solid rgba(255,255,255,.08);padding-top:2rem}
+.homies-label{font-family:'Fredoka One',sans-serif;font-size:1.1rem;color:rgba(255,255,255,.55);margin-bottom:1.2rem}
+.homies-grid{display:flex;gap:1.5rem;flex-wrap:wrap}
+.homies-card{display:flex;align-items:center;gap:1rem;background:rgba(255,255,255,.04);border:1.5px solid rgba(255,255,255,.08);border-radius:12px;padding:1rem 1.4rem;flex:1;min-width:220px}
+.homies-photo{width:60px;height:60px;border-radius:50%;object-fit:cover;border:2px solid rgba(249,189,43,.3)}
+.homies-info h4{color:#fff;font-size:1rem;font-weight:600;margin-bottom:.2rem}
+.homies-info p{color:rgba(255,255,255,.45);font-size:.8rem;font-weight:300}
+
+/* ── FOOTER ── */
+.footer{background:var(--ph-dark);border-top:4px solid var(--ph-yellow);padding:2rem;text-align:center}
+.footer-hog{font-size:2rem;margin-bottom:.4rem}
+.footer-sub{color:rgba(255,255,255,.35);font-size:.82rem;font-weight:300}
+.footer-links{display:flex;gap:1.5rem;justify-content:center;margin-top:1rem;flex-wrap:wrap}
+.footer-links a{color:var(--ph-yellow);text-decoration:none;font-size:.85rem;font-weight:600;transition:color .18s}
+.footer-links a:hover{color:#fff}
+
+/* ── KEYFRAMES ── */
+@keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(7px)}}
+@keyframes cursor-blink{0%,100%{opacity:1}50%{opacity:0}}
+@keyframes waggle{0%,100%{transform:rotate(0deg)}50%{transform:rotate(18deg)}}
+@keyframes clippy-bob{0%,100%{transform:rotate(-2deg) translateY(0)}50%{transform:rotate(2deg) translateY(-3px)}}
+@keyframes clippy-appear{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+</style>
+</head>
+<body>
+
+<!-- CLIPPY -->
+<div class="clippy-wrap" id="clippyWrap">
+  <div class="clippy-bubble" id="clippyBubble">
+    <button class="clippy-x" id="clippyX">&#x2715;</button>
+    Do you remember Clippy? <br/> <strong>Never forget Clippy!</strong>
+  </div>
+  <div class="clippy-char" id="clippyChar">
+    <div class="clip-outer"></div>
+    <div class="clip-inner"></div>
+    <div class="clip-brows">
+      <div class="clip-brow"></div>
+      <div class="clip-brow"></div>
+    </div>
+    <div class="clip-face">
+      <div class="clip-eye"></div>
+      <div class="clip-eye"></div>
+    </div>
+    <div class="clip-mouth"></div>
+    <div class="clip-feet">
+      <div class="clip-foot"></div>
+      <div class="clip-foot"></div>
+    </div>
+  </div>
+</div>
+
+<!-- HEADER -->
+<header class="hdr">
+  <div class="hdr-chip">🦔 A message for the PostHog team</div>
+  <h1>Hi PostHog &mdash; I'm <span>Sharlena.</span></h1>
+  <p class="hdr-sub">Welcome to my little corner. Everything here tells a piece of my story. Look around &mdash; things are friendlier than they look.</p>
+  <div class="hdr-hint">
+    <span>Hover over objects to wake them up, then click to learn more</span>
+    <span class="bob">&#8595;</span>
+  </div>
+</header>
+
+<!-- MAIN SCENE -->
+<main class="scene-wrap">
+<div class="room">
+
+  <!-- WALL -->
+  <div class="wall">
+    <!-- window -->
+    <div class="wwindow"></div>
+
+    <!-- bookshelf -->
+    <div class="wshelf">
+      <div class="wshelf-items">
+        <div class="wbook" style="background:#E05050;height:88%"></div>
+        <div class="wbook" style="background:#4070E0;height:92%"></div>
+        <div class="wbook" style="background:#F9BD2B;height:78%"></div>
+        <div class="wbook" style="background:#50B068;height:96%"></div>
+        <div class="wbook" style="background:#E08040;height:82%"></div>
+      </div>
+      <div class="wshelf-board"></div>
+    </div>
+  </div>
+
+  <div class="baseboard"></div>
+  <div class="floor"></div>
+
+  <!-- DESK -->
+  <div class="desk">
+    <div class="desk-top" id="desk-surface">
+
+      <!-- CSS PLANT -->
+      <div class="desk-plant">
+        <div class="plant-leaves-wrap">
+          <div class="leaf lf1"></div>
+          <div class="leaf lf2"></div>
+          <div class="leaf lf3"></div>
+          <div class="leaf lf4"></div>
+          <div class="leaf lfc"></div>
+        </div>
+        <div class="plant-soil"></div>
+        <div class="plant-rim"></div>
+        <div class="plant-pot"></div>
+      </div>
+
+      <!-- OBJ 1: CRT COMPUTER -->
+      <div class="obj crt" data-modal="computer">
+        <div class="crt-mon">
+          <div class="crt-scr">
+            <div class="crt-scanlines"></div>
+            <div class="crt-txt">C:\> dir<br/>C:\> huzzah.exe<br/>C:\> &#9646;</div>
+          </div>
+          <div class="crt-brand">COMPAQ</div>
+          <div class="crt-btn"></div>
+          <div class="geyes" style="top:70%;left:18%;right:18%;gap:20%">
+            <div class="geye"><div class="pupil"></div></div>
+            <div class="geye"><div class="pupil"></div></div>
+          </div>
+        </div>
+        <div class="crt-stand"></div>
+        <div class="crt-base"></div>
+        <div class="crt-kb"></div>
+        <div class="sbub">Ask me how I got into tech 💾</div>
+      </div>
+
+      <!-- OBJ 2: CASE FILE -->
+      <div class="obj casefile" data-modal="casa">
+        <!-- Papers peeking out top -->
+        <div class="cf-papers">
+          <div class="cf-p cf-p1"></div>
+          <div class="cf-p cf-p2"></div>
+          <div class="cf-p cf-p3"></div>
+        </div>
+        <div class="cf-folder cf-folder-h">
+          <div class="cf-tab"></div>
+          <div class="cf-clip"></div>
+          <div class="cf-label">
+            <div class="cf-label-bar"></div>
+            <div class="cf-label-line"></div>
+            <div class="cf-label-line"></div>
+            <div class="cf-label-line"></div>
+          </div>
+          <div class="cf-stamp">CONFIDENTIAL</div>
+          <div class="geyes" style="top:52%;left:10%;right:10%;gap:22%">
+            <div class="geye"><div class="pupil"></div></div>
+            <div class="geye"><div class="pupil"></div></div>
+          </div>
+          <!-- side photo with sun glare -->
+          <div class="cf-sideframe">
+            <div class="cf-sideframe-inner">
+              <div class="cf-glare"></div>
+            </div>
+          </div>
+        </div>
+        <div class="sbub">My proudest work 📋</div>
+      </div>
+
+      <!-- OBJ 3: KITCHENAID (teal) -->
+      <div class="obj mixer" data-modal="baking">
+        <div class="mx-wrap">
+          <!-- Whisk above head -->
+          <div class="mx-whisk-zone">
+            <div class="mx-whisk-head"></div>
+            <div class="mx-whisk-stem"></div>
+            <div class="mx-hub-top"></div>
+          </div>
+          <!-- Motor head -->
+          <div class="mx-head">
+            <div class="mx-dial"></div>
+            <div class="mx-attach-hub"></div>
+            <div class="mx-brand">KitchenAid</div>
+            <div class="geyes" style="top:20%;left:24%;right:18%;gap:28%">
+              <div class="geye"><div class="pupil"></div></div>
+              <div class="geye"><div class="pupil"></div></div>
+            </div>
+          </div>
+          <div class="mx-column"></div>
+          <div class="mx-foot"></div>
+          <!-- Bowl -->
+          <div class="mx-bowl-outer">
+            <div class="mx-bowl">
+              <div class="mx-bowl-rim"></div>
+              <div class="mx-bowl-shine"></div>
+            </div>
+          </div>
+        </div>
+        <div class="sbub">Want some ice cream cake? 🎂</div>
+      </div>
+
+      <!-- OBJ 4: LAPTOP (MAIN) -->
+      <div class="obj laptop" data-modal="laptop">
+        <div class="lp-screen-unit">
+          <div class="lp-camera"></div>
+          <div class="lp-display">
+            <div class="lp-hog">🦔</div>
+            <div class="lp-code">
+              why_posthog.md<span class="cursor-blink">_</span><br/>
+              ――――――――――――――<br/>
+              click to read &#8594;
+            </div>
+          </div>
+        </div>
+        <div class="lp-base"></div>
+        <div class="geyes" style="top:10%;left:5%;right:55%;gap:18%">
+          <div class="geye"><div class="pupil"></div></div>
+          <div class="geye"><div class="pupil"></div></div>
+        </div>
+        <div class="sbub">✨ Start here &mdash; this is the important one</div>
+      </div>
+
+      <!-- AUNT PHOTO (static) -->
+      <div class="obj-static aunt">
+        <div class="aunt-frame-outer">
+          <div class="aunt-frame-inner">
+            <img src="assets/img/menhelen.jpg" alt="me and my late aunt"/>
+          </div>
+        </div>
+        <div class="aunt-caption">in loving memory &#x2661;</div>
+      </div>
+
+    </div><!-- /desk-top -->
+    <div class="desk-front"></div>
+    <div class="desk-leg left"></div>
+    <div class="desk-leg right"></div>
+  </div>
+
+  <!-- CATS ON FLOOR (side by side) -->
+  <div class="floor-cats">
+
+    <!-- BUMBUM: white/grey, Persian-Siberian, very fluffy -->
+    <div class="cat-obj" data-modal="cat-bumbum">
+      <div class="bb-wrap">
+        <div class="bb-fig">
+          <div class="bb-tail"></div>
+          <div class="bb-head">
+            <div class="bb-ear l"></div>
+            <div class="bb-ear r"></div>
+            <div class="bb-eyes-row">
+              <div class="bb-eye"><div class="pupil"></div></div>
+              <div class="bb-eye"><div class="pupil"></div></div>
+            </div>
+            <div class="bb-nose"></div>
+            <div class="bb-mouth"></div>
+          </div>
+          <div class="bb-body">
+            <div class="bb-chest"></div>
+          </div>
+          <div class="bb-paws">
+            <div class="bb-paw"></div>
+            <div class="bb-paw"></div>
+          </div>
+        </div>
+      </div>
+      <div class="cat-sbub">Bumbum says hello</div>
+    </div>
+
+    <!-- DODO: black/white, fluffy -->
+    <div class="cat-obj" data-modal="cat-dodo">
+      <div class="dd-wrap">
+        <div class="dd-fig">
+          <div class="dd-tail"></div>
+          <div class="dd-head">
+            <div class="dd-ear l"></div>
+            <div class="dd-ear r"></div>
+            <div class="dd-eyes-row">
+              <div class="dd-eye"><div class="pupil"></div></div>
+              <div class="dd-eye"><div class="pupil"></div></div>
+            </div>
+            <div class="dd-nose"></div>
+            <div class="dd-mouth"></div>
+          </div>
+          <div class="dd-body">
+            <div class="dd-chest"></div>
+          </div>
+          <div class="dd-paws">
+            <div class="dd-paw"></div>
+            <div class="dd-paw"></div>
+          </div>
+        </div>
+      </div>
+      <div class="cat-sbub">Dodo says hello</div>
+    </div>
+
+  </div><!-- /floor-cats -->
+
+  <!-- SUITCASE ON FLOOR near plant -->
+  <div class="suitcase-floor" data-modal="travel">
+    <div class="lg-body">
+      <div class="lg-handle"></div>
+      <div class="lg-stripe"></div>
+      <div class="lg-zip"></div>
+      <div class="lg-tag"></div>
+      <div class="lg-wheel l"></div>
+      <div class="lg-wheel r"></div>
+      <div class="geyes" style="top:35%;left:8%;right:42%;gap:24%">
+        <div class="geye"><div class="pupil"></div></div>
+        <div class="geye"><div class="pupil"></div></div>
+      </div>
+    </div>
+    <div class="sf-sbub">Let's go somewhere! ✈️</div>
+  </div>
+
+</div><!-- /room -->
+</main>
+
+<!-- ABOUT ME -->
+<section class="people-section">
+  <div class="people-inner">
+    <div class="people-eyebrow">Meet the Engineer</div>
+    <h2 class="people-title">Sharlena Luyen</h2>
+    <p class="people-sub">The human behind all the googly eyes and ice cream cakes.</p>
+
+    <div class="person-card">
+      <div class="person-media">
+        <div class="person-photo-frame">
+          <img src="https://sharlenaluyen.com/assets/img/menbumbum.JPG" alt="Sharlena Luyen with Bumbum"/>
+        </div>
+        <div class="badge-row">
+          <div class="p-badge">🍍 <span style="color:#22C55E">👍</span></div>
+          <div class="badge-tooltip-wrap">
+            <div class="p-badge">🏆 <strong>15</strong></div>
+            <div class="badge-tip">Slingin' code since 2011</div>
+          </div>
+          <div class="badge-tooltip-wrap">
+            <div class="p-badge">🐋</div>
+            <div class="badge-tip">Searching for whales</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="person-info">
+        <h3 class="person-name">Sharlena Luyen</h3>
+        <p class="person-role">Software Engineer</p>
+        <p class="person-bio">
+          I build backend infrastructure, advocate fiercely for children who need it, and swam next to a baby humpback whale in Tahiti. 7-year CASA volunteer, previous Multnomah County Citizens Review Board member, and proud servant to two very opinionated cats. Currently looking for a team that ships things that actually matter with teammates who care about each other.
+        </p>
+        <div class="person-links">
+          <a class="person-link" href="https://bit.ly/sharresume" target="_blank">Resume &#8599;</a>
+          <a class="person-link out" href="https://bit.ly/sharlinkedin" target="_blank">LinkedIn &#8599;</a>
+          <a class="person-link out" href="https://sharlenaluyen.com" target="_blank">Portfolio &#8599;</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="homie-section">
+      <div class="homie-label">The Homies</div>
+      <div class="homie-grid">
+        <div class="homie-card">
+          <img class="homie-photo" src="https://dodobumbum.com/assets/images/dodo_headshot.jpg" alt="Dodo"/>
+          <div class="homie-info">
+            <h4>Dodo</h4>
+            <p>Distinguished Observer &bull; Black &amp; White &bull; Deeply correct opinions</p>
+          </div>
+        </div>
+        <div class="homie-card">
+          <img class="homie-photo" src="https://dodobumbum.com/assets/images/bumbum_headshot.jpg" alt="Bumbum"/>
+          <div class="homie-info">
+            <h4>Bumbum</h4>
+            <p>Chief Chaos Agent &bull; White &amp; Gray &bull; Professional call crasher</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MODAL -->
+<div class="modal-bg" id="modalBg">
+  <div class="modal">
+    <div class="modal-hdr">
+      <div class="modal-icon-big" id="mIcon">🦔</div>
+      <div class="modal-title-wrap">
+        <div class="modal-chip" id="mChip">Story</div>
+        <h2 class="modal-title" id="mTitle">Title</h2>
+      </div>
+      <button class="modal-x" id="mClose">&#x2715;</button>
+    </div>
+    <div class="modal-body" id="mBody"></div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="footer-hog">🦔</div>
+  <div class="footer-sub">Made with PostHog energy by Sharlena Luyen</div>
+  <div class="footer-links">
+    <a href="https://bit.ly/sharresume" target="_blank">R&eacute;sum&eacute; &#8599;</a>
+    <a href="https://bit.ly/sharlinkedin" target="_blank">LinkedIn &#8599;</a>
+    <a href="https://sharlenaluyen.com" target="_blank">Portfolio &#8599;</a>
+    <a href="https://posthog.com/careers/product-engineer" target="_blank">The Role I Want &#8599;</a>
+  </div>
+</footer>
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+
+  /* ── CLIPPY ── */
+  const clippyX = document.getElementById('clippyX');
+  const clippyBubble = document.getElementById('clippyBubble');
+  const clippyChar = document.getElementById('clippyChar');
+  let clippyClosed = false;
+  clippyX.addEventListener('click', e => { e.stopPropagation(); clippyBubble.style.display='none'; clippyClosed=true; });
+  clippyChar.addEventListener('click', () => { if(clippyClosed){ clippyBubble.style.display=''; clippyClosed=false; }});
+
+  /* ── MODAL DATA ── */
+  const data = {
+    computer:{chip:'Origin Story',title:'How I actually got into tech',icon:'🖥️',
+      html:`<p>My family didn't have a lot growing up, but we had a clunky computer and a dial-up connection. By age 10, I was the family IT department. I was figuring out how to get things we couldn't afford.</p>
+      <p>I learned to use LimeWire, Napster, and BitTorrent to pirate software and games for my family long before I knew what a network packet was. I didn't realize it at the time, but I was learning about <strong>peer-to-peer networks, file systems, and the architecture of the internet</strong> through pure curiosity and necessity.</p>
+      <div class="mhighlight">"I wasn't trying to break rules; I was only trying to solve problems for people I cared about. That's still how I approach engineering today."</div>
+      <p>That early scrappiness turned into a real love for how computers work. I went from torrenting 80s music and movies to building distributed identity infrastructure at HashiCorp. The thread connecting it all: <strong>technology as a tool to close gaps for people who need it most.</strong></p>
+      <div class="mtags"><span class="mtag">Self-taught curiosity</span><span class="mtag">Grew up on AIM &amp; MSN</span><span class="mtag">Family IT dept</span><span class="mtag">Scrappy by nature</span></div>`
+    },
+    casa:{chip:'Philanthropy',title:'7 Years Advocating for Foster Youth',icon:'📋',
+      html:`<p>For over 7 years I served as a <strong>Court Appointed Special Advocate (CASA)</strong> in Benton and Multnomah Counties, Oregon as well as Orange County, California. CASAs are trained volunteers appointed by judges to speak in the best interest of children brought before the court for abuse or neglect.</p>
+      <p>We aren't social workers or attorneys; rather, we're the one consistent adult in a child's case who reads every file, attends every hearing, and makes recommendations based purely on the child's best interest.</p>
+      <p>I also served on the <strong>Multnomah County Citizens Review Board (CRB)</strong>, bringing public oversight to foster care proceedings. We reviewed active cases and submitted policy recommendations directly to judges.</p>
+      <p>This work taught me something directly relevant to engineering: <strong>the systems we build have real human consequences.</strong> When you design for the most vulnerable users — the ones who can't advocate for themselves, you make everything better for everyone.</p>
+      <div class="mtags"><span class="mtag">CASA Volunteer, 7+ yrs</span><span class="mtag">Citizens Review Board</span><span class="mtag">Orange &amp; Benton &amp; Multnomah Counties</span><span class="mtag">Advocate by nature</span></div>`
+    },
+    baking:{chip:'Fun Fact',title:"I'm known for my ice cream cakes",icon:'🎂',
+      html:`<p>Every team I've been on has eventually found out: <strong>if there's a birthday, Sharlena will show up with a cake.</strong> Specifically, an ice cream cake; the kind with multiple flavor layers, crushed Oreos, hot fudge ribbons, and a proper two-day freeze time.</p>
+      <p>Baking is my creative outlet and my way of taking care of people. It requires the same mindset I bring to engineering: <strong>precision, patience, and the willingness to redo the whole thing if the first attempt doesn't hold up.</strong></p>
+      <div class="mhighlight">"An ice cream cake is basically a distributed system: multiple layers, independent state, only cohesive when everything comes together at exactly the right temperature. The only difference is that my ice cream cakes are usually ugly on the outside."</div>
+      <div class="mtags"><span class="mtag">Ice cream cake architect</span><span class="mtag">Never uses a box mix</span><span class="mtag">Team morale up</span><span class="mtag">Will make your birthday special</span></div>`
+    },
+    laptop:{chip:'The Big One 🦔',title:'Why PostHog?',icon:'💻',
+      html:`<p>I've been watching PostHog for a while, in the way you watch a company that's doing everything you wish more companies would do: <strong>radically transparent, genuinely open source, obsessively focused on the product and the people building it.</strong></p>
+      <p>Pineapple on pizza is a weird thing to center your company around, but I somehow love it.</p>
+      <hr class="mdivider"/>
+      <p><strong>My engineering background:</strong> At HashiCorp, an IBM Company, I built backend infrastructure; specifically, cross-identity management between external identity providers and HashiCorp Cloud Platform. Before that, as a software consultant, I helped implement MoveHQ in Ruby on Rails and React, replacing legacy government systems for military family relocations.</p>
+      <div class="mhighlight info"><strong>Note on identity work:</strong> I am not an IAM specialist. My identity work at HashiCorp was specifically around <strong>SCIM (System for Cross-domain Identity Management)</strong> to build the infrastructure that lets enterprise customers provision and sync users between their identity providers (Okta, Azure AD, etc.) and HashiCorp Cloud Platform. I have a strong practical background in identity concepts, provisioning flows, and token-based auth, but I'm a backend engineer who touched identity deeply — not a dedicated IAM engineer.</div>
+      <p>I've built things used by real people under real pressure. <strong>Stakes make the engineering matter more.</strong></p>
+      <div class="mhighlight">PostHog is building the analytics infrastructure that helps every other company understand their users. That's leverage at a scale I find genuinely exciting. Something I miss about HashiCorp's previous dedication to open-source products.</div>
+      <p><strong>Why product engineering specifically:</strong> I want to be close to the user and close to the data at the same time. I want to ship a feature, watch how it lands, learn from it, and iterate. PostHog is where the tools for doing that are actually being built, and I want to be on that team to make mistakes and learn.</p>
+      <p>I also just genuinely love the culture. The transparency reports. The "here's what we got wrong" blog posts. You feel like a team that <strong>actually ships and actually cares.</strong> That combination is rare and I want to be part of it.</p>
+      <div class="mtags"><span class="mtag">HashiCorp / IBM</span><span class="mtag">Ruby on Rails</span><span class="mtag">React</span><span class="mtag">Distributed Systems</span><span class="mtag">SCIM / Identity</span><span class="mtag">Product Engineering</span></div>
+      <div class="mbtn-row"><a class="mbtn" href="https://bit.ly/sharresume" target="_blank">View R&eacute;sum&eacute; &#8599;</a><a class="mbtn outline" href="https://bit.ly/sharlinkedin" target="_blank">LinkedIn &#8599;</a></div>`
+    },
+    travel:{chip:'Adventures',title:'Places my carry-on has been',icon:'✈️',afterRender:initCarousel,
+      html:`<p>During my intentional work hiatus to grieve my aunt, I committed to experiencing the world. What followed was one of the most clarifying periods of my life: a masterclass in <strong>showing up somewhere unfamiliar and figuring it out.</strong></p>
+      <div class="carousel"><div class="car-track" id="carTrack">
+        <div class="car-slide"><img src="assets/vid/humpback_whale_jumping.mp4" onerror="this.style.background='#FFB8CE';this.style.height='250px';this.removeAttribute('src')" alt="Tahiti"  style="background: rgb(255, 184, 206); height: 250px;"/>    <div class="car-cap">Tahiti <br/> snorkeling with humpback whales with my best friend of 16+ years, Amy. </div></div>
+        <div class="car-slide"><img src="assets/img/peru_menemily.jpg"          onerror="this.style.background='#C8956C';this.style.height='250px';this.removeAttribute('src')" alt="Peru"  style="background: rgb(255, 184, 206); height: 250px;"/>      <div class="car-cap">Machu Picchu <br/> after 4 days backpacking the Andes on the Incan Trail with my friend Emily.</div></div>
+        <div class="car-slide"><img src="assets/img/aus_menkangaroo.jpg"        onerror="this.style.background='#F9BD2B';this.style.height='250px';this.removeAttribute('src')" alt="Australia"  style="background: rgb(255, 184, 206); height: 250px;"/> <div class="car-cap">Australia <br/> yes, I fed a kangaroo in a wildlife sanctuary.</div></div>
+        <div class="car-slide"><img src="assets/img/ireland.jpg"                onerror="this.style.background='#4070D0';this.style.height='250px';this.removeAttribute('src')" alt="Ireland"  style="background: rgb(255, 184, 206); height: 250px;"/>   <div class="car-cap">Ireland <br/> where I celebrated my 22nd birthday with my little cousin, Cam-Mi.</div></div>
+      </div></div>
+      <div class="car-nav"><button class="car-btn" id="carPrev">&#8592;</button><div class="car-dots" id="carDots"></div><button class="car-btn" id="carNext">&#8594;</button></div>
+      <p style="margin-top:1rem">Travel taught me to be <strong>comfortable with ambiguity</strong>, to make decisions with incomplete information, and to find genuine delight in the unexpected.</p>
+      <div class="mtags"><span class="mtag">Tahiti</span><span class="mtag">Peru</span><span class="mtag">Australia</span><span class="mtag">Ireland</span></div>`
+    },
+    'cat-bumbum':{chip:'Meet the Homies',title:'This is Bumbum',icon:'🐱',
+      html:`<div style="text-align:center;margin-bottom:1rem"><img src="https://dodobumbum.com/assets/images/bumbum_headshot.jpg" alt="Bumbum" style="width:140px;height:140px;border-radius:50%;object-fit:cover;border:3px solid #F9BD2B;box-shadow:3px 3px 0 #1A1A1A"/></div>
+      <p>Bumbum is my gray and white floof and <strong>chief chaos agent.</strong> He takes his responsibilities very seriously: knocking things off counters, interrupting video calls at critical moments, and demanding attention at 3am with the energy of someone who has never experienced consequences.</p>
+      <p>He is also the warmest, most affectionate cat I've ever known. Several former coworkers know him by name from standups. He is round and pillowy that multiple people have asked if he is a cloud wearing a face</p>
+      <div class="mhighlight">Bumbum's contribution to my engineering career: teaching me to stay calm when production breaks at 2am. He is always there, purring at maximum volume, completely unbothered.</div>
+      <div class="mtags"><span class="mtag">Gray and white</span><span class="mtag">Very fluffy</span><span class="mtag">Professional call crasher</span><span class="mtag">Undefeated at 3am</span></div>`
+    },
+    'cat-dodo':{chip:'Meet the Homies',title:'This is Dodo',icon:'🐱',
+      html:`<div style="text-align:center;margin-bottom:1rem"><img src="https://dodobumbum.com/assets/images/dodo_headshot.jpg" alt="Dodo" style="width:140px;height:140px;border-radius:50%;object-fit:cover;border:3px solid #F9BD2B;box-shadow:3px 3px 0 #1A1A1A"/></div>
+       <p>Dodo is my white and black calm cat, and he is <strong>extraordinarily, aggressively calm.</strong></p>
+      <p>He is the dignified one. Discerning about who deserves his attention, methodical in his routines, and absolutely devastating when he decides you have earned a slow blink.</p>
+      <div class="mhighlight">Dodo doesn't really appear on work video calls, but you will hear him press his "outside!" and "hungry" buttons. </div>
+      <div class="mtags"><span class="mtag">Black and white</span><span class="mtag">Bright, green eyes like a snake</span><span class="mtag">Extremely mellow</span><span class="mtag">Deeply correct opinions</span></div>`
+    }
+  };
+
+  /* ── MODAL ── */
+  const bg = document.getElementById('modalBg');
+  const mIcon = document.getElementById('mIcon');
+  const mChip = document.getElementById('mChip');
+  const mTitle = document.getElementById('mTitle');
+  const mBody = document.getElementById('mBody');
+
+  function openModal(key) {
+    const d = data[key]; if (!d) return;
+    mIcon.textContent = d.icon;
+    mChip.textContent = d.chip;
+    mTitle.textContent = d.title;
+    mBody.innerHTML = d.html;
+    bg.classList.add('open');
+    document.body.style.overflow = 'hidden';
+    if (d.afterRender) setTimeout(d.afterRender, 60);
+  }
+  function closeModal(){ bg.classList.remove('open'); document.body.style.overflow = ''; }
+
+  document.querySelectorAll('[data-modal]').forEach(el => el.addEventListener('click', () => openModal(el.dataset.modal)));
+  document.getElementById('mClose').addEventListener('click', closeModal);
+  bg.addEventListener('click', e => { if (e.target===bg) closeModal(); });
+  document.addEventListener('keydown', e => { if (e.key==='Escape') closeModal(); });
+
+  /* ── CAROUSEL ── */
+  function initCarousel() {
+    const track = document.getElementById('carTrack');
+    const dotsEl = document.getElementById('carDots');
+    const prev = document.getElementById('carPrev');
+    const next = document.getElementById('carNext');
+    if (!track) return;
+    const slides = track.querySelectorAll('.car-slide');
+    let cur = 0;
+    slides.forEach((_, i) => {
+      const d = document.createElement('div');
+      d.className = 'car-dot' + (i===0?' on':'');
+      d.addEventListener('click', () => go(i));
+      dotsEl.appendChild(d);
+    });
+    function go(n){ cur=((n%slides.length)+slides.length)%slides.length; track.style.transform=`translateX(-${cur*100}%)`; dotsEl.querySelectorAll('.car-dot').forEach((d,i)=>d.classList.toggle('on',i===cur)); }
+    prev.addEventListener('click', () => go(cur-1));
+    next.addEventListener('click', () => go(cur+1));
+  }
+
+  /* ── BLINKING (independent per eye group) ── */
+  function blink(eyes) {
+    function run(){ eyes.forEach(e=>e.classList.add('blink')); setTimeout(()=>{ eyes.forEach(e=>e.classList.remove('blink')); setTimeout(run,1800+Math.random()*5200); },130); }
+    setTimeout(run, Math.random()*4500);
+  }
+  document.querySelectorAll('.geyes').forEach(g => blink([...g.querySelectorAll('.geye')]));
+  blink([...document.querySelectorAll('.bb-eye')]);
+  blink([...document.querySelectorAll('.dd-eye')]);
+
+  /* ── PUPIL TRACKING (from group midpoint — no cross-eyes) ── */
+  function trackGroup(eyes, mx, my) {
+    if (!eyes.length) return;
+    const rects = eyes.map(e=>e.getBoundingClientRect());
+    const cx = rects.reduce((a,r)=>a+r.left+r.width/2,0)/rects.length;
+    const cy = rects.reduce((a,r)=>a+r.top+r.height/2,0)/rects.length;
+    const dx=mx-cx, dy=my-cy, dist=Math.sqrt(dx*dx+dy*dy)||1, max=2;
+    const nx=(dx/dist)*Math.min(dist*.17,max), ny=(dy/dist)*Math.min(dist*.17,max);
+    eyes.forEach(eye=>{ const p=eye.querySelector('.pupil'); if(p) p.style.transform=`translate(calc(-50% + ${nx}px), calc(-50% + ${ny}px))`; });
+  }
+
+  document.addEventListener('mousemove', e => {
+    document.querySelectorAll('.geyes').forEach(g => trackGroup([...g.querySelectorAll('.geye')],e.clientX,e.clientY));
+    const sg = document.querySelector('.suitcase-floor .geyes');
+    if (sg) trackGroup([...sg.querySelectorAll('.geye')],e.clientX,e.clientY);
+    trackGroup([...document.querySelectorAll('.bb-eye')],e.clientX,e.clientY);
+    trackGroup([...document.querySelectorAll('.dd-eye')],e.clientX,e.clientY);
+  });
+
+});
+</script>
+</body>
+</html>
