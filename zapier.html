@@ -1,0 +1,878 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Sharlena Luyen × Zapier</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,300;12..96,400;12..96,600;12..96,800&family=Fira+Code:wght@400;500&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --zap-orange:#FF4F00;
+  --zap-orange-light:#FF7A3D;
+  --zap-orange-pale:#FFF0EB;
+  --zap-orange-mid:#FFD6C7;
+  --zap-dark:#0D0A09;
+  --zap-dark-2:#1C1714;
+  --zap-mid:#3D3330;
+  --zap-muted:#6B5E59;
+  --zap-border:#E8E0DC;
+  --zap-bg:#FDFBF9;
+}
+html{scroll-behavior:smooth}
+body{font-family:'Outfit',sans-serif;background:var(--zap-bg);color:var(--zap-dark);overflow-x:hidden}
+body{cursor:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'%3E%3Cpath d='M13 2L4 14h7l-1 8 9-12h-7l1-8z' fill='%23FF4F00' stroke='%23fff' stroke-width='1'/%3E%3C/svg%3E") 4 2, auto}
+
+/* NAV */
+.nav{position:fixed;top:0;left:0;right:0;z-index:200;display:flex;align-items:center;justify-content:space-between;padding:0 2.5rem;height:60px;background:rgba(253,251,249,0.92);backdrop-filter:blur(12px);border-bottom:1px solid var(--zap-border)}
+.nav-logo{display:flex;align-items:center;gap:10px;text-decoration:none}
+.nav-logo-zap{background:var(--zap-orange);color:#fff;padding:4px 10px;border-radius:5px;font-family:'Fira Code',monospace;font-size:.75rem;font-weight:500}
+.nav-logo-sep{color:var(--zap-muted)}
+.nav-logo-name{font-weight:600;font-size:.95rem;color:var(--zap-dark)}
+.nav-links{display:flex;gap:2rem}
+.nav-links a{text-decoration:none;color:var(--zap-muted);font-size:.85rem;font-weight:500;transition:color .18s}
+.nav-links a:hover{color:var(--zap-orange)}
+@media(max-width:640px){.nav-links{display:none}}
+
+/* HERO */
+.hero{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:100px 2rem 5rem;position:relative;overflow:hidden}
+.hero-bg{position:absolute;inset:0;background:radial-gradient(ellipse 70% 70% at 80% 10%,rgba(255,79,0,0.07) 0%,transparent 60%),radial-gradient(ellipse 50% 50% at 15% 85%,rgba(255,79,0,0.05) 0%,transparent 60%),var(--zap-bg)}
+.hero-bg::before{content:'';position:absolute;inset:0;background-image:linear-gradient(rgba(255,79,0,0.04) 1px,transparent 1px),linear-gradient(90deg,rgba(255,79,0,0.04) 1px,transparent 1px);background-size:48px 48px}
+.hero-inner{position:relative;z-index:2;max-width:800px;margin:0 auto;text-align:center}
+.hero-chip{display:inline-flex;align-items:center;gap:8px;border:1.5px solid var(--zap-orange);background:var(--zap-orange-pale);color:var(--zap-orange);padding:6px 16px;border-radius:100px;font-size:.78rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase;margin-bottom:2rem;animation:fadeUp .7s ease both}
+.hero-h1{font-family:'Bricolage Grotesque',sans-serif;font-size:clamp(2.8rem,7vw,5.2rem);font-weight:800;line-height:1.06;color:var(--zap-dark);margin-bottom:1.5rem;animation:fadeUp .7s .08s ease both}
+.hero-h1 .underline-orange{display:inline-block;position:relative}
+.hero-h1 .underline-orange::after{content:'';position:absolute;left:0;bottom:-4px;right:0;height:5px;background:var(--zap-orange);border-radius:3px;animation:expandWidth .8s .6s ease both}
+.hero-sub{font-size:clamp(1rem,2vw,1.18rem);font-weight:300;color:var(--zap-muted);line-height:1.75;max-width:580px;margin:0 auto 2.5rem;animation:fadeUp .7s .16s ease both}
+.hero-cta{display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;animation:fadeUp .7s .24s ease both}
+.btn-primary{background:var(--zap-orange);color:#fff;padding:.85rem 2rem;border-radius:8px;font-size:.9rem;font-weight:600;text-decoration:none;border:2px solid var(--zap-orange);transition:all .2s;display:inline-block}
+.btn-primary:hover{background:var(--zap-orange-light);border-color:var(--zap-orange-light);transform:translateY(-2px);box-shadow:0 8px 24px rgba(255,79,0,0.3)}
+.btn-outline{background:transparent;color:var(--zap-dark);padding:.85rem 2rem;border-radius:8px;font-size:.9rem;font-weight:600;text-decoration:none;border:2px solid var(--zap-border);transition:all .2s;display:inline-block}
+.btn-outline:hover{border-color:var(--zap-orange);color:var(--zap-orange);transform:translateY(-2px)}
+.bolt-float{position:absolute;font-size:clamp(1.5rem,3vw,2.8rem);opacity:.07;animation:floatBolt 6s ease-in-out infinite;pointer-events:none}
+.bolt-float:nth-child(1){top:15%;left:8%;animation-delay:0s}
+.bolt-float:nth-child(2){top:25%;right:10%;animation-delay:1.5s;font-size:1.8rem}
+.bolt-float:nth-child(3){bottom:30%;left:5%;animation-delay:3s;font-size:2rem}
+.bolt-float:nth-child(4){bottom:20%;right:8%;animation-delay:.8s}
+.bolt-float:nth-child(5){top:60%;left:15%;animation-delay:2.2s;font-size:1.5rem}
+
+/* GAUNTLET */
+.gauntlet-section{padding:6rem 2rem;background:var(--zap-dark);position:relative;overflow:hidden}
+.gauntlet-section::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 70% 50% at 50% 50%,rgba(255,79,0,0.07) 0%,transparent 70%)}
+.gauntlet-inner{max-width:860px;margin:0 auto;position:relative;z-index:2}
+.section-eyebrow{display:inline-flex;align-items:center;gap:8px;font-size:.75rem;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--zap-orange);margin-bottom:1rem}
+.gauntlet-title{font-family:'Bricolage Grotesque',sans-serif;font-size:clamp(1.8rem,4vw,2.8rem);font-weight:800;color:#fff;margin-bottom:.75rem;line-height:1.15}
+.gauntlet-sub{color:rgba(255,255,255,0.5);font-size:1rem;font-weight:300;margin-bottom:2.5rem;max-width:540px}
+
+/* Stage track */
+.stage-track{display:flex;align-items:flex-start;gap:0;margin-bottom:2.5rem}
+.stage-node{display:flex;flex-direction:column;align-items:center;gap:.4rem;flex:1;position:relative;z-index:2}
+.stage-circle{width:40px;height:40px;border-radius:50%;border:2px solid rgba(255,255,255,.12);background:rgba(255,255,255,.04);display:flex;align-items:center;justify-content:center;font-size:1rem;transition:all .4s ease;flex-shrink:0}
+.stage-circle.done{background:var(--zap-orange);border-color:var(--zap-orange);box-shadow:0 0 0 4px rgba(255,79,0,.2)}
+.stage-circle.active{border-color:var(--zap-orange);background:rgba(255,79,0,.12);animation:activePulse 1.8s ease infinite}
+.stage-label{font-size:.6rem;font-weight:600;letter-spacing:.05em;text-transform:uppercase;color:rgba(255,255,255,.25);text-align:center;line-height:1.3;max-width:68px}
+.stage-label.active{color:var(--zap-orange)}
+.stage-label.done{color:rgba(255,255,255,.55)}
+.stage-line{flex:1;height:2px;background:rgba(255,255,255,.08);margin-top:20px;position:relative;overflow:hidden}
+.stage-line-fill{height:100%;width:0%;background:var(--zap-orange);transition:width .6s ease}
+
+/* Game screen */
+.game-screen{background:rgba(255,255,255,.03);border:1.5px solid rgba(255,255,255,.08);border-radius:16px;padding:2.5rem;min-height:360px;display:flex;flex-direction:column}
+.screen-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:1.5rem}
+.screen-title{font-family:'Fira Code',monospace;font-size:.78rem;color:rgba(255,255,255,.3)}
+.screen-badge{font-family:'Fira Code',monospace;font-size:.7rem;color:var(--zap-orange);background:rgba(255,79,0,.1);border:1px solid rgba(255,79,0,.2);padding:3px 10px;border-radius:100px}
+.stage-panel{display:none;animation:fadeIn .3s ease}
+.stage-panel.active{display:flex;flex-direction:column;gap:1.25rem}
+
+/* Login */
+.login-heading{font-family:'Bricolage Grotesque',sans-serif;font-size:1.3rem;font-weight:800;color:#fff;display:flex;align-items:center;gap:.4rem}
+.login-heading span{color:var(--zap-orange)}
+.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:.75rem}
+@media(max-width:520px){.form-grid{grid-template-columns:1fr}}
+.form-group{display:flex;flex-direction:column;gap:.35rem}
+.form-label{font-size:.75rem;font-weight:500;color:rgba(255,255,255,.45)}
+.form-input{background:rgba(255,255,255,.06);border:1.5px solid rgba(255,255,255,.1);border-radius:8px;padding:.6rem .9rem;color:#fff;font-family:'Outfit',sans-serif;font-size:.88rem;outline:none;transition:border-color .2s;width:100%}
+.form-input:focus{border-color:rgba(255,79,0,.5)}
+.form-input.locked{opacity:.55;cursor:not-allowed}
+.form-input.shake{animation:shake .3s ease}
+.form-hint{font-size:.7rem;color:rgba(255,255,255,.2);font-family:'Fira Code',monospace}
+.alert{border-radius:8px;padding:.7rem 1rem;font-size:.8rem;line-height:1.55;display:flex;gap:.5rem;align-items:flex-start}
+.alert.warn{background:rgba(251,191,36,.08);border:1px solid rgba(251,191,36,.22);color:#fbbf24}
+.alert.ok{background:rgba(74,222,128,.07);border:1px solid rgba(74,222,128,.22);color:#4ade80}
+
+/* MFA */
+.totp-display{background:rgba(0,0,0,.45);border-radius:10px;padding:1rem 1.5rem;text-align:center;border:1px solid rgba(255,255,255,.06)}
+.totp-code{font-family:'Fira Code',monospace;font-size:2rem;font-weight:500;color:var(--zap-orange);letter-spacing:.22em}
+.totp-meta{display:flex;align-items:center;justify-content:center;gap:.6rem;margin-top:.4rem}
+.totp-label{font-size:.7rem;color:rgba(255,255,255,.3);font-family:'Fira Code',monospace}
+.totp-bar{width:70px;height:3px;background:rgba(255,255,255,.1);border-radius:2px;overflow:hidden}
+.totp-fill{height:100%;background:var(--zap-orange);transition:width 1s linear}
+.otp-row{display:flex;gap:.5rem;justify-content:center}
+.otp-box{width:46px;height:56px;border-radius:8px;border:1.5px solid rgba(255,255,255,.12);background:rgba(255,255,255,.05);color:#fff;font-size:1.45rem;font-weight:700;text-align:center;font-family:'Fira Code',monospace;outline:none;transition:all .2s}
+.otp-box:focus{border-color:var(--zap-orange);background:rgba(255,79,0,.08);box-shadow:0 0 0 3px rgba(255,79,0,.15)}
+.otp-box.filled{border-color:rgba(255,79,0,.45);color:var(--zap-orange)}
+.otp-box.shake{animation:shake .3s ease}
+.otp-hint{text-align:center;font-family:'Fira Code',monospace;font-size:.7rem;color:rgba(255,255,255,.22)}
+
+/* SAML */
+.saml-step{display:flex;align-items:center;gap:.75rem;padding:.7rem 1rem;border-radius:10px;border:1.5px solid rgba(255,255,255,.06);background:rgba(255,255,255,.02);transition:all .4s}
+.saml-step.going{border-color:rgba(255,79,0,.35);background:rgba(255,79,0,.05)}
+.saml-step.done{border-color:rgba(74,222,128,.28);background:rgba(74,222,128,.04)}
+.saml-icon{font-size:1rem;width:26px;text-align:center;flex-shrink:0}
+.saml-text{flex:1}
+.saml-name{font-size:.82rem;font-weight:600;color:rgba(255,255,255,.7)}
+.saml-detail{font-family:'Fira Code',monospace;font-size:.67rem;color:rgba(255,255,255,.28);margin-top:.12rem}
+.saml-status{font-family:'Fira Code',monospace;font-size:.7rem;color:rgba(255,255,255,.22)}
+.saml-status.spinning{animation:spinOnce .7s linear infinite;display:inline-block;color:var(--zap-orange)}
+.saml-status.ok{color:#4ade80}
+
+/* SCIM terminal */
+.terminal{background:#000;border-radius:10px;border:1px solid rgba(255,255,255,.07);overflow:hidden}
+.term-bar{background:#1a1a1a;padding:.45rem 1rem;display:flex;align-items:center;gap:.35rem}
+.term-dot{width:10px;height:10px;border-radius:50%}
+.term-body{padding:1rem 1.2rem;font-family:'Fira Code',monospace;font-size:.73rem;line-height:1.9;color:rgba(255,255,255,.55);min-height:120px}
+.t-key{color:#93c5fd}.t-str{color:#86efac}.t-num{color:#fdba74}.t-bool{color:#c084fc}.t-dim{color:rgba(255,255,255,.28)}
+.cursor{display:inline-block;width:7px;height:13px;background:var(--zap-orange);vertical-align:middle;animation:blink .8s step-end infinite}
+
+/* Access granted */
+.granted{display:flex;flex-direction:column;align-items:center;text-align:center;gap:1rem;padding:1rem 0}
+.granted-ring{width:72px;height:72px;border-radius:50%;background:rgba(74,222,128,.1);border:2px solid rgba(74,222,128,.4);display:flex;align-items:center;justify-content:center;font-size:2rem;animation:popIn .4s cubic-bezier(.34,1.56,.64,1)}
+.granted-h{font-family:'Bricolage Grotesque',sans-serif;font-size:1.85rem;font-weight:800;color:#fff}
+.granted-p{color:rgba(255,255,255,.5);font-size:.9rem;font-weight:300;max-width:400px;line-height:1.65}
+.cred-tags{display:flex;flex-wrap:wrap;gap:.4rem;justify-content:center}
+.cred-tag{border-radius:100px;padding:4px 13px;font-size:.74rem;font-weight:600;border:1.5px solid}
+
+/* Action row */
+.action-row{margin-top:1.5rem;display:flex;align-items:center;gap:1rem;flex-wrap:wrap}
+.action-btn{background:var(--zap-orange);color:#fff;border:none;padding:.78rem 1.9rem;border-radius:8px;font-family:'Outfit',sans-serif;font-size:.88rem;font-weight:600;cursor:pointer;transition:all .2s;display:flex;align-items:center;gap:.4rem}
+.action-btn:hover{background:var(--zap-orange-light);transform:translateY(-2px);box-shadow:0 8px 20px rgba(255,79,0,.4)}
+.action-btn:disabled{opacity:.45;cursor:default;transform:none;box-shadow:none}
+.action-note{font-family:'Fira Code',monospace;font-size:.72rem;color:rgba(255,255,255,.3)}
+
+/* Insight */
+.insight{margin-top:1.5rem;background:rgba(255,79,0,.06);border:1.5px solid rgba(255,79,0,.18);border-radius:12px;padding:1rem 1.2rem;display:none;animation:fadeUp .4s ease}
+.insight.show{display:block}
+.insight-label{font-size:.67rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--zap-orange);margin-bottom:.4rem}
+.insight-body{font-size:.84rem;line-height:1.65;color:rgba(255,255,255,.6);font-weight:300}
+.insight-body strong{color:#fff;font-weight:600}
+
+/* VALUES */
+.values-section{padding:6rem 2rem;background:var(--zap-bg)}
+.values-inner{max-width:900px;margin:0 auto}
+.values-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:1.25rem;margin-top:2.5rem}
+.value-card{background:#fff;border:1.5px solid var(--zap-border);border-radius:14px;padding:1.5rem;transition:all .22s;position:relative;overflow:hidden}
+.value-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:var(--zap-orange);transform:scaleX(0);transform-origin:left;transition:transform .3s ease}
+.value-card:hover{border-color:var(--zap-orange-mid);box-shadow:0 6px 24px rgba(255,79,0,.08);transform:translateY(-3px)}
+.value-card:hover::before{transform:scaleX(1)}
+.value-number{font-family:'Fira Code',monospace;font-size:.68rem;font-weight:500;color:var(--zap-orange);letter-spacing:.1em;text-transform:uppercase;margin-bottom:.5rem}
+.value-name{font-family:'Bricolage Grotesque',sans-serif;font-size:1.15rem;font-weight:800;color:var(--zap-dark);margin-bottom:.6rem}
+.value-zapier{font-size:.82rem;line-height:1.6;color:var(--zap-muted);font-weight:300;margin-bottom:.9rem;padding-bottom:.9rem;border-bottom:1px solid var(--zap-border)}
+.value-sharlena-label{font-size:.68rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--zap-orange);margin-bottom:.35rem}
+.value-sharlena{font-size:.84rem;line-height:1.65;color:var(--zap-dark);font-weight:400}
+
+.remote-quote{background:var(--zap-dark);border-radius:12px;padding:1.25rem 1.4rem;margin:1.2rem 0;position:relative}
+.remote-quote::before{content:'\201C';position:absolute;top:-.2rem;left:1rem;font-size:3rem;color:var(--zap-orange);opacity:.4;font-family:'Bricolage Grotesque',sans-serif;line-height:1}
+.remote-quote-text{font-size:.88rem;line-height:1.7;color:rgba(255,255,255,.7);font-style:italic;padding-left:.5rem}
+.remote-quote-source{font-family:'Fira Code',monospace;font-size:.67rem;color:rgba(255,255,255,.3);margin-top:.6rem;padding-left:.5rem}
+.remote-quote-source a{color:var(--zap-orange);text-decoration:none}
+.remote-quote-source a:hover{text-decoration:underline}
+
+.about-inner{max-width:900px;margin:0 auto}
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:start}
+@media(max-width:768px){.two-col{grid-template-columns:1fr;gap:2rem}}
+.about-title{font-family:'Bricolage Grotesque',sans-serif;font-size:clamp(1.8rem,4vw,2.6rem);font-weight:800;color:var(--zap-dark);margin-bottom:1.2rem;line-height:1.15}
+.about-body{font-size:.95rem;line-height:1.8;color:var(--zap-muted);font-weight:300;margin-bottom:1.2rem}
+.about-body strong{color:var(--zap-dark);font-weight:600}
+.highlight-box{background:var(--zap-orange-pale);border-left:4px solid var(--zap-orange);padding:1rem 1.2rem;border-radius:0 10px 10px 0;font-size:.88rem;line-height:1.7;color:var(--zap-mid);font-style:italic;margin:1.2rem 0}
+.skill-row{display:flex;flex-wrap:wrap;gap:.5rem;margin-top:1.5rem}
+.skill-pill{background:#fff;border:1.5px solid var(--zap-border);color:var(--zap-mid);padding:5px 14px;border-radius:100px;font-size:.78rem;font-weight:500;transition:all .18s;cursor:default}
+.skill-pill:hover{border-color:var(--zap-orange);color:var(--zap-orange);background:var(--zap-orange-pale)}
+.reasons-grid{display:flex;flex-direction:column;gap:1.2rem}
+.reason-card{background:#fff;border:1.5px solid var(--zap-border);border-radius:12px;padding:1.2rem;transition:all .2s}
+.reason-card:hover{border-color:var(--zap-orange-mid);box-shadow:0 4px 20px rgba(255,79,0,.08);transform:translateX(4px)}
+.reason-icon{font-size:1.3rem;margin-bottom:.4rem}
+.reason-title{font-weight:700;font-size:.93rem;color:var(--zap-dark);margin-bottom:.3rem}
+.reason-body{font-size:.83rem;line-height:1.65;color:var(--zap-muted);font-weight:300}
+
+/* STATS */
+.stats-strip{background:var(--zap-orange);padding:3.5rem 2rem}
+.stats-grid{max-width:800px;margin:0 auto;display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:2rem;text-align:center}
+.stat-num{font-family:'Bricolage Grotesque',sans-serif;font-size:2.5rem;font-weight:800;color:#fff;display:block;line-height:1}
+.stat-label{font-size:.78rem;color:rgba(255,255,255,.75);font-weight:400;margin-top:.3rem;display:block;line-height:1.4}
+
+/* PROFILE */
+.profile-section{padding:6rem 2rem;background:var(--zap-dark)}
+.profile-inner{max-width:860px;margin:0 auto}
+.profile-card{display:grid;grid-template-columns:200px 1fr;gap:3rem;align-items:start;background:rgba(255,255,255,.03);border:1.5px solid rgba(255,255,255,.08);border-radius:20px;padding:2.5rem}
+@media(max-width:640px){.profile-card{grid-template-columns:1fr;gap:2rem}}
+.profile-photo{width:100%;aspect-ratio:1;border-radius:14px;object-fit:cover;border:2px solid rgba(255,79,0,.3)}
+.profile-name{font-family:'Bricolage Grotesque',sans-serif;font-size:2rem;font-weight:800;color:#fff;margin-bottom:.25rem}
+.profile-role{color:var(--zap-orange);font-weight:600;font-size:1rem;margin-bottom:1rem}
+.profile-bio{color:rgba(255,255,255,.6);font-size:.9rem;line-height:1.75;font-weight:300;max-width:480px;margin-bottom:1.5rem}
+.profile-links{display:flex;gap:.75rem;flex-wrap:wrap}
+.profile-link{background:var(--zap-orange);color:#fff;padding:8px 20px;border-radius:7px;font-size:.84rem;font-weight:600;text-decoration:none;border:2px solid var(--zap-orange);transition:all .2s;display:inline-block}
+.profile-link:hover{background:var(--zap-orange-light);border-color:var(--zap-orange-light);transform:translateY(-2px)}
+.profile-link.out{background:transparent;color:rgba(255,255,255,.65);border-color:rgba(255,255,255,.18)}
+.profile-link.out:hover{border-color:var(--zap-orange);color:var(--zap-orange);background:rgba(255,79,0,.07)}
+
+footer{background:var(--zap-dark-2);padding:2rem;text-align:center;border-top:1px solid rgba(255,255,255,.06)}
+.footer-logo{font-family:'Fira Code',monospace;font-size:.88rem;color:rgba(255,255,255,.35);margin-bottom:.5rem}
+.footer-logo span{color:var(--zap-orange)}
+.footer-links{display:flex;gap:1.5rem;justify-content:center;margin-top:.75rem;flex-wrap:wrap}
+.footer-links a{color:rgba(255,255,255,.3);text-decoration:none;font-size:.8rem;transition:color .18s}
+.footer-links a:hover{color:var(--zap-orange)}
+
+.reveal{opacity:0;transform:translateY(20px);transition:opacity .55s ease,transform .55s ease}
+.reveal.visible{opacity:1;transform:translateY(0)}
+.about-section{padding:6rem 2rem;background:var(--zap-bg)}
+
+@keyframes fadeUp{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:translateY(0)}}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+@keyframes floatBolt{0%,100%{transform:translateY(0) rotate(-5deg)}50%{transform:translateY(-12px) rotate(5deg)}}
+@keyframes expandWidth{from{width:0}to{width:100%}}
+@keyframes activePulse{0%,100%{box-shadow:0 0 0 4px rgba(255,79,0,.12)}50%{box-shadow:0 0 0 8px rgba(255,79,0,.04)}}
+@keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-6px)}75%{transform:translateX(6px)}}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:0}}
+@keyframes spinOnce{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}
+@keyframes popIn{from{transform:scale(.5);opacity:0}to{transform:scale(1);opacity:1}}
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <a class="nav-logo" href="#">
+    <span class="nav-logo-zap">⚡ Zapier</span>
+    <span class="nav-logo-sep">×</span>
+    <span class="nav-logo-name">Sharlena Luyen</span>
+  </a>
+  <nav class="nav-links">
+    <a href="#gauntlet">Auth Gauntlet</a>
+    <a href="#values">Values</a>
+    <a href="#why">Why Zapier</a>
+    <a href="#profile">About Me</a>
+    <a href="https://bit.ly/sharresume" target="_blank">Resume ↗</a>
+  </nav>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg">
+    <span class="bolt-float">⚡</span>
+    <span class="bolt-float">⚡</span>
+    <span class="bolt-float">⚡</span>
+    <span class="bolt-float">⚡</span>
+    <span class="bolt-float">⚡</span>
+  </div>
+  <div class="hero-inner">
+    <div class="hero-chip">⚡ Sr. Fullstack Engineer · Identity Platform</div>
+    <h1 class="hero-h1">
+      Hi Zapier! I've worked<br/>inside the systems<br/><span class="underline-orange">you're hiring to own.</span>
+    </h1>
+    <p class="hero-sub">
+      I'm Sharlena Luyen. At HashiCorp, I built the SCIM and SAML API layer for enterprise identity: the integration surface that enterprise customers actually touch. I'm genuinely here to go deeper, and this is the team that I want to do it with.
+    </p>
+    <div class="hero-cta">
+      <a class="btn-primary" href="#gauntlet">Play the Auth Gauntlet ⚡</a>
+      <a class="btn-outline" href="https://bit.ly/sharresume" target="_blank">View Resume</a>
+    </div>
+  </div>
+</section>
+
+<!-- AUTH GAUNTLET -->
+<section class="gauntlet-section" id="gauntlet">
+  <div class="gauntlet-inner">
+    <div class="section-eyebrow reveal">🔐 Interactive Game</div>
+    <h2 class="gauntlet-title reveal">The Identity Auth Gauntlet</h2>
+    <p class="gauntlet-sub reveal">You're a new enterprise admin trying to get into Zapier. Make it through all 4 layers! I'll show you exactly where my experience lives in each one.</p>
+
+    <!-- PROGRESS -->
+    <div class="stage-track reveal">
+      <div class="stage-node">
+        <div class="stage-circle active" id="c0">🔑</div>
+        <div class="stage-label active" id="l0">Login</div>
+      </div>
+      <div class="stage-line"><div class="stage-line-fill" id="ln0"></div></div>
+      <div class="stage-node">
+        <div class="stage-circle" id="c1">📱</div>
+        <div class="stage-label" id="l1">MFA</div>
+      </div>
+      <div class="stage-line"><div class="stage-line-fill" id="ln1"></div></div>
+      <div class="stage-node">
+        <div class="stage-circle" id="c2">🏢</div>
+        <div class="stage-label" id="l2">SSO / SAML</div>
+      </div>
+      <div class="stage-line"><div class="stage-line-fill" id="ln2"></div></div>
+      <div class="stage-node">
+        <div class="stage-circle" id="c3">⚙️</div>
+        <div class="stage-label" id="l3">SCIM</div>
+      </div>
+      <div class="stage-line"><div class="stage-line-fill" id="ln3"></div></div>
+      <div class="stage-node">
+        <div class="stage-circle" id="c4">✅</div>
+        <div class="stage-label" id="l4">Access<br/>Granted</div>
+      </div>
+    </div>
+
+    <!-- SCREEN -->
+    <div class="game-screen reveal">
+      <div class="screen-header">
+        <span class="screen-title">zapier.com/app/auth</span>
+        <span class="screen-badge" id="stageBadge">Stage 1 of 4</span>
+      </div>
+
+      <!-- STAGE 0: LOGIN -->
+      <div class="stage-panel active" id="s0">
+        <div>
+          <div class="login-heading">⚡ <span>Zapier</span> Enterprise Login</div>
+          <div style="font-size:.78rem;color:rgba(255,255,255,.3);margin-top:.2rem">Sign in with your organization credentials</div>
+        </div>
+        <div class="form-grid">
+          <div class="form-group">
+            <label class="form-label">Work email</label>
+            <input class="form-input locked" value="admin@sharlenacorp.com" readonly/>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Password</label>
+            <input class="form-input" id="passInput" type="password" placeholder="Enter anything..."/>
+            <span class="form-hint">// try any password (but not actually) </span>
+          </div>
+        </div>
+        <div class="alert warn" id="bruteAlert" style="display:none">⚠️ Multiple failed attempts detected. Rate limiter engaged — credential stuffing blocked. <strong>Working as intended.</strong></div>
+        <div class="action-row">
+          <button class="action-btn" id="loginBtn">Sign In →</button>
+          <span class="action-note" id="loginNote"></span>
+        </div>
+        <div class="insight" id="i0">
+          <div class="insight-label">🔍 Sharlena's Layer</div>
+          <div class="insight-body">At HashiCorp, I built the auth gateway handling login events, session alerts, and initial <strong>brute-force rate limiting for enterprise tenants</strong>. I designed the token issuance flow that created scoped and short-lived credentials after credential verification — the exact foundation Zapier's login layer needs to be solid on.</div>
+        </div>
+      </div>
+
+      <!-- STAGE 1: MFA -->
+      <div class="stage-panel" id="s1">
+        <div>
+          <div class="login-heading" style="font-size:1.15rem">📱 Two-Factor Authentication</div>
+          <div style="font-size:.78rem;color:rgba(255,255,255,.3);margin-top:.2rem">Your org requires MFA. Open your authenticator app and enter the 6-digit code.</div>
+        </div>
+        <div class="totp-display">
+          <div style="font-size:.7rem;color:rgba(255,255,255,.3);font-family:'Fira Code',monospace;margin-bottom:.3rem">your authenticator shows</div>
+          <div class="totp-code" id="totpCode">— — — — — —</div>
+          <div class="totp-meta">
+            <span class="totp-label">expires in <span id="totpTimer">30</span>s</span>
+            <div class="totp-bar"><div class="totp-fill" id="totpFill" style="width:100%"></div></div>
+          </div>
+        </div>
+        <div>
+          <div class="otp-row" id="otpRow">
+            <input class="otp-box" maxlength="1" inputmode="numeric"/>
+            <input class="otp-box" maxlength="1" inputmode="numeric"/>
+            <input class="otp-box" maxlength="1" inputmode="numeric"/>
+            <input class="otp-box" maxlength="1" inputmode="numeric"/>
+            <input class="otp-box" maxlength="1" inputmode="numeric"/>
+            <input class="otp-box" maxlength="1" inputmode="numeric"/>
+          </div>
+          <div class="otp-hint" style="margin-top:.5rem">type the 6 digits shown above ↑</div>
+        </div>
+        <div class="action-row">
+          <button class="action-btn" id="mfaBtn" disabled>Verify Code →</button>
+          <span class="action-note" id="mfaNote"></span>
+        </div>
+        <div class="insight" id="i1">
+          <div class="insight-label">🔍 Sharlena's Layer</div>
+          <div class="insight-body">Honest answer: MFA implementation is an area I'm looking to grow into. I understand how TOTP works (the shared secret, the time-window, the UX tradeoffs), but I haven't built it from scratch. What I <strong>have</strong> built is the API surface that sits just beneath this layer: the provisioning and identity plumbing that makes MFA enforcement possible across enterprise tenants.</div>
+        </div>
+      </div>
+
+      <!-- STAGE 2: SAML -->
+      <div class="stage-panel" id="s2">
+        <div>
+          <div class="login-heading" style="font-size:1.15rem">🏢 SSO via SAML 2.0</div>
+          <div style="font-size:.78rem;color:rgba(255,255,255,.3);margin-top:.2rem">SharlenaCorp uses Okta as their IdP. Click to initiate the handshake.</div>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:.6rem" id="samlFlow">
+          <div class="saml-step" id="ss0">
+            <div class="saml-icon">1️⃣</div>
+            <div class="saml-text">
+              <div class="saml-name">SP-initiated AuthnRequest</div>
+              <div class="saml-detail">Zapier → Okta: SAMLRequest signed with SP private key</div>
+            </div>
+            <span class="saml-status" id="ss0-status">waiting</span>
+          </div>
+          <div class="saml-step" id="ss1">
+            <div class="saml-icon">2️⃣</div>
+            <div class="saml-text">
+              <div class="saml-name">IdP authenticates user</div>
+              <div class="saml-detail">Okta validates credentials + MFA, builds SAMLResponse</div>
+            </div>
+            <span class="saml-status" id="ss1-status">waiting</span>
+          </div>
+          <div class="saml-step" id="ss2">
+            <div class="saml-icon">3️⃣</div>
+            <div class="saml-text">
+              <div class="saml-name">ACS endpoint receives assertion</div>
+              <div class="saml-detail">Zapier verifies signature, extracts NameID + attributes</div>
+            </div>
+            <span class="saml-status" id="ss2-status">waiting</span>
+          </div>
+          <div class="saml-step" id="ss3">
+            <div class="saml-icon">4️⃣</div>
+            <div class="saml-text">
+              <div class="saml-name">Session created + user linked</div>
+              <div class="saml-detail">Just-in-time provisioning → user record upserted</div>
+            </div>
+            <span class="saml-status" id="ss3-status">waiting</span>
+          </div>
+        </div>
+        <div class="action-row">
+          <button class="action-btn" id="samlBtn">Initiate SSO →</button>
+        </div>
+        <div class="insight" id="i2">
+          <div class="insight-label">🔍 Sharlena's Layer</div>
+          <div class="insight-body">At HashiCorp, I built the <strong>SAML API layer</strong>. The integration surface that enterprise customers use to connect their IdP to our platform. I worked closely with the protocol internals (assertions, attribute mapping, IdP quirks) without owning the full SP implementation. I know this layer well enough to extend it; I'm here to learn the rest.</div>
+        </div>
+      </div>
+
+      <!-- STAGE 3: SCIM -->
+      <div class="stage-panel" id="s3">
+        <div>
+          <div class="login-heading" style="font-size:1.15rem">⚙️ SCIM 2.0 Auto-Provisioning</div>
+          <div style="font-size:.78rem;color:rgba(255,255,255,.3);margin-top:.2rem">SharlenaCorp's Okta is pushing your user record to Zapier. Watch the provisioning happen.</div>
+        </div>
+        <div class="terminal">
+          <div class="term-bar">
+            <div class="term-dot" style="background:#ff5f57"></div>
+            <div class="term-dot" style="background:#ffbd2e"></div>
+            <div class="term-dot" style="background:#28ca41"></div>
+            <span style="font-family:'Fira Code',monospace;font-size:.68rem;color:rgba(255,255,255,.28);margin-left:.5rem">POST /scim/v2/Users</span>
+          </div>
+          <div class="term-body" id="scimBody"><span class="cursor"></span></div>
+        </div>
+        <div class="action-row">
+          <button class="action-btn" id="scimBtn">Provision User →</button>
+        </div>
+        <div class="insight" id="i3">
+          <div class="insight-label">🔍 Sharlena's Layer</div>
+          <div class="insight-body">This is where I have the most real depth. At HashiCorp, I <strong>built the SCIM API layer</strong>. The endpoints enterprise customers call to provision and sync users. I worked through the attribute mapping, idempotency requirements, and the real-world IdP quirks that only show up in production. The full provisioning server architecture is something I'm ready to go deeper on here.</div>
+        </div>
+      </div>
+
+      <!-- STAGE 4: GRANTED -->
+      <div class="stage-panel" id="s4">
+        <div class="granted">
+          <div class="granted-ring">✅</div>
+          <h3 class="granted-h">Access Granted.</h3>
+          <p class="granted-p">You made it through Login → MFA → SAML SSO → SCIM provisioning. That's the stack Zapier's Identity Platform team owns. I've worked inside parts of it, and I'm genuinely here to learn the rest.</p>
+          <div class="cred-tags">
+            <span class="cred-tag" style="color:#fb923c;border-color:rgba(251,146,60,.3);background:rgba(251,146,60,.08)">SAML 2.0</span>
+            <span class="cred-tag" style="color:#60a5fa;border-color:rgba(96,165,250,.3);background:rgba(96,165,250,.08)">SCIM 2.0</span>
+            <span class="cred-tag" style="color:#a78bfa;border-color:rgba(167,139,250,.3);background:rgba(167,139,250,.08)">OIDC / OAuth</span>
+            <span class="cred-tag" style="color:#4ade80;border-color:rgba(74,222,128,.3);background:rgba(74,222,128,.08)">TOTP / MFA</span>
+            <span class="cred-tag" style="color:#fbbf24;border-color:rgba(251,191,36,.3);background:rgba(251,191,36,.08)">Session Mgmt</span>
+            <span class="cred-tag" style="color:#f9a8d4;border-color:rgba(249,168,212,.3);background:rgba(249,168,212,.08)">Enterprise SSO</span>
+          </div>
+          <a class="btn-primary" href="#why" style="margin-top:.5rem">Why I want this role →</a>
+        </div>
+      </div>
+
+    </div><!-- /game-screen -->
+  </div>
+</section>
+
+<!-- STATS -->
+<div class="stats-strip">
+  <div class="stats-grid">
+    <div class="reveal"><span class="stat-num">SCIM</span><span class="stat-label">+ SAML API layer built in production at HashiCorp for enterprise customers</span></div>
+    <div class="reveal"><span class="stat-num">7+</span><span class="stat-label">years as CASA foster youth advocate — I design for users with no margin for error</span></div>
+    <div class="reveal"><span class="stat-num">Reach</span><span class="stat-label">role. Honest about it. The domain fit is real — and I'm ready to grow into the rest</span></div>
+    <div class="reveal"><span class="stat-num">100%</span><span class="stat-label">remote-ready, async-first, written-comms native</span></div>
+  </div>
+</div>
+
+<!-- VALUES -->
+<section class="values-section" id="values">
+  <div class="values-inner">
+    <div class="section-eyebrow reveal">Zapier's 5 Values</div>
+    <h2 class="about-title reveal" style="font-family:'Bricolage Grotesque',sans-serif;font-size:clamp(1.8rem,4vw,2.6rem);font-weight:800;color:var(--zap-dark);line-height:1.15">How I live these<br/><span style="color:var(--zap-orange)">every day.</span></h2>
+    <div class="values-grid">
+
+      <div class="value-card reveal">
+        <div class="value-number">Value 01</div>
+        <div class="value-name">⚡ Default to Action</div>
+        <div class="value-zapier">Delivering something real today and learning from it is better than delivering something of questionably better quality next week.</div>
+        <div class="value-sharlena-label">My take</div>
+        <div class="value-sharlena">As a CASA advocate, I couldn't wait for perfect information, since a child's court date doesn't move. I learned to make sound decisions fast, flag risks clearly, and adjust when reality shifted. In code, same thing: I ship, observe, iterate. I don't gold-plate before getting signal.</div>
+      </div>
+
+      <div class="value-card reveal">
+        <div class="value-number">Value 02</div>
+        <div class="value-name">🔍 Default to Transparency</div>
+        <div class="value-zapier">Work in public. Have discussions in the open and document your work. Transparency promotes equity and inclusion across a distributed team.</div>
+        <div class="value-sharlena-label">Sharlena's take</div>
+        <div class="value-sharlena">I write things down. I document decisions, not just outcomes. At HashiCorp, I maintained runbooks for every auth system I owned so the next engineer — or 2am-me — wasn't starting from scratch. Async-first communication isn't a constraint to me; it's how I naturally operate.</div>
+      </div>
+
+      <div class="value-card reveal">
+        <div class="value-number">Value 03</div>
+        <div class="value-name">🌱 Grow Through Feedback</div>
+        <div class="value-zapier">Our success has more to do with how quickly we learn than how "perfect" we are in a given moment. Feedback is one of Zapier's most essential practices.</div>
+        <div class="value-sharlena-label">Sharlena's take</div>
+        <div class="value-sharlena">Seven years in court advocacy taught me to receive hard feedback from judges, opposing counsel, and families — and use it to serve a child better. I carry that into engineering: code review isn't criticism of me, it's improvement of the product. I ask for feedback before I think I need it.</div>
+      </div>
+
+      <div class="value-card reveal">
+        <div class="value-number">Value 04</div>
+        <div class="value-name">🤝 Empathy Over Ego</div>
+        <div class="value-zapier">Empathy promotes understanding, curiosity, and humility — qualities that help us connect with and serve our customers and each other.</div>
+        <div class="value-sharlena-label">Sharlena's take</div>
+        <div class="value-sharlena">This one is personal. Being a CASA volunteer — showing up for a kid who has no one — is an exercise in pure empathy. I bring that same instinct to engineering: I ask who has to use this, what goes wrong for them, what can I not see from where I'm sitting. It makes the systems I build better.</div>
+      </div>
+
+      <div class="value-card reveal">
+        <div class="value-number">Value 05</div>
+        <div class="value-name">🤖 Build the Robot</div>
+        <div class="value-zapier">No matter your role, find ways to work better — through automation, simplification, or prioritization — so humans can focus on what they do best.</div>
+        <div class="value-sharlena-label">Sharlena's take</div>
+        <div class="value-sharlena">I genuinely automate things in my own life — my dev setup, my workflow, my routines. The idea that computers should do more so humans can focus on what matters is not a platitude to me. It's why this job is interesting, not just a thing I'm supposed to say in an application.</div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- WHY ZAPIER -->
+<section class="about-section" id="why">
+  <div class="about-inner">
+    <div class="two-col">
+      <div>
+        <div class="section-eyebrow reveal">Why This Role</div>
+        <h2 class="about-title reveal">Identity is the foundation<br/><span style="color:var(--zap-orange)">everything else builds on.</span></h2>
+        <p class="about-body reveal">Zapier's posting says it plainly: <strong>"Authentication, session management, and credential infrastructure are the foundation. Get them right, and every product team ships faster with confidence."</strong> I've worked inside part of that foundation (the SCIM and SAML API layer at HashiCorp), and I want to understand and improve the rest of it.</p>
+        <p class="about-body reveal">I'll be honest: this is a reach role for me. I haven't implemented TOTP or owned a full auth session system, but I've been close enough to know how these pieces fit together, and I've built the integration surface that enterprise customers actually use to connect their identity providers. I learn fast in domains I'm motivated by, and identity is one of them.</p>
+        <div class="highlight-box reveal">"Get them right, and every product team ships faster with confidence." I want to be the engineer who makes that promise real for Zapier's enterprise customers.</div>
+        <p class="about-body reveal">And honestly? The way Zapier works is also a huge draw. I read <a href="https://zapier.com/blog/remote-design-culture/" target="_blank" style="color:var(--zap-orange);text-decoration:none;font-weight:500">this post about remote design culture at Zapier</a> and it articulated something I've struggled to name: the best deep work happens in solitude, not in open offices. I do my sharpest thinking alone, then bring it into collaboration. Zapier built an entire culture around that rhythm, and they've been doing it intentionally since before it was trendy. And I've only ever worked remotely, so I'm familiar with the clear, direct communication that comes with remote work.</p>
+        <div class="remote-quote reveal">
+          <div class="remote-quote-text">The creative process needs quiet. Remote work is ideal for the creative process, because it easily allows for designers and researchers to have the solitude they need: giving your team the freedom to analyze, design, and develop their work wherever makes them happiest has the biggest impact.</div>
+          <div class="remote-quote-source">— Julia Elman, Director of Design @ Zapier · <a href="https://zapier.com/blog/remote-design-culture/" target="_blank">zapier.com/blog/remote-design-culture</a></div>
+        </div>
+        <div class="skill-row reveal">
+          <span class="skill-pill">SAML 2.0</span>
+          <span class="skill-pill">SCIM 2.0</span>
+          <span class="skill-pill">OIDC / OAuth</span>
+          <span class="skill-pill">MFA / TOTP</span>
+          <span class="skill-pill">Session Management</span>
+          <span class="skill-pill">Go</span>
+          <span class="skill-pill">Ruby on Rails</span>
+          <span class="skill-pill">React</span>
+          <span class="skill-pill">PostgreSQL</span>
+          <span class="skill-pill">AWS</span>
+          <span class="skill-pill">Docker</span>
+          <span class="skill-pill">Python</span>
+        </div>
+      </div>
+      <div class="reasons-grid reveal">
+        <div class="reason-card">
+          <div class="reason-icon">🔐</div>
+          <div class="reason-title">I've worked inside the stack they're hiring for</div>
+          <div class="reason-body">At HashiCorp I built the SCIM and SAML API layer — the integration surface enterprise customers use to connect their IdP. Not the full protocol internals, but real production work that touched real enterprise tenants with real SLAs.</div>
+        </div>
+        <div class="reason-card">
+          <div class="reason-icon">🏗️</div>
+          <div class="reason-title">Identity is platform work — I think in foundations</div>
+          <div class="reason-body">I understand why getting auth right unlocks every team downstream. I've seen what happens when it breaks in production at 2am. I approach identity as infrastructure, not feature work.</div>
+        </div>
+        <div class="reason-card">
+          <div class="reason-icon">🤝</div>
+          <div class="reason-title">Fullstack means I can own both sides</div>
+          <div class="reason-body">I've worked across backend APIs and frontend flows, not always in the same codebase, but I'm comfortable moving between them. The seam between UI state and auth tokens is where a lot of bugs live, and I know enough to reason about both ends.</div>
+        </div>
+        <div class="reason-card">
+          <div class="reason-icon">⚡</div>
+          <div class="reason-title">The mission hits personally</div>
+          <div class="reason-body">7 years advocating for foster youth taught me to design for users with little to no margin for error. Zapier's enterprise customers need auth that just works. That's a responsibility I take seriously.</div>
+        </div>
+        <div class="reason-card">
+          <div class="reason-icon">🏡</div>
+          <div class="reason-title">Remote-first is how I do my best work</div>
+          <div class="reason-body">I read Zapier's post on remote design culture and recognized myself in it: deep work in solitude, then intentional collaboration. Async by default. No performance theater. Zapier has practiced this seriously for over a decade. That's rare, and it's exactly the environment where I thrive.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROFILE -->
+<section class="profile-section" id="profile">
+  <div class="profile-inner">
+    <div class="section-eyebrow reveal" style="color:var(--zap-orange)">Meet Sharlena</div>
+    <div class="profile-card reveal">
+      <img class="profile-photo" src="assets/img/menbumbum.JPG" alt="Sharlena Luyen"/>
+      <div>
+        <h3 class="profile-name">Sharlena Luyen</h3>
+        <p class="profile-role">Fullstack Engineer · Identity Specialist · Cat Person</p>
+        <p class="profile-bio">I build distributed identity systems, advocate for foster youth, and once swam next to a baby humpback whale in Tahiti. Proud servant to Bumbum and Dodo. I want to work with people who ship things that matter, trust each other, and are honest (especially about hard tradeoffs in auth flows at 2am).</p>
+        <div class="profile-links">
+          <a class="profile-link" href="https://bit.ly/sharresume" target="_blank">Resume ↗</a>
+          <a class="profile-link out" href="https://bit.ly/sharlinkedin" target="_blank">LinkedIn ↗</a>
+          <a class="profile-link out" href="https://sharlenaluyen.com" target="_blank">Portfolio ↗</a>
+          <a class="profile-link out" href="https://calendly.com/sharlena/personal-meeting" target="_blank">Book time ↗</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-logo"><span>⚡ zapier</span> × sharlenaluyen.com/zapier</div>
+  <div class="footer-links">
+    <a href="https://bit.ly/sharresume" target="_blank">Resume</a>
+    <a href="https://bit.ly/sharlinkedin" target="_blank">LinkedIn</a>
+    <a href="https://jobs.ashbyhq.com/zapier/3b141014-1d0f-426e-94e5-997b2cfd6ae8" target="_blank">The Role ↗</a>
+    <a href="/cdn-cgi/l/email-protection#0d7e656c7f6168636c61787468634d6a606c6461236e6260"><span class="__cf_email__" data-cfemail="52213a33203e373c333e272b373c12353f333b3e7c313d3f">[email&#160;protected]</span></a>
+  </div>
+</footer>
+
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+let stage = 0;
+let attempts = 0;
+let totpCode = '';
+let totpSec = 30;
+let totpTick = null;
+
+function generateTOTP(){ return String(Math.floor(100000 + Math.random() * 900000)); }
+
+function advance() {
+  const prev = stage;
+  stage++;
+
+  // done state on previous circle
+  const pc = document.getElementById('c' + prev);
+  pc.classList.remove('active'); pc.classList.add('done'); pc.textContent = '✓';
+  const pl = document.getElementById('l' + prev);
+  pl.classList.remove('active'); pl.classList.add('done');
+
+  // fill line
+  const ln = document.getElementById('ln' + prev);
+  if (ln) { ln.style.width = '100%'; }
+
+  // activate next
+  if (stage <= 4) {
+    const nc = document.getElementById('c' + stage);
+    if (nc) nc.classList.add('active');
+    const nl = document.getElementById('l' + stage);
+    if (nl) { nl.classList.remove('active'); nl.classList.add('active'); }
+  }
+
+  // swap panels
+  document.getElementById('s' + prev).classList.remove('active');
+  setTimeout(() => {
+    const next = document.getElementById('s' + stage);
+    if (next) next.classList.add('active');
+  }, 120);
+
+  // badge
+  const badge = document.getElementById('stageBadge');
+  if (stage < 4) badge.textContent = 'Stage ' + (stage + 1) + ' of 4';
+  else badge.textContent = '🎉 Access Granted!';
+
+  if (stage === 1) initMFA();
+}
+
+/* ─ STAGE 0: LOGIN ─ */
+document.getElementById('loginBtn').addEventListener('click', () => {
+  const pass = document.getElementById('passInput').value.trim();
+  if (!pass) {
+    document.getElementById('passInput').classList.add('shake');
+    setTimeout(() => document.getElementById('passInput').classList.remove('shake'), 350);
+    document.getElementById('loginNote').textContent = 'type anything!';
+    return;
+  }
+  attempts++;
+  if (attempts === 1) {
+    document.getElementById('passInput').classList.add('shake');
+    setTimeout(() => document.getElementById('passInput').classList.remove('shake'), 350);
+    document.getElementById('loginNote').textContent = '✗ Invalid credentials (1/3)';
+    return;
+  }
+  if (attempts === 2) {
+    document.getElementById('passInput').value = '';
+    document.getElementById('loginNote').textContent = '✗ Invalid credentials (2/3)';
+    document.getElementById('bruteAlert').style.display = 'flex';
+    return;
+  }
+  // 3rd attempt: reveal + proceed
+  document.getElementById('i0').classList.add('show');
+  const btn = document.getElementById('loginBtn');
+  btn.textContent = 'Redirecting to SSO...';
+  btn.disabled = true;
+  document.getElementById('loginNote').textContent = 'Your org enforces SSO — continuing...';
+  setTimeout(advance, 1300);
+});
+
+/* ─ STAGE 1: MFA ─ */
+function initMFA() {
+  totpCode = generateTOTP();
+  renderTOTP();
+  totpSec = 30;
+  clearInterval(totpTick);
+  totpTick = setInterval(() => {
+    totpSec--;
+    document.getElementById('totpTimer').textContent = totpSec;
+    document.getElementById('totpFill').style.width = (totpSec / 30 * 100) + '%';
+    if (totpSec <= 0) {
+      totpCode = generateTOTP();
+      renderTOTP();
+      totpSec = 30;
+      clearOTP();
+    }
+  }, 1000);
+
+  const boxes = document.querySelectorAll('.otp-box');
+  boxes.forEach((box, i) => {
+    box.value = '';
+    box.classList.remove('filled');
+    // remove old listeners by cloning
+    const fresh = box.cloneNode(true);
+    box.parentNode.replaceChild(fresh, box);
+  });
+
+  document.querySelectorAll('.otp-box').forEach((box, i) => {
+    box.addEventListener('input', e => {
+      const v = e.target.value.replace(/\D/g, '');
+      e.target.value = v;
+      e.target.classList.toggle('filled', !!v);
+      if (v) {
+        const allBoxes = document.querySelectorAll('.otp-box');
+        if (i < allBoxes.length - 1) allBoxes[i + 1].focus();
+      }
+      checkOTP();
+    });
+    box.addEventListener('keydown', e => {
+      if (e.key === 'Backspace' && !box.value && i > 0) {
+        const allBoxes = document.querySelectorAll('.otp-box');
+        allBoxes[i - 1].focus();
+      }
+    });
+    box.addEventListener('paste', e => {
+      e.preventDefault();
+      const p = (e.clipboardData || window.clipboardData).getData('text').replace(/\D/g, '');
+      const allBoxes = document.querySelectorAll('.otp-box');
+      p.split('').forEach((ch, idx) => {
+        if (allBoxes[idx]) { allBoxes[idx].value = ch; allBoxes[idx].classList.add('filled'); }
+      });
+      checkOTP();
+    });
+  });
+}
+
+function renderTOTP() {
+  document.getElementById('totpCode').textContent = totpCode.split('').join(' ');
+}
+
+function clearOTP() {
+  document.querySelectorAll('.otp-box').forEach(b => { b.value = ''; b.classList.remove('filled'); });
+  document.getElementById('mfaBtn').disabled = true;
+}
+
+function checkOTP() {
+  const entered = Array.from(document.querySelectorAll('.otp-box')).map(b => b.value).join('');
+  document.getElementById('mfaBtn').disabled = entered.length < 6;
+}
+
+document.getElementById('mfaBtn').addEventListener('click', () => {
+  const entered = Array.from(document.querySelectorAll('.otp-box')).map(b => b.value).join('');
+  clearInterval(totpTick);
+  if (entered === totpCode) {
+    document.getElementById('mfaNote').textContent = '✓ Verified!';
+    document.getElementById('i1').classList.add('show');
+    document.getElementById('mfaBtn').disabled = true;
+    setTimeout(advance, 900);
+  } else {
+    document.querySelectorAll('.otp-box').forEach(b => { b.classList.add('shake'); setTimeout(() => b.classList.remove('shake'), 350); });
+    document.getElementById('mfaNote').textContent = '✗ Wrong — use the code shown above';
+    clearOTP();
+    initMFA();
+    document.querySelectorAll('.otp-box')[0].focus();
+  }
+});
+
+/* ─ STAGE 2: SAML ─ */
+const samlTimings = [800, 2000, 3300, 4500];
+const samlOK = ['✓ sent', '✓ validated', '✓ verified', '✓ session created'];
+
+document.getElementById('samlBtn').addEventListener('click', () => {
+  const btn = document.getElementById('samlBtn');
+  btn.disabled = true; btn.textContent = 'Handshake in progress...';
+
+  samlTimings.forEach((t, i) => {
+    const row = document.getElementById('ss' + i);
+    const status = document.getElementById('ss' + i + '-status');
+    setTimeout(() => { row.classList.add('going'); status.classList.add('spinning'); status.textContent = '⟳'; }, Math.max(0, t - 700));
+    setTimeout(() => {
+      row.classList.remove('going'); row.classList.add('done');
+      status.classList.remove('spinning'); status.classList.add('ok');
+      status.textContent = samlOK[i];
+    }, t);
+  });
+
+  setTimeout(() => {
+    document.getElementById('i2').classList.add('show');
+    setTimeout(advance, 800);
+  }, 5200);
+});
+
+/* ─ STAGE 3: SCIM ─ */
+const scimLines = [
+  `<span class="t-dim">{</span>`,
+  `  <span class="t-key">"schemas"</span><span class="t-dim">: [</span><span class="t-str">"urn:ietf:params:scim:schemas:core:2.0:User"</span><span class="t-dim">],</span>`,
+  `  <span class="t-key">"userName"</span><span class="t-dim">:</span> <span class="t-str">"admin@sharlenacorp.com"</span><span class="t-dim">,</span>`,
+  `  <span class="t-key">"name"</span><span class="t-dim">: {</span> <span class="t-key">"givenName"</span><span class="t-dim">:</span> <span class="t-str">"Enterprise"</span><span class="t-dim">,</span> <span class="t-key">"familyName"</span><span class="t-dim">:</span> <span class="t-str">"Admin"</span> <span class="t-dim">},</span>`,
+  `  <span class="t-key">"emails"</span><span class="t-dim">: [{</span> <span class="t-key">"value"</span><span class="t-dim">:</span> <span class="t-str">"admin@sharlenacorp.com"</span><span class="t-dim">,</ span> <span class="t-key">"primary"</span><span class="t-dim">:</ span> <span class="t-bool">true</ span> < span class="t-dim">}],</ span>`,
+  `  < span class="t-key">"active"</ span>< span class="t-dim">:</ span> < span class="t-bool">true</ span>< span class="t-dim">,</ span>`,
+  `  < span class="t-key">"groups"</ span>< span class="t-dim">: [{</ span> < span class="t-key">"value"</ span>< span class="t-dim">:</.span> <.span	class= " t-str "> "admins" </.span > <.span	class= " t-dim "> }],</.span >`,
+  `  <.span	class= " t-key "> "externalId" </.span ><.span	class= " t-dim "> :</.span > <.span	class= " t-str "> "okta-00u1abc23def456" </.span ><.span	class= " t-dim ">,</.span >`,
+  `<span class="t-dim">}</span>`,
+  ``,
+  `<span class="t-bool">HTTP 201 Created</span>`,
+  `<span class="t-dim">→</span> <span class="t-key">id</span><span class="t-dim">:</span> <span class="t-str">"zapier-usr-9f3a2c..."</span>`,
+  `<span class="t-dim">→</span> Roles applied. Session ready. Welcome aboard.`,
+];
+
+document.getElementById('scimBtn').addEventListener('click', () => {
+  const btn = document.getElementById('scimBtn');
+  btn.disabled = true; btn.textContent = 'Provisioning...';
+  const body = document.getElementById('scimBody');
+  body.innerHTML = '';
+
+  scimLines.forEach((line, i) => {
+    setTimeout(() => {
+      const div = document.createElement('div');
+      div.innerHTML = line;
+      body.appendChild(div);
+      body.scrollTop = body.scrollHeight;
+      if (i === scimLines.length - 1) {
+        document.getElementById('i3').classList.add('show');
+        setTimeout(advance, 1100);
+      }
+    }, i * 150);
+  });
+});
+
+/* ─ SCROLL REVEAL ─ */
+// Mark all reveal elements visible immediately as fallback
+document.querySelectorAll('.reveal').forEach(el => el.classList.add('visible'));
+
+// Then layer on the scroll animation for browsers that support it
+try {
+  const obs = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target); }});
+  }, { threshold: 0, rootMargin: '0px 0px -40px 0px' });
+  document.querySelectorAll('.reveal').forEach(el => {
+    el.classList.remove('visible');
+    obs.observe(el);
+  });
+} catch(e) {}
+</script>
+</body>
+</html>
