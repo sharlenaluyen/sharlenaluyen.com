@@ -55,9 +55,9 @@ html,body{width:100%;overflow-x:hidden;font-family:'Fredoka',sans-serif;backgrou
 .desk-leg{position:absolute;bottom:calc(-100% - 10px);width:5%;height:120%;background:#7A4028;border-radius:0 0 4px 4px}
 .desk-leg.left{left:9%}.desk-leg.right{right:9%}
 
-/* ── WINDOW ── */
+/* ── WINDOW — CHANGE 1: moved to left:68% (between aunt frame ~57.5% and plant ~99.5%) ── */
 .wwindow{
-  position:absolute;top:5%;left:11%;width:16%;aspect-ratio:1/1.1;
+  position:absolute;top:5%;left:68%;width:14%;aspect-ratio:1/1.1;
   background:linear-gradient(135deg,#B0D8F5,#E8F6FF 60%,#90C0E8);
   border:7px solid #C8955A;border-radius:4px;
   box-shadow:inset 0 0 15px rgba(150,200,240,.2),0 4px 14px rgba(0,0,0,.22);
@@ -101,6 +101,9 @@ html,body{width:100%;overflow-x:hidden;font-family:'Fredoka',sans-serif;backgrou
 .plant-soil{width:64%;margin:0 auto;height:4px;background:#5A3016;border-radius:50%;margin-bottom:-1px}
 .plant-rim{width:76%;margin:0 auto;height:clamp(4px,.85vw,7px);background:linear-gradient(180deg,#CA6828,#A04818);border-radius:2px}
 .plant-pot{width:60%;margin:0 auto;height:clamp(13px,2.6vw,24px);background:linear-gradient(160deg,#C86826,#A04618);clip-path:polygon(8% 0%,92% 0%,100% 100%,0% 100%)}
+
+/* ── CHANGE 6: VINE PLANT — drapes off desk onto floor ── */
+.vine-plant{position:absolute;bottom:100%;left:83%;width:4%;z-index:18;pointer-events:none;overflow:visible}
 
 /* ── CASE FILE ── */
 .casefile{left:15%;width:6.5%}
@@ -225,8 +228,8 @@ html,body{width:100%;overflow-x:hidden;font-family:'Fredoka',sans-serif;backgrou
 .suitcase-floor .geyes{position:absolute;top:35%;left:8%;right:42%;gap:24%}
 .suitcase-floor .geye{width:clamp(4px,.8vw,8px);height:clamp(6.5px,1.3vw,13px)}
 
-/* ── CATS ON FLOOR — side by side ── */
-.floor-cats{position:absolute;bottom:39%;left:2%;display:flex;align-items:flex-end;gap:.6%;z-index:30}
+/* ── CHANGES 2+3+4: CATS — foreground, bottom:0, z-index:60, larger sizes ── */
+.floor-cats{position:absolute;bottom:1%;left:2%;display:flex;align-items:flex-end;gap:.6%;z-index:60}
 .cat-obj{cursor:pointer;position:relative;transition:transform .3s cubic-bezier(.34,1.56,.64,1)}
 .cat-obj:nth-child(1):hover{transform:scale(1.08) rotate(2.5deg)}
 .cat-obj:nth-child(2):hover{transform:scale(1.08) rotate(-2.5deg)}
@@ -235,8 +238,8 @@ html,body{width:100%;overflow-x:hidden;font-family:'Fredoka',sans-serif;backgrou
 .cat-sbub::before{content:'';position:absolute;top:calc(100% - 2px);left:50%;transform:translateX(-50%);z-index:1;border:5px solid transparent;border-top-color:#fff}
 .cat-obj:hover .cat-sbub{opacity:1;transform:translateX(-50%) scale(1)}
 
-/* ──── BUMBUM: white/grey, Persian-Siberian, VERY FLUFFY ──── */
-.bb-wrap{width:clamp(60px,8.5vw,110px);position:relative}
+/* ──── BUMBUM: white/grey, Persian-Siberian, VERY FLUFFY — CHANGE 2: larger ──── */
+.bb-wrap{width:clamp(55px,8vw,105px);position:relative}
 .bb-fig{position:relative;width:100%}
 /* Fluffy tail */
 .bb-tail{position:absolute;right:-24%;bottom:4%;width:52%;aspect-ratio:1;background:radial-gradient(ellipse,#fff 22%,#E8E8E8 58%,#D0D0D0 100%);border-radius:50%;border:2.5px solid #CCCCCC;box-shadow:-1px 0 0 3px rgba(215,215,215,.45);z-index:0}
@@ -276,8 +279,8 @@ html,body{width:100%;overflow-x:hidden;font-family:'Fredoka',sans-serif;backgrou
 .bb-paws{display:flex;justify-content:center;gap:10%;margin-top:-3%;position:relative;z-index:2}
 .bb-paw{width:23%;aspect-ratio:1.6/1;background:linear-gradient(180deg,#EAEAEA,#D2D2D2);border-radius:50%;border:1.5px solid #C8C8C8;box-shadow:0 1px 0 1px #E8E8E8}
 
-/* ──── DODO: black/white, fluffy ──── */
-.dd-wrap{width:clamp(55px,7.8vw,100px);position:relative}
+/* ──── DODO: black/white, fluffy — CHANGE 3: larger ──── */
+.dd-wrap{width:clamp(50px,7.2vw,95px);position:relative}
 .dd-fig{position:relative;width:100%}
 .dd-tail{position:absolute;right:-20%;bottom:6%;width:42%;aspect-ratio:.95/1;background:radial-gradient(ellipse,#2C2C2C 36%,#111 80%);border-radius:50%;border:2px solid #101010;box-shadow:-1px 0 0 2px rgba(0,0,0,.3);z-index:0}
 .dd-body{
@@ -398,13 +401,13 @@ html,body{width:100%;overflow-x:hidden;font-family:'Fredoka',sans-serif;backgrou
 .person-link.out{background:rgba(255,255,255,.08);color:#fff;border-color:rgba(255,255,255,.2);box-shadow:3px 3px 0 rgba(255,255,255,.1)}
 .person-link.out:hover{background:rgba(255,255,255,.15)}
 /* Homies */
-.homies-section{margin-top:3rem;border-top:1px solid rgba(255,255,255,.08);padding-top:2rem}
-.homies-label{font-family:'Fredoka One',sans-serif;font-size:1.1rem;color:rgba(255,255,255,.55);margin-bottom:1.2rem}
-.homies-grid{display:flex;gap:1.5rem;flex-wrap:wrap}
-.homies-card{display:flex;align-items:center;gap:1rem;background:rgba(255,255,255,.04);border:1.5px solid rgba(255,255,255,.08);border-radius:12px;padding:1rem 1.4rem;flex:1;min-width:220px}
-.homies-photo{width:60px;height:60px;border-radius:50%;object-fit:cover;border:2px solid rgba(249,189,43,.3)}
-.homies-info h4{color:#fff;font-size:1rem;font-weight:600;margin-bottom:.2rem}
-.homies-info p{color:rgba(255,255,255,.45);font-size:.8rem;font-weight:300}
+.homie-section{margin-top:3rem;border-top:1px solid rgba(255,255,255,.08);padding-top:2rem}
+.homie-label{font-family:'Fredoka One',sans-serif;font-size:1.1rem;color:rgba(255,255,255,.55);margin-bottom:1.2rem}
+.homie-grid{display:flex;gap:1.5rem;flex-wrap:wrap}
+.homie-card{display:flex;align-items:center;gap:1rem;background:rgba(255,255,255,.04);border:1.5px solid rgba(255,255,255,.08);border-radius:12px;padding:1rem 1.4rem;flex:1;min-width:220px}
+.homie-photo{width:60px;height:60px;border-radius:50%;object-fit:cover;border:2px solid rgba(249,189,43,.3)}
+.homie-info h4{color:#fff;font-size:1rem;font-weight:600;margin-bottom:.2rem}
+.homie-info p{color:rgba(255,255,255,.45);font-size:.8rem;font-weight:300}
 
 /* ── FOOTER ── */
 .footer{background:var(--ph-dark);border-top:4px solid var(--ph-yellow);padding:2rem;text-align:center}
@@ -466,7 +469,7 @@ html,body{width:100%;overflow-x:hidden;font-family:'Fredoka',sans-serif;backgrou
 
   <!-- WALL -->
   <div class="wall">
-    <!-- window -->
+    <!-- CHANGE 1: window moved to left:68% in CSS above -->
     <div class="wwindow"></div>
 
     <!-- bookshelf -->
@@ -501,6 +504,42 @@ html,body{width:100%;overflow-x:hidden;font-family:'Fredoka',sans-serif;backgrou
         <div class="plant-soil"></div>
         <div class="plant-rim"></div>
         <div class="plant-pot"></div>
+      </div>
+
+      <!-- CHANGE 6: VINE PLANT — drapes off desk edge onto floor -->
+      <div class="vine-plant">
+        <svg viewBox="0 0 50 480" xmlns="http://www.w3.org/2000/svg" style="overflow:visible;width:100%">
+          <!-- pot -->
+          <rect x="14" y="0" width="22" height="8" rx="1.5" fill="#CA6828"/>
+          <rect x="12" y="7" width="26" height="4" rx="1" fill="#A04818"/>
+          <polygon points="12,11 38,11 42,26 8,26" fill="#C86826"/>
+          <ellipse cx="25" cy="11" rx="13" ry="3" fill="#5A3016" opacity=".7"/>
+          <!-- main draping vine stems -->
+          <path d="M22,26 Q16,55 12,90 Q6,130 10,175 Q14,215 6,260 Q0,300 4,340 Q8,375 2,420 Q-2,455 6,490" stroke="#3A8A28" stroke-width="2.2" fill="none" stroke-linecap="round"/>
+          <path d="M28,26 Q34,50 36,85 Q40,120 32,160 Q26,195 30,235 Q34,268 26,305" stroke="#2E7820" stroke-width="1.8" fill="none" stroke-linecap="round"/>
+          <!-- leaves left vine -->
+          <ellipse cx="10" cy="95"  rx="10" ry="6" fill="#48A830" transform="rotate(-40,10,95)"/>
+          <ellipse cx="8"  cy="135" rx="11" ry="6" fill="#3D9225" transform="rotate(-55,8,135)"/>
+          <ellipse cx="12" cy="178" rx="10" ry="6" fill="#52B838" transform="rotate(-30,12,178)"/>
+          <ellipse cx="5"  cy="220" rx="10" ry="6" fill="#44A028" transform="rotate(-48,5,220)"/>
+          <ellipse cx="7"  cy="265" rx="9"  ry="5.5" fill="#3A8A20" transform="rotate(-35,7,265)"/>
+          <ellipse cx="3"  cy="305" rx="10" ry="6" fill="#4EAE32" transform="rotate(-52,3,305)"/>
+          <ellipse cx="6"  cy="345" rx="9"  ry="5.5" fill="#3E9428" transform="rotate(-38,6,345)"/>
+          <ellipse cx="1"  cy="385" rx="10" ry="6" fill="#48A030" transform="rotate(-44,1,385)"/>
+          <ellipse cx="5"  cy="425" rx="9"  ry="5"   fill="#44A028" transform="rotate(-30,5,425)"/>
+          <ellipse cx="3"  cy="462" rx="10" ry="5.5" fill="#3D9225" transform="rotate(-50,3,462)"/>
+          <!-- leaves right vine -->
+          <ellipse cx="37" cy="90"  rx="10" ry="6" fill="#4EAE32" transform="rotate(35,37,90)"/>
+          <ellipse cx="38" cy="128" rx="10" ry="6" fill="#3D9225" transform="rotate(48,38,128)"/>
+          <ellipse cx="33" cy="168" rx="9"  ry="5.5" fill="#52B838" transform="rotate(28,33,168)"/>
+          <ellipse cx="32" cy="205" rx="10" ry="6" fill="#48A830" transform="rotate(42,32,205)"/>
+          <ellipse cx="28" cy="242" rx="9"  ry="5.5" fill="#3A8A20" transform="rotate(55,28,242)"/>
+          <ellipse cx="27" cy="278" rx="9"  ry="5" fill="#44A028" transform="rotate(32,27,278)"/>
+          <!-- small top leaves near pot -->
+          <ellipse cx="16" cy="35" rx="8" ry="5" fill="#56C040" transform="rotate(-55,16,35)"/>
+          <ellipse cx="36" cy="40" rx="8" ry="5" fill="#4EAE35" transform="rotate(50,36,40)"/>
+          <ellipse cx="22" cy="32" rx="7" ry="4.5" fill="#48A830" transform="rotate(-20,22,32)"/>
+        </svg>
       </div>
 
       <!-- OBJ 1: CRT COMPUTER -->
@@ -624,7 +663,7 @@ html,body{width:100%;overflow-x:hidden;font-family:'Fredoka',sans-serif;backgrou
     <div class="desk-leg right"></div>
   </div>
 
-  <!-- CATS ON FLOOR (side by side) -->
+  <!-- CHANGES 2+3+4: CATS IN FOREGROUND (bottom:0, z-index:60, larger in CSS) -->
   <div class="floor-cats">
 
     <!-- BUMBUM: white/grey, Persian-Siberian, very fluffy -->
@@ -840,10 +879,13 @@ document.addEventListener('DOMContentLoaded', () => {
     travel:{chip:'Adventures',title:'Places my carry-on has been',icon:'✈️',afterRender:initCarousel,
       html:`<p>During my intentional work hiatus to grieve my aunt, I committed to experiencing the world. What followed was one of the most clarifying periods of my life: a masterclass in <strong>showing up somewhere unfamiliar and figuring it out.</strong></p>
       <div class="carousel"><div class="car-track" id="carTrack">
-        <div class="car-slide"><img src="assets/vid/humpback_whale_jumping.mp4" onerror="this.style.background='#FFB8CE';this.style.height='250px';this.removeAttribute('src')" alt="Tahiti"  style="background: rgb(255, 184, 206); height: 250px;"/>    <div class="car-cap">Tahiti <br/> snorkeling with humpback whales with my best friend of 16+ years, Amy. </div></div>
+        <div class="car-slide">
+          <video controls style="width:100%;height:250px;object-fit:cover;display:block;background:#000"><source src="assets/vid/humpback_whale_jumping.mp4" type="video/mp4"/>Your browser does not support video.</video>
+          <div class="car-cap">Tahiti <br/> snorkeling with humpback whales with my best friend of 16+ years, Amy. </div>
+        </div>
         <div class="car-slide"><img src="assets/img/peru_menemily.jpg"          onerror="this.style.background='#C8956C';this.style.height='250px';this.removeAttribute('src')" alt="Peru"  style="background: rgb(255, 184, 206); height: 250px;"/>      <div class="car-cap">Machu Picchu <br/> after 4 days backpacking the Andes on the Incan Trail with my friend Emily.</div></div>
-        <div class="car-slide"><img src="assets/img/aus_menkangaroo.jpg"        onerror="this.style.background='#F9BD2B';this.style.height='250px';this.removeAttribute('src')" alt="Australia"  style="background: rgb(255, 184, 206); height: 250px;"/> <div class="car-cap">Australia <br/> yes, I fed a kangaroo in a wildlife sanctuary.</div></div>
-        <div class="car-slide"><img src="assets/img/ireland.jpg"                onerror="this.style.background='#4070D0';this.style.height='250px';this.removeAttribute('src')" alt="Ireland"  style="background: rgb(255, 184, 206); height: 250px;"/>   <div class="car-cap">Ireland <br/> where I celebrated my 22nd birthday with my little cousin, Cam-Mi.</div></div>
+        <div class="car-slide"><img src="assets/img/aus_menkangaroo.JPG"        onerror="this.style.background='#F9BD2B';this.style.height='250px';this.removeAttribute('src')" alt="Australia"  style="background: rgb(255, 184, 206); height: 250px;"/> <div class="car-cap">Australia <br/> yes, I fed a kangaroo in a wildlife sanctuary.</div></div>
+        <div class="car-slide"><img src="assets/img/ireland.JPG"                onerror="this.style.background='#4070D0';this.style.height='250px';this.removeAttribute('src')" alt="Ireland"  style="background: rgb(255, 184, 206); height: 250px;"/>   <div class="car-cap">Ireland <br/> where I celebrated my 22nd birthday with my little cousin, Cam-Mi.</div></div>
       </div></div>
       <div class="car-nav"><button class="car-btn" id="carPrev">&#8592;</button><div class="car-dots" id="carDots"></div><button class="car-btn" id="carNext">&#8594;</button></div>
       <p style="margin-top:1rem">Travel taught me to be <strong>comfortable with ambiguity</strong>, to make decisions with incomplete information, and to find genuine delight in the unexpected.</p>
@@ -852,7 +894,7 @@ document.addEventListener('DOMContentLoaded', () => {
     'cat-bumbum':{chip:'Meet the Homies',title:'This is Bumbum',icon:'🐱',
       html:`<div style="text-align:center;margin-bottom:1rem"><img src="https://dodobumbum.com/assets/images/bumbum_headshot.jpg" alt="Bumbum" style="width:140px;height:140px;border-radius:50%;object-fit:cover;border:3px solid #F9BD2B;box-shadow:3px 3px 0 #1A1A1A"/></div>
       <p>Bumbum is my gray and white floof and <strong>chief chaos agent.</strong> He takes his responsibilities very seriously: knocking things off counters, interrupting video calls at critical moments, and demanding attention at 3am with the energy of someone who has never experienced consequences.</p>
-      <p>He is also the warmest, most affectionate cat I've ever known. Several former coworkers know him by name from standups. He is round and pillowy that multiple people have asked if he is a cloud wearing a face</p>
+      <p>He is also the warmest, most affectionate cat I've ever known. Several former coworkers know him by name from standups. He is so round and pillowy that multiple people have asked if he is a cloud wearing a face</p>
       <div class="mhighlight">Bumbum's contribution to my engineering career: teaching me to stay calm when production breaks at 2am. He is always there, purring at maximum volume, completely unbothered.</div>
       <div class="mtags"><span class="mtag">Gray and white</span><span class="mtag">Very fluffy</span><span class="mtag">Professional call crasher</span><span class="mtag">Undefeated at 3am</span></div>`
     },
