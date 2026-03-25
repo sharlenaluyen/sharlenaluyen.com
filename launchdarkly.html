@@ -21,8 +21,8 @@
       --gold:   #FFB830;
       --teal:   #00D4AA;
       --green:  #2ECC71;
-      --text:   #E8E1F5;
-      --muted:  #686490;
+      --text:   #EDE8F8;
+      --muted:  #A89EC4;
       --serif:  'Fraunces', Georgia, serif;
       --mono:   'DM Mono', 'Courier New', monospace;
       --sans:   'Outfit', system-ui, sans-serif;
@@ -210,7 +210,7 @@
     }
     .section-lead {
       color: var(--muted);
-      font-size: 15px;
+      font-size: 16.5px;
       max-width: 520px;
       margin-bottom: 52px;
     }
@@ -278,7 +278,7 @@
       z-index: 1;
     }
 
-    /* Griffy wrapper */
+    /* HippyGriffy wrapper */
     .griff-wrap {
       position: relative;
       z-index: 3;
@@ -433,7 +433,7 @@
       color: var(--text);
       margin-bottom: 1px;
     }
-    .flag-blurb { font-size: 10px; color: var(--muted); }
+    .flag-blurb { font-size: 11.5px; color: var(--muted); }
 
     /* Toggle */
     .toggle { flex-shrink: 0; }
@@ -501,7 +501,7 @@
       margin-bottom: 10px;
       line-height: 1.2;
     }
-    .why-card p { font-size: 13.5px; color: var(--muted); line-height: 1.68; }
+    .why-card p { font-size: 15px; color: var(--muted); line-height: 1.72; }
 
     /* ======= SKILLS ======= */
     .skills-bg {
@@ -582,8 +582,8 @@
       color: var(--gold);
       border: 1px solid rgba(255,184,48,0.2);
     }
-    .skill-body { font-size: 13px; color: var(--text); line-height: 1.5; }
-    .skill-body small { display: block; color: var(--muted); font-size: 11.5px; margin-top: 2px; }
+    .skill-body { font-size: 14px; color: var(--text); line-height: 1.5; }
+    .skill-body small { display: block; color: var(--muted); font-size: 13px; margin-top: 2px; }
 
     /* ======= FOOTER ======= */
     footer {
@@ -595,6 +595,259 @@
       color: var(--muted);
     }
     footer .hl { color: var(--pink); }
+
+    /* ======= EXPERIMENT ======= */
+    .experiment-bg {
+      background: var(--bg);
+      border-top: 1px solid var(--border);
+    }
+
+    .exp-tabs {
+      display: flex;
+      gap: 4px;
+      margin-bottom: 28px;
+      background: var(--bg3);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 5px;
+      width: fit-content;
+    }
+    .exp-tab {
+      background: none;
+      border: none;
+      color: var(--muted);
+      font-family: var(--sans);
+      font-size: 14px;
+      font-weight: 500;
+      padding: 9px 22px;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background 0.2s ease, color 0.2s ease;
+    }
+    .exp-tab.active {
+      background: var(--card);
+      color: var(--text);
+      border: 1px solid var(--border);
+    }
+    .exp-tab:hover:not(.active) { color: var(--text); }
+
+    .exp-panel { }
+    .exp-panel.hidden { display: none; }
+
+    .exp-variants {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 22px;
+      margin-bottom: 28px;
+    }
+    @media (max-width: 680px) {
+      .exp-variants { grid-template-columns: 1fr; }
+    }
+
+    .variant-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      overflow: hidden;
+    }
+    .variant-hd {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 14px 18px;
+      background: var(--bg3);
+      border-bottom: 1px solid var(--border);
+    }
+    .variant-badge {
+      font-family: var(--mono);
+      font-size: 10px;
+      font-weight: 500;
+      padding: 3px 9px;
+      border-radius: 5px;
+      letter-spacing: 0.05em;
+    }
+    .badge-a {
+      background: rgba(0,212,170,0.1);
+      color: var(--teal);
+      border: 1px solid rgba(0,212,170,0.2);
+    }
+    .badge-b {
+      background: rgba(255,56,104,0.1);
+      color: var(--pink);
+      border: 1px solid rgba(255,56,104,0.2);
+    }
+    .variant-name {
+      font-size: 13px;
+      color: var(--muted);
+      font-family: var(--mono);
+    }
+
+    .variant-scene {
+      background: var(--bg3);
+      min-height: 220px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .variant-scene .griff-svg { width: 150px; height: 140px; }
+    .variant-scene .griff-wrap { animation: griffFloat 4s ease-in-out infinite; }
+    .variant-scene.mode-party .griff-wrap { animation: partyFloat 1.6s ease-in-out infinite; }
+    .variant-scene.mode-party .griff-svg { filter: drop-shadow(0 0 16px rgba(255,56,104,0.4)) drop-shadow(0 8px 20px rgba(0,0,0,0.4)); }
+    .variant-scene.mode-party { background: #0d0920; border-bottom: 1px solid rgba(255,56,104,0.15); }
+
+    .variant-meta { padding: 18px; }
+    .variant-desc {
+      font-size: 13.5px;
+      color: var(--muted);
+      margin-bottom: 16px;
+      line-height: 1.55;
+    }
+    .variant-metric {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: var(--bg3);
+      border: 1px solid var(--border);
+      border-radius: 9px;
+      padding: 10px 14px;
+      margin-bottom: 12px;
+    }
+    .metric-label { font-family: var(--mono); font-size: 11px; color: var(--muted); }
+    .metric-val {
+      font-family: var(--mono);
+      font-size: 22px;
+      font-weight: 500;
+      color: var(--text);
+      transition: transform 0.15s ease;
+    }
+    .metric-val.bump { transform: scale(1.4); }
+
+    .cheer-btn {
+      width: 100%;
+      padding: 11px;
+      border-radius: 10px;
+      border: 1px solid var(--border);
+      font-family: var(--sans);
+      font-size: 14px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.18s ease;
+    }
+    .cheer-a { background: rgba(0,212,170,0.07); color: var(--teal); }
+    .cheer-a:hover { background: rgba(0,212,170,0.15); border-color: rgba(0,212,170,0.3); }
+    .cheer-b { background: rgba(255,56,104,0.07); color: var(--pink); }
+    .cheer-b:hover { background: rgba(255,56,104,0.15); border-color: rgba(255,56,104,0.3); }
+
+    .exp-actions {
+      display: flex;
+      gap: 12px;
+      justify-content: center;
+    }
+    .declare-btn, .reset-btn {
+      padding: 12px 28px;
+      border-radius: 11px;
+      font-family: var(--sans);
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.18s ease;
+    }
+    .declare-btn {
+      background: linear-gradient(130deg, var(--pink), var(--purple));
+      color: white;
+      border: none;
+    }
+    .declare-btn:hover { opacity: 0.88; transform: translateY(-2px); }
+    .reset-btn {
+      background: rgba(255,255,255,0.04);
+      border: 1px solid var(--border);
+      color: var(--muted);
+    }
+    .reset-btn:hover { color: var(--text); background: rgba(255,255,255,0.08); }
+
+    /* Results */
+    .results-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      padding: 32px;
+    }
+    .results-hd {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 30px;
+    }
+    .results-label {
+      font-family: var(--mono);
+      font-size: 13px;
+      color: var(--text);
+    }
+    .results-status {
+      font-family: var(--mono);
+      font-size: 10px;
+      padding: 4px 11px;
+      border-radius: 100px;
+      background: rgba(46,204,113,0.1);
+      color: var(--green);
+      border: 1px solid rgba(46,204,113,0.2);
+    }
+    .results-status.concluded {
+      background: rgba(255,184,48,0.1);
+      color: var(--gold);
+      border-color: rgba(255,184,48,0.2);
+    }
+
+    .results-bars { display: flex; flex-direction: column; gap: 18px; margin-bottom: 28px; }
+    .result-row { display: flex; align-items: center; gap: 14px; }
+    .result-variant {
+      font-family: var(--mono);
+      font-size: 11px;
+      padding: 4px 10px;
+      border-radius: 5px;
+      flex-shrink: 0;
+    }
+    .bar-track {
+      flex: 1;
+      height: 28px;
+      background: var(--bg3);
+      border: 1px solid var(--border);
+      border-radius: 7px;
+      overflow: hidden;
+    }
+    .bar-fill {
+      height: 100%;
+      width: 0%;
+      border-radius: 7px;
+      transition: width 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+    .bar-fill-a { background: linear-gradient(90deg, #00D4AA, #00FFCC); }
+    .bar-fill-b { background: linear-gradient(90deg, #FF3868, #FF60A8); }
+    .bar-pct { font-family: var(--mono); font-size: 13px; color: var(--text); min-width: 36px; }
+    .bar-count { font-family: var(--mono); font-size: 11px; color: var(--muted); min-width: 70px; }
+
+    .winner-announce {
+      text-align: center;
+      padding: 18px;
+      background: rgba(255,184,48,0.06);
+      border: 1px solid rgba(255,184,48,0.2);
+      border-radius: 12px;
+      margin-bottom: 20px;
+      font-size: 16px;
+      font-weight: 600;
+      color: var(--gold);
+    }
+    .winner-announce.hidden { display: none; }
+
+    .results-note {
+      font-size: 13px;
+      color: var(--muted);
+      line-height: 1.6;
+      padding-top: 20px;
+      border-top: 1px solid var(--border);
+    }
 
     /* ======= CONFETTI ======= */
     .confetti-bit {
@@ -643,12 +896,156 @@
 </header>
 
 
+
+
+<!-- ===================== WHY LAUNCHDARKLY ===================== -->
+<div>
+  <div class="wrap">
+    <div class="section-tag">The "Why"</div>
+    <h2 class="section-h">Why LaunchDarkly</h2>
+    <p class="section-lead">Not a generic cover letter — a genuine breakdown of what draws me to this company and this work.</p>
+
+    <div class="why-grid">
+
+      <div class="why-card" style="--ca:#FF3868;">
+        <div class="why-bar"></div>
+        <span class="why-icon">🔬</span>
+        <h3>I want to live where 0.05ms matters</h3>
+        <p>Over 20 trillion flag evaluations per day. That's not just engineering — that's physics. Working in Go on hot paths where every microsecond has real consequences is exactly the environment I want to be building in.</p>
+      </div>
+
+      <div class="why-card" style="--ca:#405BFF;">
+        <div class="why-bar"></div>
+        <span class="why-icon">🌐</span>
+        <h3>Distributed systems is where I want to live</h3>
+        <p>Kinesis, Flink, Clickhouse, global AWS footprint — the LaunchDarkly platform is a masterclass in distributed systems design at real scale. I'm genuinely obsessed with how these systems stay consistent and resilient when the whole world is talking to them.</p>
+      </div>
+
+      <div class="why-card" style="--ca:#7B4FFF;">
+        <div class="why-bar"></div>
+        <span class="why-icon">🏠</span>
+        <h3>Remote-first, not remote-tolerated</h3>
+        <p>I have only ever worked remotely. It's not a perk I'm hunting for — it's the way I do my best work. LaunchDarkly is built remote-first by design, not a traditional company with a Zoom option, and that difference matters deeply to me.</p>
+      </div>
+
+      <div class="why-card" style="--ca:#00D4AA;">
+        <div class="why-bar"></div>
+        <span class="why-icon">🔥</span>
+        <h3>You build it, you run it</h3>
+        <p>On-call rotations and production ownership aren't a downside to me — they're the point. Engineers who carry the pager write fundamentally better software. A culture where operational toil is treated as a bug to fix speaks my language.</p>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+
+<!-- ===================== SKILLS MATCH ===================== -->
+<div class="skills-bg">
+  <div class="wrap">
+    <div class="section-tag">Qualifications</div>
+    <h2 class="section-h">Skills Match</h2>
+    <p class="section-lead">How my background maps to what each role needs — because a good feature flag needs context to evaluate correctly.</p>
+
+    <div class="skills-grid">
+
+      <!-- DATA PLATFORM -->
+      <div class="skill-card">
+        <div class="skill-card-hd">
+          <div class="skill-icon data">⚡</div>
+          <div>
+            <div class="skill-title">Backend Engineer<br>Data Platform</div>
+            <div class="skill-role">Backend · Remote US</div>
+          </div>
+        </div>
+        <div class="skill-items">
+          <div class="skill-item">
+            <span class="pill s">STRONG</span>
+            <div class="skill-body">Go in production
+              <small>3–4 years writing production Go at enterprise scale — exactly the language LD's backend is built on.</small>
+            </div>
+          </div>
+          <div class="skill-item">
+            <span class="pill s">STRONG</span>
+            <div class="skill-body">Backend engineering depth
+              <small>Production Ruby on Rails + Go across enterprise products; comfortable with concurrency, performance tuning, and code that outlives its author.</small>
+            </div>
+          </div>
+          <div class="skill-item">
+            <span class="pill g">GOOD</span>
+            <div class="skill-body">Python for data work
+              <small>Strong Python familiarity — comfortable with scripting, tooling, and data manipulation that pipeline work demands.</small>
+            </div>
+          </div>
+          <div class="skill-item">
+            <span class="pill g">GOOD</span>
+            <div class="skill-body">Frontend collaboration
+              <small>2 years of React/TypeScript means I can work meaningfully with frontend engineers and actually understand the full product surface.</small>
+            </div>
+          </div>
+          <div class="skill-item">
+            <span class="pill s">STRONG</span>
+            <div class="skill-body">High code-quality culture
+              <small>I write for the next engineer, not just the next deploy. Automated testing, clean APIs, and maintainability are non-negotiable to me.</small>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- INFRASTRUCTURE -->
+      <div class="skill-card">
+        <div class="skill-card-hd">
+          <div class="skill-icon infra">🏗</div>
+          <div>
+            <div class="skill-title">Infrastructure<br>Engineer</div>
+            <div class="skill-role">Infrastructure · Remote US</div>
+          </div>
+        </div>
+        <div class="skill-items">
+          <div class="skill-item">
+            <span class="pill s">STRONG</span>
+            <div class="skill-body">Software-first problem solving
+              <small>The IDE role's emphasis on replacing toil with actual software, not just config, resonates exactly with how I already approach operational problems.</small>
+            </div>
+          </div>
+          <div class="skill-item">
+            <span class="pill s">STRONG</span>
+            <div class="skill-body">Go + Ruby for internal tooling
+              <small>Building automation and internal tools in Go is exactly the kind of work I've been doing in production environments for years.</small>
+            </div>
+          </div>
+          <div class="skill-item">
+            <span class="pill g">GOOD</span>
+            <div class="skill-body">AWS familiarity
+              <small>Worked with AWS services in production across multiple roles. Not memorized every service — but never starting from zero either.</small>
+            </div>
+          </div>
+          <div class="skill-item">
+            <span class="pill g">GOOD</span>
+            <div class="skill-body">CI/CD &amp; automation mindset
+              <small>GitHub Actions and deployment pipelines have been part of every team I've been on. I think automation-first by default.</small>
+            </div>
+          </div>
+          <div class="skill-item">
+            <span class="pill s">STRONG</span>
+            <div class="skill-body">Curiosity and rapid learning
+              <small>C++, Python, Go, Ruby, TypeScript across production systems. "You don't need to have memorized every service" — I haven't, but given a week I will.</small>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+
 <!-- ===================== PLAYGROUND ===================== -->
 <div class="playground-bg">
   <div class="wrap">
     <div class="section-tag">Interactive Demo</div>
     <h2 class="section-h">Feature Flag Playground</h2>
-    <p class="section-lead">Meet Griffy, your personal hippogriff. Toggle the feature flags below to control what she does — just like LaunchDarkly, but with more feathers.</p>
+    <p class="section-lead">Meet HippyGriffy, your personal hippogriff. Toggle the feature flags below to control what she does — just like LaunchDarkly, but with more feathers.</p>
 
     <div class="playground-grid">
 
@@ -809,7 +1206,7 @@
       <div class="flag-panel">
         <div class="panel-hd">
           <div class="panel-live"></div>
-          <span class="panel-title">Feature Flags — Griffy v1.0</span>
+          <span class="panel-title">Feature Flags — HippyGriffy v1.0</span>
           <span class="env-chip">✦ Production</span>
         </div>
 
@@ -883,151 +1280,161 @@
 </div>
 
 
-<!-- ===================== WHY LAUNCHDARKLY ===================== -->
-<div>
+<!-- ===================== EXPERIMENT ===================== -->
+<div class="experiment-bg">
   <div class="wrap">
-    <div class="section-tag">The "Why"</div>
-    <h2 class="section-h">Why LaunchDarkly</h2>
-    <p class="section-lead">Not a generic cover letter — a genuine breakdown of what draws me to this company and this work.</p>
+    <div class="section-tag">Experimentation</div>
+    <h2 class="section-h">Run an Experiment on HippyGriffy</h2>
+    <p class="section-lead">LaunchDarkly's experimentation lets you A/B test anything. Here's a live demo — two variants of HippyGriffy, one winner. You decide which performs better.</p>
 
-    <div class="why-grid">
-
-      <div class="why-card" style="--ca:#FF3868;">
-        <div class="why-bar"></div>
-        <span class="why-icon">🔬</span>
-        <h3>I want to live where 0.05ms matters</h3>
-        <p>Over 20 trillion flag evaluations per day. That's not just engineering — that's physics. Working in Go on hot paths where every microsecond has real consequences is exactly the environment I want to be building in.</p>
-      </div>
-
-      <div class="why-card" style="--ca:#405BFF;">
-        <div class="why-bar"></div>
-        <span class="why-icon">🌐</span>
-        <h3>Distributed systems is where I want to live</h3>
-        <p>Kinesis, Flink, Clickhouse, global AWS footprint — the LaunchDarkly platform is a masterclass in distributed systems design at real scale. I'm genuinely obsessed with how these systems stay consistent and resilient when the whole world is talking to them.</p>
-      </div>
-
-      <div class="why-card" style="--ca:#7B4FFF;">
-        <div class="why-bar"></div>
-        <span class="why-icon">🏠</span>
-        <h3>Remote-first, not remote-tolerated</h3>
-        <p>I have only ever worked remotely. It's not a perk I'm hunting for — it's the way I do my best work. LaunchDarkly is built remote-first by design, not a traditional company with a Zoom option, and that difference matters deeply to me.</p>
-      </div>
-
-      <div class="why-card" style="--ca:#00D4AA;">
-        <div class="why-bar"></div>
-        <span class="why-icon">🔥</span>
-        <h3>You build it, you run it</h3>
-        <p>On-call rotations and production ownership aren't a downside to me — they're the point. Engineers who carry the pager write fundamentally better software. A culture where operational toil is treated as a bug to fix speaks my language.</p>
-      </div>
-
+    <!-- Experiment tabs -->
+    <div class="exp-tabs">
+      <button class="exp-tab active" data-tab="setup">⚗️ Experiment Setup</button>
+      <button class="exp-tab" data-tab="results">📊 Results</button>
     </div>
-  </div>
-</div>
 
+    <!-- Setup panel -->
+    <div class="exp-panel" id="tab-setup">
+      <div class="exp-variants">
 
-<!-- ===================== SKILLS MATCH ===================== -->
-<div class="skills-bg">
-  <div class="wrap">
-    <div class="section-tag">Qualifications</div>
-    <h2 class="section-h">Skills Match</h2>
-    <p class="section-lead">How my background maps to what each role needs — because a good feature flag needs context to evaluate correctly.</p>
-
-    <div class="skills-grid">
-
-      <!-- DATA PLATFORM -->
-      <div class="skill-card">
-        <div class="skill-card-hd">
-          <div class="skill-icon data">⚡</div>
-          <div>
-            <div class="skill-title">Backend Engineer<br>Data Platform</div>
-            <div class="skill-role">Level 3 · Remote US</div>
+        <!-- Variant A -->
+        <div class="variant-card" id="variant-a">
+          <div class="variant-hd">
+            <span class="variant-badge badge-a">Variant A</span>
+            <span class="variant-name">Control — Default HippyGriffy</span>
+          </div>
+          <div class="variant-scene" id="scene-a">
+            <div class="scene-glow"></div>
+            <div class="griff-wrap">
+              <svg class="griff-svg" viewBox="0 0 280 252" xmlns="http://www.w3.org/2000/svg">
+                <g class="wing-l"><path d="M 108 150 C 84 124, 48 102, 16 114 C 3 122, 7 146, 32 152 C 62 158, 88 154, 108 152" fill="#8A9DD4"/><path d="M 108 150 C 88 130, 56 112, 32 120" stroke="#B4C8F2" stroke-width="2" fill="none" opacity="0.6"/></g>
+                <g class="wing-r"><path d="M 172 150 C 196 124, 232 102, 264 114 C 277 122, 273 146, 248 152 C 218 158, 192 154, 172 152" fill="#8A9DD4"/><path d="M 172 150 C 192 130, 224 112, 248 120" stroke="#B4C8F2" stroke-width="2" fill="none" opacity="0.6"/></g>
+                <ellipse cx="140" cy="176" rx="62" ry="43" fill="#C8906A"/>
+                <ellipse cx="112" cy="142" rx="27" ry="36" fill="#A8BCE2" transform="rotate(-10 112 142)"/>
+                <circle cx="91" cy="91" r="44" fill="#AABFE6"/>
+                <path d="M 102 52 C 98 36, 107 20, 116 33 C 120 41, 113 53, 109 58" fill="#7E93CC"/>
+                <path d="M 115 50 C 114 32, 124 18, 130 31 C 133 41, 125 52, 121 57" fill="#90A6D8"/>
+                <path d="M 126 53 C 128 36, 137 24, 139 37 C 140 47, 133 56, 128 60" fill="#7E93CC"/>
+                <path d="M 51 91 L 29 82 L 29 100 Z" fill="#FF9040"/>
+                <circle cx="76" cy="85" r="18" fill="white"/><circle cx="76" cy="86" r="12" fill="#1A1838"/><circle cx="70" cy="80" r="5.5" fill="white"/>
+                <path d="M 62 72 C 69 66, 83 67, 91 73" fill="none" stroke="#1A1838" stroke-width="3.2" stroke-linecap="round"/>
+                <path d="M 196 163 C 224 147, 244 159, 240 179 C 236 197, 220 201, 210 189" fill="none" stroke="#D4A860" stroke-width="15" stroke-linecap="round"/>
+                <rect x="89" y="208" width="13" height="31" rx="6.5" fill="#8090C6"/>
+                <rect x="113" y="208" width="13" height="31" rx="6.5" fill="#8090C6"/>
+                <rect x="148" y="207" width="15" height="27" rx="5" fill="#9A7252"/><ellipse cx="155" cy="235" rx="10" ry="5.5" fill="#7A5230"/>
+                <rect x="172" y="207" width="15" height="27" rx="5" fill="#9A7252"/><ellipse cx="179" cy="235" rx="10" ry="5.5" fill="#7A5230"/>
+              </svg>
+            </div>
+          </div>
+          <div class="variant-meta">
+            <div class="variant-desc">Calm, gentle float. Default wing speed. No hat, no sparkles. Pure HippyGriffy.</div>
+            <div class="variant-metric">
+              <span class="metric-label">Cheers received</span>
+              <span class="metric-val" id="count-a">0</span>
+            </div>
+            <button class="cheer-btn cheer-a" onclick="cheer('a')">🎉 Cheer for Variant A</button>
           </div>
         </div>
-        <div class="skill-items">
-          <div class="skill-item">
-            <span class="pill s">STRONG</span>
-            <div class="skill-body">Go in production
-              <small>3–4 years writing production Go at enterprise scale — exactly the language LD's backend is built on.</small>
+
+        <!-- Variant B -->
+        <div class="variant-card" id="variant-b">
+          <div class="variant-hd">
+            <span class="variant-badge badge-b">Variant B</span>
+            <span class="variant-name">Treatment — Party HippyGriffy</span>
+          </div>
+          <div class="variant-scene mode-party" id="scene-b">
+            <div class="scene-glow"></div>
+            <div class="griff-wrap">
+              <svg class="griff-svg" viewBox="0 0 280 252" xmlns="http://www.w3.org/2000/svg">
+                <g class="wing-l"><path d="M 108 150 C 84 124, 48 102, 16 114 C 3 122, 7 146, 32 152 C 62 158, 88 154, 108 152" fill="#8A9DD4"/><path d="M 108 150 C 88 130, 56 112, 32 120" stroke="#B4C8F2" stroke-width="2" fill="none" opacity="0.6"/></g>
+                <g class="wing-r"><path d="M 172 150 C 196 124, 232 102, 264 114 C 277 122, 273 146, 248 152 C 218 158, 192 154, 172 152" fill="#8A9DD4"/><path d="M 172 150 C 192 130, 224 112, 248 120" stroke="#B4C8F2" stroke-width="2" fill="none" opacity="0.6"/></g>
+                <ellipse cx="140" cy="176" rx="62" ry="43" fill="#C8906A"/>
+                <ellipse cx="112" cy="142" rx="27" ry="36" fill="#A8BCE2" transform="rotate(-10 112 142)"/>
+                <circle cx="91" cy="91" r="44" fill="#AABFE6"/>
+                <path d="M 102 52 C 98 36, 107 20, 116 33 C 120 41, 113 53, 109 58" fill="#7E93CC"/>
+                <path d="M 115 50 C 114 32, 124 18, 130 31 C 133 41, 125 52, 121 57" fill="#90A6D8"/>
+                <path d="M 126 53 C 128 36, 137 24, 139 37 C 140 47, 133 56, 128 60" fill="#7E93CC"/>
+                <path d="M 51 91 L 29 82 L 29 100 Z" fill="#FF9040"/>
+                <circle cx="76" cy="85" r="18" fill="white"/><circle cx="76" cy="86" r="12" fill="#1A1838"/><circle cx="70" cy="80" r="5.5" fill="white"/>
+                <path d="M 62 72 C 69 66, 83 67, 91 73" fill="none" stroke="#1A1838" stroke-width="3.2" stroke-linecap="round"/>
+                <path d="M 196 163 C 224 147, 244 159, 240 179 C 236 197, 220 201, 210 189" fill="none" stroke="#D4A860" stroke-width="15" stroke-linecap="round"/>
+                <rect x="89" y="208" width="13" height="31" rx="6.5" fill="#8090C6"/>
+                <rect x="113" y="208" width="13" height="31" rx="6.5" fill="#8090C6"/>
+                <rect x="148" y="207" width="15" height="27" rx="5" fill="#9A7252"/><ellipse cx="155" cy="235" rx="10" ry="5.5" fill="#7A5230"/>
+                <rect x="172" y="207" width="15" height="27" rx="5" fill="#9A7252"/><ellipse cx="179" cy="235" rx="10" ry="5.5" fill="#7A5230"/>
+                <!-- wizard hat on B -->
+                <path d="M 90 56 L 112 -4 L 134 56 Z" fill="#3A0070"/>
+                <ellipse cx="112" cy="58" rx="26" ry="9" fill="#5800A8"/>
+                <circle cx="112" cy="12" r="4.5" fill="#FFD700" opacity="0.92"/>
+                <text x="107" y="44" font-size="12" fill="#FFD700" opacity="0.7" font-family="serif">✦</text>
+                <!-- sparkles -->
+                <circle cx="50" cy="52" r="5.5" fill="#FF3868"><animateTransform attributeName="transform" type="translate" values="0,0;0,-13;0,0" dur="1.1s" repeatCount="indefinite"/></circle>
+                <circle cx="234" cy="46" r="4.5" fill="#405BFF"><animateTransform attributeName="transform" type="translate" values="0,0;0,-11;0,0" dur="0.95s" repeatCount="indefinite"/></circle>
+                <circle cx="148" cy="26" r="4" fill="#FFB830"><animateTransform attributeName="transform" type="translate" values="0,0;0,-15;0,0" dur="0.85s" repeatCount="indefinite"/></circle>
+                <text x="198" y="44" font-size="17" fill="#FFB830" opacity="0.9">✦</text>
+                <text x="56"  y="40" font-size="13" fill="#FF3868" opacity="0.9">✦</text>
+              </svg>
             </div>
           </div>
-          <div class="skill-item">
-            <span class="pill s">STRONG</span>
-            <div class="skill-body">Backend engineering depth
-              <small>Production Ruby on Rails + Go across enterprise products; comfortable with concurrency, performance tuning, and code that outlives its author.</small>
+          <div class="variant-meta">
+            <div class="variant-desc">Party float, wizard hat, sparkles firing. High-energy HippyGriffy with maximum personality enabled.</div>
+            <div class="variant-metric">
+              <span class="metric-label">Cheers received</span>
+              <span class="metric-val" id="count-b">0</span>
             </div>
+            <button class="cheer-btn cheer-b" onclick="cheer('b')">🎉 Cheer for Variant B</button>
           </div>
-          <div class="skill-item">
-            <span class="pill g">GOOD</span>
-            <div class="skill-body">Python for data work
-              <small>Strong Python familiarity — comfortable with scripting, tooling, and data manipulation that pipeline work demands.</small>
+        </div>
+
+      </div><!-- /exp-variants -->
+
+      <div class="exp-actions">
+        <button class="declare-btn" onclick="declareWinner()">🏆 Declare Winner</button>
+        <button class="reset-btn" onclick="resetExp()">↩ Reset Experiment</button>
+      </div>
+    </div><!-- /tab-setup -->
+
+    <!-- Results panel -->
+    <div class="exp-panel hidden" id="tab-results">
+      <div class="results-card">
+        <div class="results-hd">
+          <span class="results-label">Experiment: hippygriffy-joy-index</span>
+          <span class="results-status" id="results-status">Running</span>
+        </div>
+        <div class="results-bars">
+          <div class="result-row">
+            <span class="result-variant badge-a">A</span>
+            <div class="bar-track">
+              <div class="bar-fill bar-fill-a" id="bar-a"></div>
             </div>
+            <span class="bar-pct" id="pct-a">0%</span>
+            <span class="bar-count" id="rcount-a">(0 cheers)</span>
           </div>
-          <div class="skill-item">
-            <span class="pill g">GOOD</span>
-            <div class="skill-body">Frontend collaboration
-              <small>2 years of React/TypeScript means I can work meaningfully with frontend engineers and actually understand the full product surface.</small>
+          <div class="result-row">
+            <span class="result-variant badge-b">B</span>
+            <div class="bar-track">
+              <div class="bar-fill bar-fill-b" id="bar-b"></div>
             </div>
+            <span class="bar-pct" id="pct-b">0%</span>
+            <span class="bar-count" id="rcount-b">(0 cheers)</span>
           </div>
-          <div class="skill-item">
-            <span class="pill s">STRONG</span>
-            <div class="skill-body">High code-quality culture
-              <small>I write for the next engineer, not just the next deploy. Automated testing, clean APIs, and maintainability are non-negotiable to me.</small>
-            </div>
-          </div>
+        </div>
+        <div class="winner-announce hidden" id="winner-announce">
+          <span id="winner-text"></span>
+        </div>
+        <div class="results-note">
+          In a real LaunchDarkly experiment, this would track conversion events, p-values, and statistical significance across thousands of users. Here it's just vibes — but the principle is identical.
         </div>
       </div>
+    </div><!-- /tab-results -->
 
-      <!-- INFRASTRUCTURE -->
-      <div class="skill-card">
-        <div class="skill-card-hd">
-          <div class="skill-icon infra">🏗</div>
-          <div>
-            <div class="skill-title">Infrastructure<br>Engineer</div>
-            <div class="skill-role">Level 4 · Remote US</div>
-          </div>
-        </div>
-        <div class="skill-items">
-          <div class="skill-item">
-            <span class="pill s">STRONG</span>
-            <div class="skill-body">Software-first problem solving
-              <small>The IDE role's emphasis on replacing toil with actual software, not just config, resonates exactly with how I already approach operational problems.</small>
-            </div>
-          </div>
-          <div class="skill-item">
-            <span class="pill s">STRONG</span>
-            <div class="skill-body">Go + Ruby for internal tooling
-              <small>Building automation and internal tools in Go is exactly the kind of work I've been doing in production environments for years.</small>
-            </div>
-          </div>
-          <div class="skill-item">
-            <span class="pill g">GOOD</span>
-            <div class="skill-body">AWS familiarity
-              <small>Worked with AWS services in production across multiple roles. Not memorized every service — but never starting from zero either.</small>
-            </div>
-          </div>
-          <div class="skill-item">
-            <span class="pill g">GOOD</span>
-            <div class="skill-body">CI/CD &amp; automation mindset
-              <small>GitHub Actions and deployment pipelines have been part of every team I've been on. I think automation-first by default.</small>
-            </div>
-          </div>
-          <div class="skill-item">
-            <span class="pill s">STRONG</span>
-            <div class="skill-body">Curiosity and rapid learning
-              <small>C++, Python, Go, Ruby, TypeScript across production systems. "You don't need to have memorized every service" — I haven't, but given a week I will.</small>
-            </div>
-          </div>
-        </div>
-      </div>
-
-    </div>
   </div>
 </div>
 
 
 <!-- ===================== FOOTER ===================== -->
 <footer>
-  <p>Built by <span class="hl">Sharlena Luyen</span> · Powered by feature flags (the fun kind) · <span class="hl">✦</span> LaunchDarkly, let's talk</p>
+  <p>Built by <span class="hl">Sharlena Luyen</span> + <a href="https://claude.ai" target="_blank" style="color:var(--muted);text-decoration:none;">claude.ai</a> · Powered by feature flags (the fun kind) · <span class="hl">✦</span> <a href="https://calendly.com/sharlena/personal-meeting" target="_blank" style="color:var(--pink);text-decoration:none;">LaunchDarkly — let's talk</a></p>
 </footer>
 
 
@@ -1085,6 +1492,67 @@
     scene.classList.toggle('mode-hat',     h);
     scene.classList.toggle('mode-rainbow', r);
   }
+
+  // ---- EXPERIMENT LOGIC ----
+  let counts = { a: 0, b: 0 };
+
+  function cheer(v) {
+    counts[v]++;
+    const el = document.getElementById('count-' + v);
+    el.textContent = counts[v];
+    el.classList.add('bump');
+    setTimeout(() => el.classList.remove('bump'), 200);
+    updateResults();
+    if (counts[v] === 1) launchConfetti();
+  }
+
+  function updateResults() {
+    const total = counts.a + counts.b || 1;
+    const pctA = Math.round((counts.a / total) * 100);
+    const pctB = 100 - pctA;
+    document.getElementById('bar-a').style.width = pctA + '%';
+    document.getElementById('bar-b').style.width = pctB + '%';
+    document.getElementById('pct-a').textContent = pctA + '%';
+    document.getElementById('pct-b').textContent = pctB + '%';
+    document.getElementById('rcount-a').textContent = '(' + counts.a + ' cheers)';
+    document.getElementById('rcount-b').textContent = '(' + counts.b + ' cheers)';
+  }
+
+  function declareWinner() {
+    if (counts.a + counts.b === 0) {
+      alert('Cast at least one cheer before declaring a winner!');
+      return;
+    }
+    const winner = counts.a >= counts.b ? 'A' : 'B';
+    const label = winner === 'A' ? 'Control — Default HippyGriffy' : 'Treatment — Party HippyGriffy';
+    const announce = document.getElementById('winner-announce');
+    document.getElementById('winner-text').textContent = '🏆 Winner: Variant ' + winner + ' · ' + label;
+    announce.classList.remove('hidden');
+    document.getElementById('results-status').textContent = 'Concluded';
+    document.getElementById('results-status').classList.add('concluded');
+    // switch to results tab
+    switchTab('results');
+    launchConfetti();
+  }
+
+  function resetExp() {
+    counts = { a: 0, b: 0 };
+    ['a','b'].forEach(v => {
+      document.getElementById('count-' + v).textContent = '0';
+      document.getElementById('bar-' + v).style.width = '0%';
+      document.getElementById('pct-' + v).textContent = '0%';
+      document.getElementById('rcount-' + v).textContent = '(0 cheers)';
+    });
+    document.getElementById('winner-announce').classList.add('hidden');
+    document.getElementById('results-status').textContent = 'Running';
+    document.getElementById('results-status').classList.remove('concluded');
+  }
+
+  function switchTab(name) {
+    document.querySelectorAll('.exp-tab').forEach(t => t.classList.toggle('active', t.dataset.tab === name));
+    document.querySelectorAll('.exp-panel').forEach(p => p.classList.toggle('hidden', p.id !== 'tab-' + name));
+  }
+  document.querySelectorAll('.exp-tab').forEach(t => t.addEventListener('click', () => switchTab(t.dataset.tab)));
 
   document.getElementById('f-party').addEventListener('change', function() {
     if (this.checked) launchConfetti();
