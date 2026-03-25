@@ -1044,8 +1044,8 @@
 <div class="playground-bg">
   <div class="wrap">
     <div class="section-tag">Interactive Demo</div>
-    <h2 class="section-h">Feature Flag Playground</h2>
-    <p class="section-lead">Meet HippyGriffy, your personal hippogriff. Toggle the feature flags below to control what she does — just like LaunchDarkly, but with more feathers.</p>
+    <h2 class="section-h">Feature Flag Playground: Hippygriffy</h2>
+    <p class="section-lead">Meet HippyGriffy, your personal hippogriff. Toggle the feature flags below to control what she does, just like LaunchDarkly, but with more feathers.</p>
 
     <div class="playground-grid">
 
@@ -1206,7 +1206,7 @@
       <div class="flag-panel">
         <div class="panel-hd">
           <div class="panel-live"></div>
-          <span class="panel-title">Feature Flags — HippyGriffy v1.0</span>
+          <span class="panel-title">Feature Flags with HippyGriffy v1.0</span>
           <span class="env-chip">✦ Production</span>
         </div>
 
@@ -1285,7 +1285,7 @@
   <div class="wrap">
     <div class="section-tag">Experimentation</div>
     <h2 class="section-h">Run an Experiment on HippyGriffy</h2>
-    <p class="section-lead">LaunchDarkly's experimentation lets you A/B test anything. Here's a live demo — two variants of HippyGriffy, one winner. You decide which performs better.</p>
+    <p class="section-lead">LaunchDarkly's experimentation lets you A/B test anything. Here's a live demo with two variants of HippyGriffy, one winner. You decide which performs better.</p>
 
     <!-- Experiment tabs -->
     <div class="exp-tabs">
@@ -1301,7 +1301,7 @@
         <div class="variant-card" id="variant-a">
           <div class="variant-hd">
             <span class="variant-badge badge-a">Variant A</span>
-            <span class="variant-name">Control — Default HippyGriffy</span>
+            <span class="variant-name">Control: Default HippyGriffy</span>
           </div>
           <div class="variant-scene" id="scene-a">
             <div class="scene-glow"></div>
@@ -1327,7 +1327,7 @@
             </div>
           </div>
           <div class="variant-meta">
-            <div class="variant-desc">Calm, gentle float. Default wing speed. No hat, no sparkles. Pure HippyGriffy.</div>
+            <div class="variant-desc">Calm, gentle float. Default wing speed. No hat, no sparkles. Pure HippyGriffy. Big chiller, but let's see if we can do better.</div>
             <div class="variant-metric">
               <span class="metric-label">Cheers received</span>
               <span class="metric-val" id="count-a">0</span>
@@ -1340,7 +1340,7 @@
         <div class="variant-card" id="variant-b">
           <div class="variant-hd">
             <span class="variant-badge badge-b">Variant B</span>
-            <span class="variant-name">Treatment — Party HippyGriffy</span>
+            <span class="variant-name">Treatment: Party HippyGriffy</span>
           </div>
           <div class="variant-scene mode-party" id="scene-b">
             <div class="scene-glow"></div>
@@ -1423,7 +1423,7 @@
           <span id="winner-text"></span>
         </div>
         <div class="results-note">
-          In a real LaunchDarkly experiment, this would track conversion events, p-values, and statistical significance across thousands of users. Here it's just vibes — but the principle is identical.
+          In a real LaunchDarkly experiment, this would track conversion events, p-values, and statistical significance across thousands of users. Here, it's just vibes, but the principle is identical.
         </div>
       </div>
     </div><!-- /tab-results -->
@@ -1524,7 +1524,7 @@
       return;
     }
     const winner = counts.a >= counts.b ? 'A' : 'B';
-    const label = winner === 'A' ? 'Control — Default HippyGriffy' : 'Treatment — Party HippyGriffy';
+    const label = winner === 'A' ? 'Control: Default HippyGriffy' : 'Treatment: Party HippyGriffy';
     const announce = document.getElementById('winner-announce');
     document.getElementById('winner-text').textContent = '🏆 Winner: Variant ' + winner + ' · ' + label;
     announce.classList.remove('hidden');
