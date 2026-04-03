@@ -12656,3 +12656,8 @@ area {
         height: 250px;
     }
 }
+
+.phil-sub {
+  font-size: 13px; line-height: 1.8; color: var(--dim);
+  max-width: 580px; margin-bottom: 28px;
+}

@@ -851,3 +851,8 @@ body.ch #cursor-ring { width: 52px; height: 52px; border-color: var(--peri); }
   margin-top: 44px; font-family: var(--f-mono); font-size: 10px;
   letter-spacing: 0.14em; color: rgba(236,234,248,0.16);
 }
+
+.phil-sub {
+  font-size: 13px; line-height: 1.8; color: var(--dim);
+  max-width: 580px; margin-bottom: 28px;
+}

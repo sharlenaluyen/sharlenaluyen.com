@@ -197,7 +197,8 @@ const bannerImages = [
   'assets/img/me.jpg',
   'assets/img/casa.jpg',
   'assets/img/cozmos.jpg',
-  'assets/img/capstone.jpg',
+  // 'assets/img/capstone.jpg',  // uncomment to add more
+  // 'assets/img/your-photo.jpg',
 ];
 
 const bannerInner = document.getElementById('banner-inner');
@@ -673,6 +674,12 @@ addHover([
   '.event-row', '.tag', '.t-chip', '.trivia-btn',
   '.banner-img', '.photo-cell', '.trivia-restart-btn',
 ].join(', '));
+
+/* ── Landing CTA — reveal after heading animation ───────────────── */
+setTimeout(() => {
+  const cta = document.getElementById('landing-cta');
+  if (cta) { cta.style.opacity = '1'; cta.style.transform = 'translateY(0)'; }
+}, 2700);
 
 /* ── Initial update ─────────────────────────────────────────────── */
 doUpdate();
