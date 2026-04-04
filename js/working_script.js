@@ -269,18 +269,47 @@ if (photoGridEl) {
 
 /* ── Travel map ─────────────────────────────────────────────────── */
 const travelData = [
-  ['Japan',        35.68,  139.69],
-  ['Vietnam',      21.03,  105.85],
-  ['Thailand',     13.75,  100.52],
-  ['France',       48.85,    2.35],
-  ['Italy',        41.90,   12.49],
-  ['Spain',        40.42,   -3.70],
-  ['Mexico',       19.43,  -99.13],
-  ['Canada',       45.42,  -75.69],
-  ['New York',     40.71,  -74.01],
-  ['Tahiti',      -17.53, -149.57],
-  ['Indonesia',    -6.21,  106.84],
-  ['Philippines',  14.60,  121.00],
+  // Europe
+  ['United Kingdom',      51.50,   -0.13],
+  ['Scotland',            55.95,   -3.19],
+  ['Ireland',             53.33,   -6.25],
+  ['Isle of Man',         54.15,   -4.48],
+  ['France',              48.85,    2.35],
+  ['Belgium',             50.85,    4.35],
+  ['Netherlands',         52.37,    4.90],
+  ['Germany',             52.52,   13.40],
+  ['Spain',               40.42,   -3.70],
+  ['Italy',               41.90,   12.49],
+  // Caribbean
+  ['Bahamas',             25.04,  -77.34],
+  ['Turks & Caicos',      21.69,  -71.80],
+  ['Puerto Rico',         18.47,  -66.11],
+  ['Anguilla',            18.22,  -63.05],
+  ['Saint Martin',        18.07,  -63.08],
+  ['St. Kitts & Nevis',   17.30,  -62.72],
+  ['Antigua & Barbuda',   17.12,  -61.85],
+  ['Saint Lucia',         13.90,  -60.98],
+  ['Barbados',            13.10,  -59.61],
+  // Central & South America
+  ['Mexico',              19.43,  -99.13],
+  ['Guatemala',           14.64,  -90.51],
+  ['Belize',              17.25,  -88.77],
+  ['Costa Rica',           9.93,  -84.08],
+  ['Peru',               -12.05,  -77.04],
+  // North America
+  ['Canada',              45.42,  -75.69],
+  // Asia
+  ['Japan',               35.68,  139.69],
+  ['South Korea',         37.57,  126.98],
+  ['Taiwan',              25.03,  121.56],
+  ['Vietnam',             21.03,  105.85],
+  ['Philippines',         14.60,  121.00],
+  ['India',               20.59,   78.96],
+  // Pacific
+  ['Australia',          -25.27,  133.78],
+  ['Fiji',               -18.14,  178.44],
+  ['Tonga',              -21.18, -175.20],
+  ['French Polynesia',   -17.53, -149.57],
 ];
 
 /* LAT_MAX/LAT_MIN chosen so (360 / (LAT_MAX - LAT_MIN)) ≈ SVG_W/SVG_H (3.4:1),
@@ -631,10 +660,14 @@ const COMMANDS = {
     { t: '' },
   ],
   travel: () => [
-    { t: 'Visited: Japan, Vietnam, Thailand, France,' },
-    { t: 'Italy, Spain, Mexico, Canada, Tahiti,' },
-    { t: 'Indonesia, Philippines, New York (yes it counts).' },
-    { cls: 'muted', t: 'Next target: TBD. Watch the map.' },
+    { t: 'Europe: UK, Scotland, Ireland, Isle of Man,' },
+    { t: 'France, Belgium, Netherlands, Germany, Spain, Italy.' },
+    { t: 'Caribbean: Bahamas, Turks & Caicos, Puerto Rico,' },
+    { t: 'Anguilla, St. Martin, St. Kitts, Antigua, St. Lucia, Barbados.' },
+    { t: 'Americas: Mexico, Guatemala, Belize, Costa Rica, Peru, Canada.' },
+    { t: 'Asia: Japan, South Korea, Taiwan, Vietnam, Philippines, India.' },
+    { t: 'Pacific: Australia, Fiji, Tonga, French Polynesia.' },
+    { cls: 'muted', t: `That's ${36} countries. Next target: TBD.` },
     { t: '' },
   ],
   hobbies: () => [

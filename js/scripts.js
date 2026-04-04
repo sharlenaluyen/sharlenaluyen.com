@@ -194,11 +194,10 @@ document.addEventListener('mousemove', e => {
 /* ── Image banner — philanthropy page ──────────────────────────── */
 // Add your image URLs or local paths here. They loop seamlessly.
 const bannerImages = [
-  'assets/img/me.jpg',
   'assets/img/casa.jpg',
   'assets/img/cozmos.jpg',
-  // 'assets/img/capstone.jpg',  // uncomment to add more
-  // 'assets/img/your-photo.jpg',
+  'assets/img/capstone.jpg',
+  'assets/img/menkids.jpg'
 ];
 
 const bannerInner = document.getElementById('banner-inner');
@@ -218,14 +217,14 @@ if (bannerInner) {
 
 /* ── Events ─────────────────────────────────────────────────────── */
 const eventsData = [
-  { year:'2024', title:'RailsConf — Detroit',          tag:'Conference' },
-  { year:'2024', title:'CASA Volunteer Recognition',   tag:'Advocacy'   },
-  { year:'2023', title:'GopherCon — San Diego',        tag:'Conference' },
-  { year:'2023', title:'Citizens Review Board',        tag:'Civic'      },
-  { year:'2023', title:'Women in Tech SF Meetup',      tag:'Community'  },
-  { year:'2022', title:'Hack for Change Hackathon',    tag:'Hackathon'  },
-  { year:'2022', title:'Bay Area Ruby Meetup',         tag:'Community'  },
-  { year:'2021', title:'CASA Volunteer Onboarding',    tag:'Advocacy'   },
+  { year:'2026', title:'Sworn into CASA in Orange County',          tag:'Advocacy' },
+  { year:'2026', title:'Increased accessibility to AI agents & services for small businesses and non-profits',   tag:'Civic'   },
+  { year:'2025', title:'Hired as Backend Software Engineer at Hashicorp, an IBM company',        tag:'Professional' },
+  { year:'2023', title:'Fundraised for Food for Lane County by coordinating Paella Fest',        tag:'Civic'      },
+  { year:'2022', title:'Hired as Software Consultant at Stride Consulting',      tag:'Professional'  },
+  { year:'2020', title:'Sworn into Citizen Review Board in Multnomah County',    tag:'Advocacy'  },
+  { year:'2020', title:'Hired as Software Engineer I at Optum',         tag:'Professional'  },
+  { year:'2019', title:'Awarded Karena Dokken Award for mentorship',    tag:'Award'   },
 ];
 const evCountEl = document.getElementById('events-count');
 const evListEl  = document.getElementById('events-list');
@@ -245,12 +244,12 @@ if (evListEl) eventsData.forEach(ev => {
 // Use local paths, full URLs, or links from anywhere (Cloudinary, Google Photos, etc.)
 // Just paste the image URL as the src. 6 slots total.
 const photoUrls = [
-  'assets/img/photo1.jpg',
-  'assets/img/photo2.jpg',
-  'assets/img/photo3.jpg',
-  'assets/img/photo4.jpg',
-  'assets/img/photo5.jpg',
-  'assets/img/photo6.jpg',
+  'https://live.staticflickr.com/933/43011836814_56b118abed_k.jpg',
+    'https://live.staticflickr.com/65535/51972900612_18438db3cf_k.jpg',
+  'https://live.staticflickr.com/65535/51973992563_74b9420228_k.jpg',
+  'https://live.staticflickr.com/856/41919257710_0852c8795f_k.jpg',
+  'https://live.staticflickr.com/65535/51973981653_ce13787e72_k.jpg',
+  'https://live.staticflickr.com/1786/42336567544_52d423d77f_k.jpg'
 ];
 
 const photoGridEl = document.getElementById('photo-grid');
@@ -269,18 +268,47 @@ if (photoGridEl) {
 
 /* ── Travel map ─────────────────────────────────────────────────── */
 const travelData = [
-  ['Japan',        35.68,  139.69],
-  ['Vietnam',      21.03,  105.85],
-  ['Thailand',     13.75,  100.52],
-  ['France',       48.85,    2.35],
-  ['Italy',        41.90,   12.49],
-  ['Spain',        40.42,   -3.70],
-  ['Mexico',       19.43,  -99.13],
-  ['Canada',       45.42,  -75.69],
-  ['New York',     40.71,  -74.01],
-  ['Tahiti',      -17.53, -149.57],
-  ['Indonesia',    -6.21,  106.84],
-  ['Philippines',  14.60,  121.00],
+  // Europe
+  ['United Kingdom',      51.50,   -0.13],
+  ['Scotland',            55.95,   -3.19],
+  ['Ireland',             53.33,   -6.25],
+  ['Isle of Man',         54.15,   -4.48],
+  ['France',              48.85,    2.35],
+  ['Belgium',             50.85,    4.35],
+  ['Netherlands',         52.37,    4.90],
+  ['Germany',             52.52,   13.40],
+  ['Spain',               40.42,   -3.70],
+  ['Italy',               41.90,   12.49],
+  // Caribbean
+  ['Bahamas',             25.04,  -77.34],
+  ['Turks & Caicos',      21.69,  -71.80],
+  ['Puerto Rico',         18.47,  -66.11],
+  ['Anguilla',            18.22,  -63.05],
+  ['Saint Martin',        18.07,  -63.08],
+  ['St. Kitts & Nevis',   17.30,  -62.72],
+  ['Antigua & Barbuda',   17.12,  -61.85],
+  ['Saint Lucia',         13.90,  -60.98],
+  ['Barbados',            13.10,  -59.61],
+  // Central & South America
+  ['Mexico',              19.43,  -99.13],
+  ['Guatemala',           14.64,  -90.51],
+  ['Belize',              17.25,  -88.77],
+  ['Costa Rica',           9.93,  -84.08],
+  ['Peru',               -12.05,  -77.04],
+  // North America
+  ['Canada',              45.42,  -75.69],
+  // Asia
+  ['Japan',               35.68,  139.69],
+  ['South Korea',         37.57,  126.98],
+  ['Taiwan',              25.03,  121.56],
+  ['Vietnam',             21.03,  105.85],
+  ['Philippines',         14.60,  121.00],
+  ['India',               20.59,   78.96],
+  // Pacific
+  ['Australia',          -25.27,  133.78],
+  ['Fiji',               -18.14,  178.44],
+  ['Tonga',              -21.18, -175.20],
+  ['French Polynesia',   -17.53, -149.57],
 ];
 
 /* LAT_MAX/LAT_MIN chosen so (360 / (LAT_MAX - LAT_MIN)) ≈ SVG_W/SVG_H (3.4:1),
@@ -631,10 +659,14 @@ const COMMANDS = {
     { t: '' },
   ],
   travel: () => [
-    { t: 'Visited: Japan, Vietnam, Thailand, France,' },
-    { t: 'Italy, Spain, Mexico, Canada, Tahiti,' },
-    { t: 'Indonesia, Philippines, New York (yes it counts).' },
-    { cls: 'muted', t: 'Next target: TBD. Watch the map.' },
+    { t: 'Europe: UK, Scotland, Ireland, Isle of Man,' },
+    { t: 'France, Belgium, Netherlands, Germany, Spain, Italy.' },
+    { t: 'Caribbean: Bahamas, Turks & Caicos, Puerto Rico,' },
+    { t: 'Anguilla, St. Martin, St. Kitts, Antigua, St. Lucia, Barbados.' },
+    { t: 'Americas: Mexico, Guatemala, Belize, Costa Rica, Peru, Canada.' },
+    { t: 'Asia: Japan, South Korea, Taiwan, Vietnam, Philippines, India.' },
+    { t: 'Pacific: Australia, Fiji, Tonga, French Polynesia.' },
+    { cls: 'muted', t: `That's ${36} countries. Next target: TBD.` },
     { t: '' },
   ],
   hobbies: () => [
