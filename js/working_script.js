@@ -197,8 +197,7 @@ const bannerImages = [
   'assets/img/me.jpg',
   'assets/img/casa.jpg',
   'assets/img/cozmos.jpg',
-  // 'assets/img/capstone.jpg',  // uncomment to add more
-  // 'assets/img/your-photo.jpg',
+  'assets/img/capstone.jpg',
 ];
 
 const bannerInner = document.getElementById('banner-inner');
@@ -245,12 +244,12 @@ if (evListEl) eventsData.forEach(ev => {
 // Use local paths, full URLs, or links from anywhere (Cloudinary, Google Photos, etc.)
 // Just paste the image URL as the src. 6 slots total.
 const photoUrls = [
-  'assets/img/photo1.jpg',
-  'assets/img/photo2.jpg',
-  'assets/img/photo3.jpg',
-  'assets/img/photo4.jpg',
-  'assets/img/photo5.jpg',
-  'assets/img/photo6.jpg',
+  'https://live.staticflickr.com/853/42823984595_db17a466f8_k.jpg',
+  'https://live.staticflickr.com/933/43011836814_56b118abed_k.jpg',
+  'https://live.staticflickr.com/65535/51973992563_74b9420228_k.jpg',
+  'https://live.staticflickr.com/856/41919257710_0852c8795f_k.jpg',
+  'https://live.staticflickr.com/65535/51973981653_ce13787e72_k.jpg',
+  'https://live.staticflickr.com/1786/42336567544_52d423d77f_k.jpg'
 ];
 
 const photoGridEl = document.getElementById('photo-grid');
@@ -674,12 +673,6 @@ addHover([
   '.event-row', '.tag', '.t-chip', '.trivia-btn',
   '.banner-img', '.photo-cell', '.trivia-restart-btn',
 ].join(', '));
-
-/* ── Landing CTA — reveal after heading animation ───────────────── */
-setTimeout(() => {
-  const cta = document.getElementById('landing-cta');
-  if (cta) { cta.style.opacity = '1'; cta.style.transform = 'translateY(0)'; }
-}, 2700);
 
 /* ── Initial update ─────────────────────────────────────────────── */
 doUpdate();
