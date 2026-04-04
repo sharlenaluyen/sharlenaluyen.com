@@ -194,10 +194,10 @@ document.addEventListener('mousemove', e => {
 /* ── Image banner — philanthropy page ──────────────────────────── */
 // Add your image URLs or local paths here. They loop seamlessly.
 const bannerImages = [
-  'assets/img/me.jpg',
   'assets/img/casa.jpg',
   'assets/img/cozmos.jpg',
   'assets/img/capstone.jpg',
+  'assets/img/menkids.jpg'
 ];
 
 const bannerInner = document.getElementById('banner-inner');
@@ -244,9 +244,12 @@ if (evListEl) eventsData.forEach(ev => {
 // Use local paths, full URLs, or links from anywhere (Cloudinary, Google Photos, etc.)
 // Just paste the image URL as the src. 6 slots total.
 const photoUrls = [
-  'https://live.staticflickr.com/853/42823984595_db17a466f8_k.jpg',
+
+
   'https://live.staticflickr.com/933/43011836814_56b118abed_k.jpg',
+    'https://live.staticflickr.com/65535/51972900612_18438db3cf_k.jpg',
   'https://live.staticflickr.com/65535/51973992563_74b9420228_k.jpg',
+
   'https://live.staticflickr.com/856/41919257710_0852c8795f_k.jpg',
   'https://live.staticflickr.com/65535/51973981653_ce13787e72_k.jpg',
   'https://live.staticflickr.com/1786/42336567544_52d423d77f_k.jpg'
