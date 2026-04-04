@@ -194,10 +194,11 @@ document.addEventListener('mousemove', e => {
 /* ── Image banner — philanthropy page ──────────────────────────── */
 // Add your image URLs or local paths here. They loop seamlessly.
 const bannerImages = [
+  'assets/img/me.jpg',
   'assets/img/casa.jpg',
   'assets/img/cozmos.jpg',
-  'assets/img/capstone.jpg',
-  'assets/img/menkids.jpg'
+  // 'assets/img/capstone.jpg',  // uncomment to add more
+  // 'assets/img/your-photo.jpg',
 ];
 
 const bannerInner = document.getElementById('banner-inner');
@@ -244,14 +245,12 @@ if (evListEl) eventsData.forEach(ev => {
 // Use local paths, full URLs, or links from anywhere (Cloudinary, Google Photos, etc.)
 // Just paste the image URL as the src. 6 slots total.
 const photoUrls = [
-
-
-  'https://live.staticflickr.com/933/43011836814_56b118abed_k.jpg',
-    'https://live.staticflickr.com/65535/51972900612_18438db3cf_k.jpg',
-  'https://live.staticflickr.com/65535/51973992563_74b9420228_k.jpg',
-  'https://live.staticflickr.com/856/41919257710_0852c8795f_k.jpg',
-  'https://live.staticflickr.com/65535/51973981653_ce13787e72_k.jpg',
-  'https://live.staticflickr.com/1786/42336567544_52d423d77f_k.jpg'
+  'assets/img/photo1.jpg',
+  'assets/img/photo2.jpg',
+  'assets/img/photo3.jpg',
+  'assets/img/photo4.jpg',
+  'assets/img/photo5.jpg',
+  'assets/img/photo6.jpg',
 ];
 
 const photoGridEl = document.getElementById('photo-grid');
@@ -284,11 +283,12 @@ const travelData = [
   ['Philippines',  14.60,  121.00],
 ];
 
+/* LAT_MAX/LAT_MIN chosen so (360 / (LAT_MAX - LAT_MIN)) ≈ SVG_W/SVG_H (3.4:1),
+   eliminating horizontal stretch. Clips Antarctica and Arctic but keeps all travel spots. */
+const LAT_MAX = 65, LAT_MIN = -40;
 function project(lat, lon, W, H) {
   const x = ((lon + 180) / 360) * W;
-  const latR = lat * Math.PI / 180;
-  const mercN = Math.log(Math.tan(Math.PI / 4 + latR / 2));
-  const y = H / 2 - (mercN / Math.PI) * H / 2;
+  const y = ((LAT_MAX - lat) / (LAT_MAX - LAT_MIN)) * H;
   return { x, y };
 }
 
@@ -300,6 +300,39 @@ const SVG_W = 900, SVG_H = 265;
 if (svgEl) {
   document.head.insertAdjacentHTML('beforeend',
     '<style>@keyframes mpulse{0%{r:4;opacity:0.5}100%{r:22;opacity:0}}</style>');
+
+  // ── World land outlines ──────────────────────────────────────────
+  function geoFeatureToPath(feature) {
+    const geom = feature.geometry;
+    if (!geom) return '';
+    function ringToD(ring) {
+      let d = '';
+      ring.forEach(([lon, lat], i) => {
+        const { x, y } = project(Math.max(-85, Math.min(85, lat)), lon, SVG_W, SVG_H);
+        d += (i === 0 ? 'M' : 'L') + x.toFixed(1) + ',' + y.toFixed(1);
+      });
+      return d + 'Z';
+    }
+    if (geom.type === 'Polygon') return geom.coordinates.map(ringToD).join(' ');
+    if (geom.type === 'MultiPolygon') return geom.coordinates.flatMap(p => p.map(ringToD)).join(' ');
+    return '';
+  }
+
+  fetch('https://cdn.jsdelivr.net/npm/world-atlas@2/countries-110m.json')
+    .then(r => r.json())
+    .then(world => {
+      topojson.feature(world, world.objects.countries).features.forEach(feature => {
+        const d = geoFeatureToPath(feature);
+        if (!d) return;
+        const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+        path.setAttribute('d', d);
+        path.setAttribute('fill', 'rgba(124,130,232,0.07)');
+        path.setAttribute('stroke', 'rgba(124,130,232,0.18)');
+        path.setAttribute('stroke-width', '0.3');
+        svgEl.insertBefore(path, svgEl.firstChild);
+      });
+    })
+    .catch(() => {});
 
   for (let lon = -180; lon <= 180; lon += 30) {
     const { x } = project(0, lon, SVG_W, SVG_H);
