@@ -1,0 +1,1397 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>ERA Gymnastics — Empower. Respect. Achieve.</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700;800;900&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet" />
+<style>
+  :root {
+    --pink:   #f72585;
+    --mag:    #b5179e;
+    --pur:    #7209b7;
+    --dpur:   #560bad;
+    --bpbl:   #3f37c9;
+    --blue:   #4361ee;
+    --sky:    #4895ef;
+    --cyan:   #4cc9f0;
+    --bg:     #07070f;
+    --bg2:    #0d0d1a;
+    --bg3:    #111122;
+    --text:   #e8e8f5;
+    --muted:  #8888aa;
+    --border: rgba(255,255,255,0.07);
+    --grad-h: linear-gradient(135deg, var(--pink), var(--pur), var(--blue));
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 16px;
+    line-height: 1.6;
+    overflow-x: hidden;
+  }
+
+  /* ── NAV ── */
+  nav#main-nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 2.5rem;
+    height: 68px;
+    background: rgba(7,7,15,0.88);
+    backdrop-filter: blur(14px);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .nav-logo {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    flex-shrink: 0;
+  }
+
+  .nav-logo img {
+    height: 44px;
+    width: auto;
+    object-fit: contain;
+    filter: brightness(1.1) saturate(1.1);
+  }
+
+  .nav-links {
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+    list-style: none;
+  }
+
+  .nav-links a {
+    color: var(--muted);
+    text-decoration: none;
+    font-size: 0.875rem;
+    font-weight: 500;
+    letter-spacing: 0.02em;
+    transition: color 0.2s;
+  }
+
+  .nav-links a:hover { color: var(--text); }
+
+  .nav-ctas {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+  }
+
+  .btn-outline {
+    border: 1.5px solid rgba(255,255,255,0.25);
+    color: var(--text);
+    background: transparent;
+    padding: 0.45rem 1.1rem;
+    border-radius: 6px;
+    font-size: 0.875rem;
+    font-weight: 500;
+    cursor: pointer;
+    text-decoration: none;
+    transition: border-color 0.2s, color 0.2s;
+    white-space: nowrap;
+  }
+
+  .btn-outline:hover { border-color: var(--cyan); color: var(--cyan); }
+
+  .btn-trial {
+    background: var(--grad-h);
+    color: #fff;
+    border: none;
+    padding: 0.5rem 1.25rem;
+    border-radius: 6px;
+    font-size: 0.875rem;
+    font-weight: 600;
+    cursor: pointer;
+    text-decoration: none;
+    transition: opacity 0.2s, transform 0.15s;
+    white-space: nowrap;
+  }
+
+  .btn-trial:hover { opacity: 0.88; transform: translateY(-1px); }
+
+  /* ── HAMBURGER ── */
+  .hamburger {
+    display: none;
+    flex-direction: column;
+    gap: 5px;
+    cursor: pointer;
+    padding: 6px;
+    border: none;
+    background: none;
+  }
+
+  .hamburger span {
+    display: block;
+    width: 22px;
+    height: 2px;
+    background: var(--text);
+    border-radius: 2px;
+    transition: transform 0.3s, opacity 0.3s;
+  }
+
+  .hamburger.active span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+  .hamburger.active span:nth-child(2) { opacity: 0; }
+  .hamburger.active span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+  /* ── MOBILE MENU ── */
+  #mobile-menu {
+    display: none;
+    position: fixed;
+    top: 68px; left: 0; right: 0;
+    background: rgba(7,7,15,0.97);
+    backdrop-filter: blur(14px);
+    border-bottom: 1px solid var(--border);
+    padding: 1.25rem 2rem 1.75rem;
+    z-index: 999;
+    flex-direction: column;
+  }
+
+  #mobile-menu.open { display: flex; }
+
+  #mobile-menu a {
+    color: var(--muted);
+    text-decoration: none;
+    font-size: 1rem;
+    font-weight: 500;
+    padding: 0.75rem 0;
+    border-bottom: 1px solid var(--border);
+    transition: color 0.2s;
+    display: block;
+  }
+
+  #mobile-menu a:hover { color: var(--text); }
+
+  .mobile-ctas {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    margin-top: 1.25rem;
+  }
+
+  .mobile-ctas a { text-align: center; }
+
+  /* ── HERO ── */
+  #hero {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    position: relative;
+    overflow: hidden;
+    padding-top: 68px;
+  }
+
+  .hero-bg-img {
+    position: absolute;
+    inset: 0;
+    background-image: url('https://images.squarespace-cdn.com/content/v1/62b115995b1e6e568892bc45/3e32078d-d993-41b1-8bb2-d06d8377c74f/MKI_7559.JPG');
+    background-size: cover;
+    background-position: center 20%;
+    filter: brightness(0.3) saturate(0.7);
+  }
+
+  .hero-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg,
+      rgba(114,9,183,0.55) 0%,
+      rgba(7,7,15,0.55) 40%,
+      rgba(7,7,15,0.85) 100%);
+  }
+
+  .orb {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(80px);
+    animation: drift 8s ease-in-out infinite alternate;
+    pointer-events: none;
+  }
+
+  .orb1 { width:380px; height:380px; background:var(--pur);  top:10%;    right:8%;  opacity:0.4; animation-delay:0s; }
+  .orb2 { width:260px; height:260px; background:var(--pink); bottom:15%; left:5%;   opacity:0.35; animation-delay:2s; }
+  .orb3 { width:220px; height:220px; background:var(--cyan); top:55%;    right:28%; opacity:0.2; animation-delay:4s; }
+
+  @keyframes drift {
+    from { transform: translate(0,0) scale(1); }
+    to   { transform: translate(28px,-18px) scale(1.05); }
+  }
+
+  .hero-content {
+    position: relative;
+    z-index: 1;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 2.5rem;
+  }
+
+  .hero-tag {
+    display: inline-block;
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--cyan);
+    background: rgba(76,201,240,0.1);
+    border: 1px solid rgba(76,201,240,0.25);
+    padding: 0.35rem 0.85rem;
+    border-radius: 100px;
+    margin-bottom: 1.5rem;
+    animation: fadeUp 0.6s ease both;
+  }
+
+  .hero-title {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 900;
+    font-size: clamp(4rem, 10vw, 8.5rem);
+    line-height: 0.92;
+    text-transform: uppercase;
+    animation: fadeUp 0.6s 0.1s ease both;
+  }
+
+  .line-grad {
+    background: var(--grad-h);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .line-white { color: #fff; }
+
+  .hero-motto {
+    margin-top: 0.75rem;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 1.3rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    color: rgba(255,255,255,0.45);
+    text-transform: uppercase;
+    animation: fadeUp 0.6s 0.2s ease both;
+  }
+
+  .hero-motto span { color: rgba(255,255,255,0.65); }
+
+  .hero-sub {
+    margin-top: 1.5rem;
+    font-size: 1.05rem;
+    color: rgba(232,232,245,0.75);
+    max-width: 500px;
+    line-height: 1.7;
+    animation: fadeUp 0.6s 0.25s ease both;
+  }
+
+  .hero-actions {
+    display: flex;
+    gap: 1rem;
+    margin-top: 2.25rem;
+    flex-wrap: wrap;
+    animation: fadeUp 0.6s 0.35s ease both;
+  }
+
+  .btn-primary {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: var(--grad-h);
+    color: #fff;
+    border: none;
+    padding: 0.9rem 2rem;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    text-decoration: none;
+    transition: opacity 0.2s, transform 0.15s;
+  }
+
+  .btn-primary:hover { opacity: 0.88; transform: translateY(-2px); }
+
+  .btn-secondary {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: rgba(255,255,255,0.08);
+    border: 1.5px solid rgba(255,255,255,0.22);
+    color: var(--text);
+    padding: 0.9rem 2rem;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 500;
+    cursor: pointer;
+    text-decoration: none;
+    transition: background 0.2s, border-color 0.2s;
+  }
+
+  .btn-secondary:hover { background: rgba(255,255,255,0.12); border-color: rgba(255,255,255,0.38); }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(22px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ── STATS BAR ── */
+  .stats-bar {
+    background: var(--bg2);
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+    padding: 1.5rem 2.5rem;
+    display: flex;
+    justify-content: center;
+    gap: 3rem;
+    flex-wrap: wrap;
+  }
+
+  .stat-item { text-align: center; }
+
+  .stat-num {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 2rem;
+    font-weight: 800;
+    background: var(--grad-h);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    line-height: 1;
+  }
+
+  .stat-label {
+    font-size: 0.78rem;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-top: 0.2rem;
+  }
+
+  /* ── CAROUSEL ── */
+  #announcements {
+    background: var(--bg);
+    padding: 5rem 2.5rem;
+  }
+
+  .carousel-wrap { max-width: 1200px; margin: 0 auto; }
+
+  .carousel-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    margin-bottom: 2rem;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+
+  .carousel-controls { display: flex; gap: 0.5rem; }
+
+  .carousel-btn {
+    width: 38px; height: 38px;
+    border-radius: 50%;
+    border: 1.5px solid var(--border);
+    background: var(--bg2);
+    color: var(--text);
+    font-size: 1.1rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: border-color 0.2s, background 0.2s;
+  }
+
+  .carousel-btn:hover { border-color: var(--cyan); background: rgba(76,201,240,0.1); }
+
+  .carousel-track-outer { overflow: hidden; border-radius: 14px; }
+
+  .carousel-track {
+    display: flex;
+    gap: 1.25rem;
+    transition: transform 0.45s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  }
+
+  .carousel-slide {
+    flex: 0 0 calc(33.333% - 0.85rem);
+    min-width: 0;
+    border-radius: 14px;
+    overflow: hidden;
+    position: relative;
+    aspect-ratio: 4/3;
+    background: var(--bg3);
+    border: 1px solid var(--border);
+  }
+
+  .slide-img {
+    width: 100%; height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.4s;
+  }
+
+  .carousel-slide:hover .slide-img { transform: scale(1.04); }
+
+  .slide-overlay {
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    background: linear-gradient(to top, rgba(7,7,15,0.95) 0%, rgba(7,7,15,0.55) 55%, transparent 100%);
+    padding: 1.5rem 1.25rem 1.25rem;
+  }
+
+  .slide-tag {
+    font-size: 0.68rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    padding: 0.25rem 0.6rem;
+    border-radius: 100px;
+    display: inline-block;
+    margin-bottom: 0.5rem;
+  }
+
+  .tag-news    { background: rgba(247,37,133,0.2);  color: var(--pink); }
+  .tag-event   { background: rgba(76,201,240,0.15); color: var(--cyan); }
+  .tag-camp    { background: rgba(114,9,183,0.25);  color: #c87aff; }
+  .tag-opengym { background: rgba(67,97,238,0.2);   color: #8ca8ff; }
+
+  .slide-title {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 1.25rem;
+    font-weight: 700;
+    line-height: 1.15;
+    color: #fff;
+    margin-bottom: 0.35rem;
+    text-transform: uppercase;
+  }
+
+  .slide-desc { font-size: 0.8rem; color: rgba(232,232,245,0.65); line-height: 1.5; }
+
+  .slide-announce {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 2rem;
+  }
+
+  .slide-announce .slide-desc { color: var(--muted); font-size: 0.9rem; line-height: 1.65; margin-top: 0.5rem; }
+
+  .carousel-dots {
+    display: flex;
+    justify-content: center;
+    gap: 0.5rem;
+    margin-top: 1.5rem;
+  }
+
+  .carousel-dot {
+    width: 7px; height: 7px;
+    border-radius: 50%;
+    background: var(--border);
+    border: none;
+    cursor: pointer;
+    transition: background 0.2s, transform 0.2s;
+    padding: 0;
+  }
+
+  .carousel-dot.active { background: var(--pink); transform: scale(1.3); }
+
+  /* ── SECTIONS ── */
+  section { padding: 6rem 2.5rem; }
+  .container { max-width: 1200px; margin: 0 auto; }
+
+  .section-tag {
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--pink);
+    margin-bottom: 0.75rem;
+  }
+
+  .section-title {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: clamp(2.2rem, 5vw, 3.5rem);
+    font-weight: 800;
+    line-height: 1.05;
+    text-transform: uppercase;
+    margin-bottom: 1rem;
+  }
+
+  .section-desc {
+    color: var(--muted);
+    max-width: 560px;
+    line-height: 1.7;
+    margin-bottom: 3rem;
+  }
+
+  /* ── CLASSES ── */
+  #classes { background: var(--bg2); }
+
+  .class-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 1.25rem;
+  }
+
+  .class-card {
+    background: var(--bg3);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 1.75rem;
+    position: relative;
+    overflow: hidden;
+    transition: border-color 0.25s, transform 0.2s, opacity 0.5s;
+  }
+
+  .class-card::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: var(--card-grad, var(--grad-h));
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+
+  .class-card:hover::before { opacity: 0.05; }
+  .class-card:hover { border-color: rgba(255,255,255,0.18); transform: translateY(-3px); }
+
+  .card-icon { font-size: 2rem; margin-bottom: 1rem; }
+
+  .card-age {
+    font-size: 0.72rem; font-weight: 600;
+    letter-spacing: 0.1em; text-transform: uppercase;
+    color: var(--pink); margin-bottom: 0.4rem;
+  }
+
+  .class-card h3 {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 1.5rem; font-weight: 700;
+    text-transform: uppercase; margin-bottom: 0.75rem;
+  }
+
+  .class-card p { font-size: 0.875rem; color: var(--muted); line-height: 1.65; margin-bottom: 1rem; }
+
+  .class-schedule {
+    font-size: 0.78rem; font-weight: 600;
+    color: var(--cyan);
+    background: rgba(76,201,240,0.08);
+    border: 1px solid rgba(76,201,240,0.18);
+    border-radius: 6px;
+    padding: 0.5rem 0.75rem;
+    line-height: 1.55;
+  }
+
+  .tuition-card {
+    background: linear-gradient(135deg, rgba(247,37,133,0.12), rgba(67,97,238,0.12));
+    border: 1px solid rgba(247,37,133,0.25) !important;
+    text-align: center;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    gap: 0.5rem;
+  }
+
+  .price {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 4rem; font-weight: 900;
+    background: var(--grad-h);
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    background-clip: text; line-height: 1;
+  }
+
+  .price-label { color: var(--muted); font-size: 0.875rem; }
+  .discount { margin-top: 0.5rem; font-size: 0.85rem; color: var(--cyan); }
+
+  /* ── TEAM ── */
+  #team { background: var(--bg); }
+
+  .team-photos {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.25rem;
+    margin-bottom: 2rem;
+  }
+
+  .team-photo-frame {
+    border-radius: 12px;
+    overflow: hidden;
+    border: 1px solid var(--border);
+    aspect-ratio: 4/3;
+  }
+
+  .team-photo-frame img {
+    width: 100%; height: 100%;
+    object-fit: cover;
+    transition: transform 0.4s;
+  }
+
+  .team-photo-frame:hover img { transform: scale(1.04); }
+
+  .team-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 1.25rem;
+    margin-bottom: 2.5rem;
+  }
+
+  .team-tier {
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 2rem;
+    transition: border-color 0.25s, transform 0.2s;
+  }
+
+  .team-tier:hover { border-color: rgba(255,255,255,0.18); transform: translateY(-3px); }
+
+  .tier-badge {
+    display: inline-block;
+    font-size: 0.7rem; font-weight: 700;
+    letter-spacing: 0.12em; text-transform: uppercase;
+    padding: 0.3rem 0.75rem; border-radius: 100px; margin-bottom: 1rem;
+  }
+
+  .tier-preteam .tier-badge { background: rgba(76,201,240,0.15);  color: var(--cyan); }
+  .tier-xcel    .tier-badge { background: rgba(247,37,133,0.15);  color: var(--pink); }
+  .tier-dev     .tier-badge { background: rgba(114,9,183,0.2);    color: #c87aff; }
+
+  .team-tier h3 {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 1.6rem; font-weight: 800;
+    text-transform: uppercase; margin-bottom: 0.75rem;
+  }
+
+  .team-tier p { font-size: 0.875rem; color: var(--muted); line-height: 1.7; }
+  .tier-detail { margin-top: 1rem; font-size: 0.8rem; color: rgba(255,255,255,0.4); }
+
+  .team-invite {
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-left: 3px solid var(--pink);
+    border-radius: 0 12px 12px 0;
+    padding: 1.5rem 2rem;
+    font-size: 0.9rem; color: var(--muted); line-height: 1.7;
+  }
+
+  .team-invite strong { color: var(--text); }
+
+  /* ── INFO ── */
+  #info { background: var(--bg2); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+
+  .info-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 2rem; }
+
+  .info-block h3 {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 1.25rem; font-weight: 700;
+    text-transform: uppercase; margin-bottom: 1rem; color: #fff;
+  }
+
+  .info-block p { font-size: 0.875rem; color: var(--muted); line-height: 1.8; }
+
+  .open-gym-card {
+    background: linear-gradient(135deg, rgba(76,201,240,0.08), rgba(67,97,238,0.08));
+    border: 1px solid rgba(76,201,240,0.2);
+    border-radius: 10px;
+    padding: 1.25rem 1.5rem;
+    margin-top: 0.75rem;
+    font-size: 0.875rem; color: var(--muted); line-height: 1.8;
+  }
+
+  .open-gym-card strong { color: var(--cyan); display: block; margin-bottom: 0.35rem; font-size: 0.95rem; }
+
+  .hours-table { width: 100%; border-collapse: collapse; }
+  .hours-table td { padding: 0.45rem 0; font-size: 0.875rem; }
+  .hours-table td:first-child { color: var(--muted); width: 110px; }
+  .hours-table td:last-child { color: var(--text); font-weight: 500; }
+  .hours-table tr.closed td { color: rgba(255,255,255,0.25); }
+
+  /* ── ADULT ── */
+  #adult { background: var(--bg); }
+
+  .adult-inner {
+    background: linear-gradient(135deg, rgba(114,9,183,0.15), rgba(67,97,238,0.1));
+    border: 1px solid rgba(114,9,183,0.3);
+    border-radius: 16px;
+    padding: 3.5rem;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 3rem;
+    align-items: center;
+  }
+
+  .adult-inner h2 {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: clamp(2rem, 4vw, 3rem); font-weight: 800;
+    text-transform: uppercase; line-height: 1.05; margin-bottom: 1rem;
+  }
+
+  .adult-inner p { color: var(--muted); font-size: 0.95rem; line-height: 1.7; margin-bottom: 1.5rem; }
+
+  /* ── CTA BANNER ── */
+  .cta-banner {
+    background: linear-gradient(135deg, var(--pink) 0%, var(--pur) 50%, var(--blue) 100%);
+    padding: 5rem 2.5rem;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .cta-banner::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Ccircle cx='30' cy='30' r='1' fill='rgba(255,255,255,0.1)'/%3E%3C/svg%3E") repeat;
+  }
+
+  .cta-banner h2 {
+    position: relative;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: clamp(2.5rem, 6vw, 4rem); font-weight: 900;
+    text-transform: uppercase; color: #fff; margin-bottom: 0.75rem;
+  }
+
+  .cta-banner p { position: relative; color: rgba(255,255,255,0.75); margin-bottom: 2rem; }
+
+  .btn-white {
+    position: relative;
+    display: inline-flex; align-items: center; gap: 0.5rem;
+    background: #fff; color: var(--pur); border: none;
+    padding: 0.9rem 2.25rem; border-radius: 8px;
+    font-size: 1rem; font-weight: 700; cursor: pointer;
+    text-decoration: none;
+    transition: opacity 0.2s, transform 0.15s;
+  }
+
+  .btn-white:hover { opacity: 0.9; transform: translateY(-2px); }
+
+  /* ── CONTACT ── */
+  #contact { background: var(--bg2); }
+  .contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: start; }
+  .contact-detail { display: flex; flex-direction: column; gap: 1.25rem; margin-top: 1rem; }
+  .contact-item { display: flex; gap: 0.75rem; align-items: flex-start; }
+  .c-icon { font-size: 1.1rem; margin-top: 0.1rem; flex-shrink: 0; }
+  .c-label { font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--muted); margin-bottom: 0.2rem; }
+  .c-val { font-size: 0.95rem; color: var(--text); font-weight: 500; }
+  .c-val a { color: var(--cyan); text-decoration: none; }
+
+  /* ── FOOTER ── */
+  footer {
+    background: var(--bg);
+    border-top: 1px solid var(--border);
+    padding: 2.5rem;
+    display: flex; align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap; gap: 1.25rem;
+  }
+
+  .footer-logo {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 900; font-size: 1.4rem;
+    background: var(--grad-h);
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .footer-links { display: flex; gap: 1.75rem; list-style: none; flex-wrap: wrap; }
+  .footer-links a { color: var(--muted); text-decoration: none; font-size: 0.85rem; transition: color 0.2s; }
+  .footer-links a:hover { color: var(--text); }
+  .footer-copy { font-size: 0.78rem; color: rgba(255,255,255,0.2); }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 900px) {
+    .nav-links { display: none; }
+    .hamburger { display: flex; }
+    .team-grid    { grid-template-columns: 1fr; }
+    .info-grid    { grid-template-columns: 1fr; }
+    .contact-grid { grid-template-columns: 1fr; }
+    .adult-inner  { grid-template-columns: 1fr; padding: 2rem; }
+    .team-photos  { grid-template-columns: 1fr; }
+    .carousel-slide { flex: 0 0 calc(100% - 1.25rem); }
+    section { padding: 4rem 1.5rem; }
+    #announcements { padding: 4rem 1.5rem; }
+    .stats-bar { gap: 1.5rem; }
+  }
+
+  @media (max-width: 600px) {
+    nav#main-nav { padding: 0 1.25rem; }
+    .nav-ctas .btn-trial { display: none; }
+    .carousel-slide { flex: 0 0 100%; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="main-nav">
+  <a href="#hero" class="nav-logo">
+    <img src="https://images.squarespace-cdn.com/content/v1/62b115995b1e6e568892bc45/07023939-a6d9-477c-82a5-f6b06215a0d8/Untitled+design+%2828%29.jpg?format=1500w" alt="ERA Gymnastics" />
+  </a>
+  <ul class="nav-links">
+    <li><a href="#announcements">News</a></li>
+    <li><a href="#classes">Classes</a></li>
+    <li><a href="#team">Team</a></li>
+    <li><a href="#info">Open Gym</a></li>
+    <li><a href="#adult">Adults</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <div class="nav-ctas">
+    <a href="https://eragymnastics.com/parent-portal" target="_blank" class="btn-outline">Login</a>
+    <a href="https://eragymnastics.com/try-a-class" target="_blank" class="btn-trial">Schedule a Free Trial</a>
+    <button class="hamburger" id="hamburger" aria-label="Toggle menu" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+
+<!-- MOBILE MENU -->
+<div id="mobile-menu" role="navigation" aria-label="Mobile navigation">
+  <a href="#announcements">News</a>
+  <a href="#classes">Classes</a>
+  <a href="#team">Team</a>
+  <a href="#info">Open Gym</a>
+  <a href="#adult">Adults</a>
+  <a href="#contact">Contact</a>
+  <div class="mobile-ctas">
+    <a href="https://eragymnastics.com/parent-portal" target="_blank" class="btn-outline">Login</a>
+    <a href="https://eragymnastics.com/try-a-class" target="_blank" class="btn-trial">Schedule a Free Trial</a>
+  </div>
+</div>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-bg-img"></div>
+  <div class="hero-overlay"></div>
+  <div class="orb orb1"></div>
+  <div class="orb orb2"></div>
+  <div class="orb orb3"></div>
+  <div class="hero-content">
+    <div class="hero-tag">&#128205; Anaheim, CA &mdash; Community Gymnastics Nonprofit</div>
+    <h1 class="hero-title">
+      <div class="line-grad">ERA</div>
+      <div class="line-white">Gymnastics</div>
+    </h1>
+    <p class="hero-motto">
+      <span>Empower</span> &nbsp;&#9670;&nbsp; <span>Respect</span> &nbsp;&#9670;&nbsp; <span>Achieve</span>
+    </p>
+    <p class="hero-sub">
+      World-class gymnastics for the Anaheim community. From toddlers to adults, we build athletes and humans you can be proud of.
+    </p>
+    <div class="hero-actions">
+      <a href="https://eragymnastics.com/try-a-class" target="_blank" class="btn-primary">
+        Schedule a Free Trial
+      </a>
+      <a href="#classes" class="btn-secondary">
+        Explore Classes &rarr;
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- STATS BAR -->
+<div class="stats-bar">
+  <div class="stat-item">
+    <div class="stat-num">18mo+</div>
+    <div class="stat-label">Starting Age</div>
+  </div>
+  <div class="stat-item">
+    <div class="stat-num">$110</div>
+    <div class="stat-label">Monthly Tuition</div>
+  </div>
+  <div class="stat-item">
+    <div class="stat-num">10+</div>
+    <div class="stat-label">Class Types</div>
+  </div>
+  <div class="stat-item">
+    <div class="stat-num">6 Days</div>
+    <div class="stat-label">Per Week</div>
+  </div>
+  <div class="stat-item">
+    <div class="stat-num">Nonprofit</div>
+    <div class="stat-label">Community Mission</div>
+  </div>
+</div>
+
+<!-- ANNOUNCEMENTS CAROUSEL -->
+<section id="announcements">
+  <div class="carousel-wrap">
+    <div class="carousel-header">
+      <div>
+        <div class="section-tag">What's happening</div>
+        <h2 class="section-title" style="margin-bottom:0">ERA News &amp; Updates</h2>
+      </div>
+      <div class="carousel-controls">
+        <button class="carousel-btn" id="carousel-prev" aria-label="Previous">&larr;</button>
+        <button class="carousel-btn" id="carousel-next" aria-label="Next">&rarr;</button>
+      </div>
+    </div>
+
+    <div class="carousel-track-outer">
+      <div class="carousel-track" id="carousel-track">
+
+        <div class="carousel-slide slide-announce" style="background:linear-gradient(135deg,rgba(114,9,183,0.3),rgba(67,97,238,0.2));border-color:rgba(114,9,183,0.3)">
+          <div class="slide-tag tag-camp">Summer Camp</div>
+          <div class="slide-title">Summer Camp 2025 Dates Are Live</div>
+          <div class="slide-desc">Summer camp dates and prices have been posted. Spots fill fast &mdash; head to our Events page to register before it's too late.</div>
+          <div style="margin-top:1.25rem">
+            <a href="https://eragymnastics.com/events" target="_blank" class="btn-primary" style="font-size:0.85rem;padding:0.6rem 1.2rem">View Events &rarr;</a>
+          </div>
+        </div>
+
+        <div class="carousel-slide">
+          <img class="slide-img" src="https://images.squarespace-cdn.com/content/v1/62b115995b1e6e568892bc45/3e32078d-d993-41b1-8bb2-d06d8377c74f/MKI_7559.JPG" alt="ERA Gymnastics team at competition" loading="lazy" />
+          <div class="slide-overlay">
+            <div class="slide-tag tag-event">Competition</div>
+            <div class="slide-title">ERA Team at the Meet</div>
+            <div class="slide-desc">Our athletes compete locally and across the country, building friendships and confidence along the way.</div>
+          </div>
+        </div>
+
+        <div class="carousel-slide">
+          <img class="slide-img" src="https://images.squarespace-cdn.com/content/v1/62b115995b1e6e568892bc45/353c50aa-f565-437c-8e8d-a9b6ba687098/IMG_6073.jpg" alt="ERA gymnast competing on bars" loading="lazy" />
+          <div class="slide-overlay">
+            <div class="slide-tag tag-news">Girls Academy</div>
+            <div class="slide-title">All Four Olympic Events</div>
+            <div class="slide-desc">Girls Academy athletes train on vault, bars, beam, and floor. Ages 7 to 17 welcome.</div>
+          </div>
+        </div>
+
+        <div class="carousel-slide">
+          <img class="slide-img" src="https://images.squarespace-cdn.com/content/v1/62b115995b1e6e568892bc45/a5c6c195-aaf2-4af4-9903-4964fdfb8eb5/MKI_7326.jpg" alt="ERA gymnast on floor routine" loading="lazy" />
+          <div class="slide-overlay">
+            <div class="slide-tag tag-event">Floor Exercise</div>
+            <div class="slide-title">Tumbling, Expression &amp; Power</div>
+            <div class="slide-desc">Floor exercise combines tumbling and artistry. Our coaches build the skills and confidence to shine.</div>
+          </div>
+        </div>
+
+        <div class="carousel-slide slide-announce" style="background:linear-gradient(135deg,rgba(76,201,240,0.15),rgba(63,55,201,0.15));border-color:rgba(76,201,240,0.25)">
+          <div class="slide-tag tag-opengym">Open Gym</div>
+          <div class="slide-title">Every Thursday 7&ndash;8pm</div>
+          <div class="slide-desc">$15 drop-in for ages 7 and up. Non-enrolled students need a signed release form from a parent or legal guardian.</div>
+          <div style="margin-top:1.25rem">
+            <a href="#info" class="btn-secondary" style="font-size:0.85rem;padding:0.6rem 1.2rem">Learn More &rarr;</a>
+          </div>
+        </div>
+
+        <div class="carousel-slide slide-announce" style="background:linear-gradient(135deg,rgba(247,37,133,0.2),rgba(114,9,183,0.15));border-color:rgba(247,37,133,0.3)">
+          <div class="slide-tag tag-news">New Families</div>
+          <div class="slide-title">Your First Class Is Free</div>
+          <div class="slide-desc">Not sure which class is the right fit? Schedule a free trial and see for yourself. No pressure, no commitment.</div>
+          <div style="margin-top:1.25rem">
+            <a href="https://eragymnastics.com/try-a-class" target="_blank" class="btn-primary" style="font-size:0.85rem;padding:0.6rem 1.2rem">Schedule a Trial &rarr;</a>
+          </div>
+        </div>
+
+      </div>
+    </div>
+    <div class="carousel-dots" id="carousel-dots"></div>
+  </div>
+</section>
+
+<!-- CLASSES -->
+<section id="classes">
+  <div class="container">
+    <div style="margin-bottom:3rem">
+      <div class="section-tag">Recreational Programs</div>
+      <h2 class="section-title">Find Your Class</h2>
+      <p class="section-desc" style="margin-bottom:0">One hour lessons, once a week. Every class is designed to meet your child where they are and grow them into confident, capable athletes.</p>
+    </div>
+
+    <div class="class-grid">
+
+      <div class="class-card" style="--card-grad:linear-gradient(135deg,var(--cyan),var(--blue))">
+        <div class="card-icon">&#128118;</div>
+        <div class="card-age">18 months &ndash; 3 years</div>
+        <h3>Parent Tot</h3>
+        <p>Bond with your little one through movement and play. Guided activities, obstacle courses, and age-appropriate equipment build coordination, social skills, and early fundamentals.</p>
+        <div class="class-schedule">SAT 9:00am &middot; 10:15am</div>
+      </div>
+
+      <div class="class-card" style="--card-grad:linear-gradient(135deg,var(--pink),var(--mag))">
+        <div class="card-icon">&#11088;</div>
+        <div class="card-age">3 &amp; 4 year olds</div>
+        <h3>Littles</h3>
+        <p>Tumble, jump, and smile through colorful equipment and creative movement games. Builds coordination, confidence, and social skills in a safe and encouraging environment.</p>
+        <div class="class-schedule">MON&ndash;THU 3:30 &middot; 4:45 &middot; 6:00pm<br>FRI 3:30 &middot; 4:45pm<br>SAT 9:00 &middot; 10:15 &middot; 11:30am</div>
+      </div>
+
+      <div class="class-card" style="--card-grad:linear-gradient(135deg,var(--pur),var(--blue))">
+        <div class="card-icon">&#129336;</div>
+        <div class="card-age">5 year olds</div>
+        <h3>Juniors</h3>
+        <p>Flip, tumble, and leap into fun. Explores rolls, cartwheels, jumps, and balance. A perfect mix of structure and silliness where young gymnasts can shine, make friends, and feel like superstars.</p>
+        <div class="class-schedule">MON&ndash;THU 3:30 &middot; 4:45 &middot; 6:00pm<br>FRI 3:30 &middot; 4:45pm<br>SAT 9:00 &middot; 10:15 &middot; 11:30am</div>
+      </div>
+
+      <div class="class-card" style="--card-grad:linear-gradient(135deg,var(--blue),var(--cyan))">
+        <div class="card-icon">&#11088;</div>
+        <div class="card-age">6 year olds</div>
+        <h3>Elites</h3>
+        <p>The perfect blend of fun, fitness, and foundational skills. Introduces handstands, cartwheels, and balance on kid-friendly equipment. Every child shines at their own pace.</p>
+        <div class="class-schedule">MON&ndash;THU 3:30 &middot; 4:45 &middot; 6:00pm<br>SAT 9:00 &middot; 10:15 &middot; 11:30am</div>
+      </div>
+
+      <div class="class-card" style="--card-grad:linear-gradient(135deg,var(--pink),var(--pur))">
+        <div class="card-icon">&#127885;</div>
+        <div class="card-age">7 &ndash; 17 years</div>
+        <h3>Girls Academy</h3>
+        <p>All four Olympic events &mdash; vault, uneven bars, balance beam, and floor &mdash; plus trampoline. Gymnasts progress through a structured six-level system at their own pace.</p>
+        <div class="class-schedule">MON&ndash;TUE 3:30 &middot; 4:45 &middot; 6:00 &middot; 7:00pm<br>WED&ndash;THU 3:30 &middot; 4:45 &middot; 6:00pm<br>FRI 3:30 &middot; 4:45pm &middot; SAT 9:00&ndash;11:30am</div>
+      </div>
+
+      <div class="class-card" style="--card-grad:linear-gradient(135deg,var(--mag),var(--pink))">
+        <div class="card-icon">&#129355;</div>
+        <div class="card-age">5 &ndash; 17 years</div>
+        <h3>Ninja</h3>
+        <p>The ultimate fusion of gymnastics, martial arts, obstacle course training, and freestyle movement. Flips, kicks, vaults, and agility courses that build focus, confidence, and discipline.</p>
+        <div class="class-schedule">Ages 5&ndash;6: MON 3:30pm<br>Ages 7+: WED 3:30 &middot; THU 4:45<br>FRI 3:30 &middot; 4:45 &middot; SAT 11:30am</div>
+      </div>
+
+      <div class="class-card" style="--card-grad:linear-gradient(135deg,var(--bpbl),var(--sky))">
+        <div class="card-icon">&#128170;</div>
+        <div class="card-age">7 &ndash; 17 years</div>
+        <h3>Tumbling</h3>
+        <p>From first cartwheels to advanced back handsprings and tucks. Focused exclusively on floor skills with personalized instruction. Perfect for gymnasts, cheerleaders, and dancers.</p>
+        <div class="class-schedule">TUE 7:00pm &middot; FRI 3:30 &middot; 4:45pm</div>
+      </div>
+
+      <div class="class-card" style="--card-grad:linear-gradient(135deg,var(--pur),var(--mag))">
+        <div class="card-icon">&#128257;</div>
+        <div class="card-age">7 &ndash; 17 years</div>
+        <h3>Back Handspring</h3>
+        <p>Flip with confidence. Drills, progressions, and technique for one of the most sought-after skills in gymnastics and cheer. Strong emphasis on safety, body control, and proper form.</p>
+        <div class="class-schedule">WED 7:00pm</div>
+      </div>
+
+      <div class="class-card" style="--card-grad:linear-gradient(135deg,var(--cyan),var(--pur))">
+        <div class="card-icon">&#127942;</div>
+        <div class="card-age">7 &ndash; 17 years</div>
+        <h3>Team Interest</h3>
+        <p>Ready to train like a champion? This 1.5-hour class is high-energy and technique-focused. Work on strength, flexibility, and the key skills needed for team placement consideration.</p>
+        <div class="class-schedule">WED 5:30pm &middot; FRI 5:30pm<br><span style="color:var(--pink)">$155/month</span></div>
+      </div>
+
+      <div class="class-card tuition-card">
+        <div class="price">$110</div>
+        <div class="price-label">per month, based on 4 lessons</div>
+        <div class="discount">$10 off a second class or second student</div>
+        <div style="margin-top:1.25rem">
+          <a href="tel:7147791888" class="btn-primary" style="font-size:0.85rem;padding:0.65rem 1.35rem">(714) 779-1888</a>
+        </div>
+        <p style="font-size:0.78rem;color:var(--muted);margin-top:0.75rem">Call or email to schedule based on availability</p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- TEAM -->
+<section id="team">
+  <div class="container">
+    <div class="section-tag">Competitive Programs</div>
+    <h2 class="section-title">ERA Team</h2>
+    <p class="section-desc">ERA athletes compete locally and across the country. We build great work habits, team-building skills, a love for the sport, and life-long friendships. Team positions are by invitation only.</p>
+
+    <div class="team-photos">
+      <div class="team-photo-frame">
+        <img src="https://images.squarespace-cdn.com/content/v1/62b115995b1e6e568892bc45/353c50aa-f565-437c-8e8d-a9b6ba687098/IMG_6073.jpg" alt="ERA gymnast competing on bars" loading="lazy" />
+      </div>
+      <div class="team-photo-frame">
+        <img src="https://images.squarespace-cdn.com/content/v1/62b115995b1e6e568892bc45/a5c6c195-aaf2-4af4-9903-4964fdfb8eb5/MKI_7326.jpg" alt="ERA gymnast competing on floor" loading="lazy" />
+      </div>
+    </div>
+
+    <div class="team-grid">
+      <div class="team-tier tier-preteam">
+        <div class="tier-badge">Ages 5 &ndash; 9</div>
+        <h3>Pre-Team</h3>
+        <p>Introduced to the structure of team gymnastics through event coaching, strength training, and flexibility. Athletes have the potential to compete when they achieve all necessary skills with correct form and a great work ethic.</p>
+      </div>
+      <div class="team-tier tier-xcel">
+        <div class="tier-badge">Xcel Program</div>
+        <h3>Xcel Team</h3>
+        <p>An alternative to the Developmental Program that introduces athletes to the optional program. ERA offers levels Bronze through Diamond.</p>
+        <div class="tier-detail">Bronze/Silver: 4&ndash;6 competitions/year &middot; 4&ndash;6 hrs/week<br>Gold/Platinum/Diamond: 5&ndash;10 competitions &middot; 8&ndash;12 hrs/week</div>
+      </div>
+      <div class="team-tier tier-dev">
+        <div class="tier-badge">Ages 7 &ndash; 18</div>
+        <h3>Developmental Team</h3>
+        <p>A serious commitment to the sport. Athletes train significantly more and progress faster while developing greater strength, flexibility, and technique. ERA currently offers levels 4&ndash;6.</p>
+        <div class="tier-detail">Compulsories (Lvl 4/5): 12 hrs/week<br>Optionals (Lvl 6&ndash;10): 12&ndash;20 hrs/week</div>
+      </div>
+    </div>
+
+    <div class="team-invite">
+      <strong>How does placement work?</strong> Every ERA gymnast is considered a candidate for a team spot. Athletes are observed discreetly throughout their time at ERA &mdash; we assess strength, flexibility, listening skills, and more. We will contact you if your gymnast is selected as the best candidate for an open position. Tryouts are held once a year and are invite only.
+    </div>
+  </div>
+</section>
+
+<!-- INFO -->
+<section id="info">
+  <div class="container">
+    <div class="info-grid">
+      <div class="info-block">
+        <h3>Open Gym</h3>
+        <div class="open-gym-card">
+          <strong>Every Thursday 7pm &ndash; 8pm</strong>
+          $15 &middot; Ages 7 and up only. Non-attending students must have a release form signed by a parent or legal guardian.
+        </div>
+      </div>
+      <div class="info-block">
+        <h3>ERA News</h3>
+        <p style="margin-bottom:0.75rem">Summer Camp dates and prices have been posted in our <a href="https://eragymnastics.com/events" target="_blank" style="color:var(--cyan);text-decoration:none">Events section</a>.</p>
+        <p>Check back regularly for closure dates, special events, and gym announcements.</p>
+      </div>
+      <div class="info-block">
+        <h3>Office Hours</h3>
+        <table class="hours-table">
+          <tr><td>Monday</td><td>12pm &ndash; 8pm</td></tr>
+          <tr><td>Tuesday</td><td>12pm &ndash; 8pm</td></tr>
+          <tr><td>Wednesday</td><td>12pm &ndash; 8pm</td></tr>
+          <tr><td>Thursday</td><td>12pm &ndash; 8pm</td></tr>
+          <tr><td>Friday</td><td>2pm &ndash; 8pm</td></tr>
+          <tr><td>Saturday</td><td>9am &ndash; 2pm</td></tr>
+          <tr class="closed"><td>Sunday</td><td>Closed</td></tr>
+        </table>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ADULT -->
+<section id="adult">
+  <div class="container">
+    <div class="adult-inner">
+      <div>
+        <div class="section-tag">For Grown-Ups Too</div>
+        <h2>Adult Gymnastics Classes</h2>
+        <p>It is never too late to start. ERA's adult gymnastics classes are designed for all skill levels &mdash; whether you have never touched a gymnastics mat or you trained as a kid and want to get back to it. Come flip, stretch, and have a great time.</p>
+        <a href="https://eragymnastics.com/classes-1" target="_blank" class="btn-primary">View Adult Schedule &rarr;</a>
+      </div>
+      <div style="text-align:center">
+        <div style="font-size:6rem;line-height:1">&#129336;&#8205;&#9792;&#65039;</div>
+        <p style="color:var(--muted);font-size:0.9rem;margin-top:1rem">Open to all skill levels</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA BANNER -->
+<div class="cta-banner">
+  <h2>Ready to Start?</h2>
+  <p>Schedule a free trial class and see what ERA is all about. No pressure, no commitment.</p>
+  <a href="https://eragymnastics.com/try-a-class" target="_blank" class="btn-white">Schedule a Free Trial Class</a>
+</div>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="container">
+    <div class="contact-grid">
+      <div>
+        <div class="section-tag">Get in Touch</div>
+        <h2 class="section-title">We'd Love<br>to Hear From You</h2>
+        <p style="color:var(--muted);max-width:400px;line-height:1.7;margin-bottom:1.5rem">Questions about class availability, scheduling, or team programs? Reach out and our front office team will get back to you.</p>
+        <div class="contact-detail">
+          <div class="contact-item">
+            <div class="c-icon">&#128205;</div>
+            <div>
+              <div class="c-label">Location</div>
+              <div class="c-val">4622 E La Palma Ave<br>Anaheim, CA 92807</div>
+            </div>
+          </div>
+          <div class="contact-item">
+            <div class="c-icon">&#128222;</div>
+            <div>
+              <div class="c-label">Phone</div>
+              <div class="c-val"><a href="tel:7147791888">(714) 779-1888</a></div>
+            </div>
+          </div>
+          <div class="contact-item">
+            <div class="c-icon">&#9993;&#65039;</div>
+            <div>
+              <div class="c-label">Email</div>
+              <div class="c-val"><a href="mailto:office@eragymnastics.com">office@eragymnastics.com</a></div>
+            </div>
+          </div>
+          <div class="contact-item">
+            <div class="c-icon">&#128188;</div>
+            <div>
+              <div class="c-label">Now Hiring</div>
+              <div class="c-val"><a href="https://eragymnastics.com/hiring" target="_blank">View open positions</a></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <div class="section-tag">Office Hours</div>
+        <table class="hours-table" style="margin-top:0.5rem">
+          <tr><td>Monday</td><td>12pm &ndash; 8pm</td></tr>
+          <tr><td>Tuesday</td><td>12pm &ndash; 8pm</td></tr>
+          <tr><td>Wednesday</td><td>12pm &ndash; 8pm</td></tr>
+          <tr><td>Thursday</td><td>12pm &ndash; 8pm</td></tr>
+          <tr><td>Friday</td><td>2pm &ndash; 8pm</td></tr>
+          <tr><td>Saturday</td><td>9am &ndash; 2pm</td></tr>
+          <tr class="closed"><td>Sunday</td><td>Closed</td></tr>
+        </table>
+        <div style="margin-top:2.5rem">
+          <div class="section-tag">Quick Links</div>
+          <div style="display:flex;flex-wrap:wrap;gap:0.75rem;margin-top:0.75rem">
+            <a href="https://eragymnastics.com/era-policies"  target="_blank" class="btn-outline">ERA Policies</a>
+            <a href="https://eragymnastics.com/closuredates"  target="_blank" class="btn-outline">Closure Dates</a>
+            <a href="https://eragymnastics.com/events"        target="_blank" class="btn-outline">Events</a>
+            <a href="https://eragymnastics.com/sponsors"      target="_blank" class="btn-outline">Sponsors</a>
+            <a href="https://eragymnastics.com/parent-portal" target="_blank" class="btn-outline">Parent Portal</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">ERA Gymnastics</div>
+  <ul class="footer-links">
+    <li><a href="#classes">Classes</a></li>
+    <li><a href="#team">Team</a></li>
+    <li><a href="#info">Open Gym</a></li>
+    <li><a href="#contact">Contact</a></li>
+    <li><a href="https://eragymnastics.com/era-policies" target="_blank">Policies</a></li>
+    <li><a href="https://eragymnastics.com/hiring" target="_blank">Now Hiring</a></li>
+  </ul>
+  <div class="footer-copy">&copy; 2025 ERA Gymnastics &middot; Anaheim, CA &middot; Nonprofit</div>
+</footer>
+
+<script>
+(function () {
+  'use strict';
+
+  /* ── MOBILE NAV ── */
+  var hamburger  = document.getElementById('hamburger');
+  var mobileMenu = document.getElementById('mobile-menu');
+  var menuOpen   = false;
+
+  function openMenu() {
+    menuOpen = true;
+    mobileMenu.classList.add('open');
+    hamburger.classList.add('active');
+    hamburger.setAttribute('aria-expanded', 'true');
+  }
+
+  function closeMenu() {
+    menuOpen = false;
+    mobileMenu.classList.remove('open');
+    hamburger.classList.remove('active');
+    hamburger.setAttribute('aria-expanded', 'false');
+  }
+
+  hamburger.addEventListener('click', function (e) {
+    e.stopPropagation();
+    if (menuOpen) { closeMenu(); } else { openMenu(); }
+  });
+
+  mobileMenu.querySelectorAll('a').forEach(function (link) {
+    link.addEventListener('click', closeMenu);
+  });
+
+  document.addEventListener('click', function (e) {
+    if (menuOpen && !mobileMenu.contains(e.target)) {
+      closeMenu();
+    }
+  });
+
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape' && menuOpen) { closeMenu(); }
+  });
+
+  /* ── CAROUSEL ── */
+  var track      = document.getElementById('carousel-track');
+  var dotsWrap   = document.getElementById('carousel-dots');
+  var prevBtn    = document.getElementById('carousel-prev');
+  var nextBtn    = document.getElementById('carousel-next');
+  var slides     = Array.prototype.slice.call(track.querySelectorAll('.carousel-slide'));
+  var slideCount = slides.length;
+  var current    = 0;
+  var autoTimer  = null;
+
+  for (var i = 0; i < slideCount; i++) {
+    var dot = document.createElement('button');
+    dot.className = 'carousel-dot' + (i === 0 ? ' active' : '');
+    dot.setAttribute('aria-label', 'Go to slide ' + (i + 1));
+    dot.dataset.index = String(i);
+    dotsWrap.appendChild(dot);
+  }
+
+  var dots = Array.prototype.slice.call(dotsWrap.querySelectorAll('.carousel-dot'));
+
+  function getVisible() {
+    return window.innerWidth <= 900 ? 1 : 3;
+  }
+
+  function getSlideOffset() {
+    var gap     = 20;
+    var visible = getVisible();
+    var width   = track.parentElement.offsetWidth;
+    return (width + gap) / visible;
+  }
+
+  function goTo(index) {
+    var max = slideCount - getVisible();
+    current = Math.max(0, Math.min(index, max));
+    track.style.transform = 'translateX(-' + (current * getSlideOffset()) + 'px)';
+    dots.forEach(function (d, idx) {
+      d.classList.toggle('active', idx === current);
+    });
+  }
+
+  prevBtn.addEventListener('click', function () { goTo(current - 1); resetAuto(); });
+  nextBtn.addEventListener('click', function () { goTo(current + 1); resetAuto(); });
+
+  dotsWrap.addEventListener('click', function (e) {
+    var dot = e.target.closest('.carousel-dot');
+    if (dot) { goTo(parseInt(dot.dataset.index, 10)); resetAuto(); }
+  });
+
+  function advance() {
+    var next = current + 1;
+    if (next > slideCount - getVisible()) { next = 0; }
+    goTo(next);
+  }
+
+  function startAuto() { autoTimer = setInterval(advance, 4500); }
+  function resetAuto()  { clearInterval(autoTimer); startAuto(); }
+
+  startAuto();
+  window.addEventListener('resize', function () { goTo(current); });
+
+  /* ── SCROLL FADE-IN ── */
+  var fadeEls = Array.prototype.slice.call(
+    document.querySelectorAll('.class-card, .team-tier, .info-block, .adult-inner')
+  );
+
+  fadeEls.forEach(function (el) {
+    el.style.opacity = '0';
+    el.style.transform = 'translateY(20px)';
+    el.style.transition = 'opacity 0.5s ease, transform 0.5s ease, border-color 0.25s';
+  });
+
+  var io = new IntersectionObserver(function (entries) {
+    entries.forEach(function (entry) {
+      if (entry.isIntersecting) {
+        entry.target.style.opacity = '1';
+        entry.target.style.transform = 'translateY(0)';
+        io.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.08 });
+
+  fadeEls.forEach(function (el) { io.observe(el); });
+
+}());
+</script>
+</body>
+</html>
