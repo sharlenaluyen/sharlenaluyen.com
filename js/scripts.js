@@ -461,7 +461,7 @@ const triviaQuestions = [
   },
   {
     q: "What are the names of Sharlena's cats?",
-    choices: ['Luna & Mochi', 'Cleo & Mango', 'Pixel & Byte', 'Bumbum & Dodo'],
+    choices: ['Luna & Mochi', 'Cleo & Mango', 'Pixel & Byte', 'Dodo & Bumbum'],
     correct: 3,
   },
   {
@@ -470,8 +470,8 @@ const triviaQuestions = [
     correct: 1,
   },
   {
-    q: "What's growing on Sharlena's desk?",
-    choices: ['A vine plant', 'A succulent', 'A bonsai tree', 'Nothing — clean desk'],
+    q: "Which of the following is NOT one of Sharlena's hobbies in 2026?",
+    choices: ['Painting', 'Gymnastics', 'Training for a marathon', 'Pickleball'],
     correct: 0,
   },
   {
@@ -480,19 +480,19 @@ const triviaQuestions = [
     correct: 3,
   },
   {
-    q: 'Sharlena has visited 12+ countries. Which of these is on her travel map?',
+    q: 'Sharlena has visited 35+ countries. Which of these is on her travel map?',
     choices: ['Iceland', 'Tahiti', 'Morocco', 'New Zealand'],
     correct: 1,
   },
   {
-    q: "When it comes to identity systems, Sharlena's direct experience is best described as:",
+    q: "Which of the following are NOT career paths that Sharlena has considered pursuing at some point?",
     choices: [
-      'Building the full OAuth protocol stack from scratch',
-      'Designing authentication UI components',
-      'Writing database schemas for user tables',
-      'The SCIM and SAML API integration surface',
+      'Event planner',
+      'Teacher or professor',
+      'Acrobatic performance art',
+      'Dog trainer',
     ],
-    correct: 3,
+    correct: 2,
   },
 ];
 
@@ -594,10 +594,10 @@ function showTriviaResult() {
     triviaMsg.textContent = 'Pretty solid. Keep reading.';
     triviaSub.textContent = 'You clearly paid attention. She appreciates that.';
   } else if (pct >= 0.4) {
-    triviaMsg.textContent = 'Room to grow.';
+    triviaMsg.textContent = 'Room to grow. Book a chat with her.';
     triviaSub.textContent = 'A decent start, but she is disappointed, for sure.';
   } else {
-    triviaMsg.textContent = 'Fresh start, then.';
+    triviaMsg.textContent = 'Fresh start, then? Book a chat with her.';
     triviaSub.textContent = "Scroll back through. There's a lot of good stuff here.";
   }
 }
@@ -634,12 +634,12 @@ const COMMANDS = {
   about: () => [
     { t: '┌──────────────────────────────────────────┐' },
     { t: '│  Sharlena Luyen                          │' },
-    { t: '│  Backend / Fullstack Engineer            │' },
-    { t: '│  San Francisco, CA                       │' },
+    { t: '│  Backend Software Engineer               │' },
+    { t: '│  CASA Volunteer                          │' },
     { t: '│                                          │' },
     { t: '│  3+ yrs Go & Ruby on Rails (production)  │' },
     { t: '│  Specialty: enterprise identity systems  │' },
-    { t: '│  Also: CASA volunteer, cat mom, traveler │' },
+    { t: '│  Also: runner, cat mom, traveler         │' },
     { t: '└──────────────────────────────────────────┘' },
     { t: '' },
   ],
@@ -659,19 +659,19 @@ const COMMANDS = {
     { t: '' },
   ],
   travel: () => [
-    { t: 'Europe: UK, Scotland, Ireland, Isle of Man,' },
+    { t: 'EUROPE: UK, Scotland, Ireland, Isle of Man,' },
     { t: 'France, Belgium, Netherlands, Germany, Spain, Italy.' },
-    { t: 'Caribbean: Bahamas, Turks & Caicos, Puerto Rico,' },
+    { t: 'CARIBBEAN: Bahamas, Turks & Caicos, Puerto Rico,' },
     { t: 'Anguilla, St. Martin, St. Kitts, Antigua, St. Lucia, Barbados.' },
-    { t: 'Americas: Mexico, Guatemala, Belize, Costa Rica, Peru, Canada.' },
-    { t: 'Asia: Japan, South Korea, Taiwan, Vietnam, Philippines, India.' },
-    { t: 'Pacific: Australia, Fiji, Tonga, French Polynesia.' },
-    { cls: 'muted', t: `That's ${36} countries. Next target: TBD.` },
+    { t: 'AMERICAS: Mexico, Guatemala, Belize, Costa Rica, Peru, Canada.' },
+    { t: 'ASIA: Japan, South Korea, Taiwan, Vietnam, Philippines, India.' },
+    { t: 'PACIFIC: Australia, Fiji, Tonga, French Polynesia.' },
+    { cls: 'muted', t: `That's ${36} countries. Next target: New Zealand.` },
     { t: '' },
   ],
   hobbies: () => [
     { t: 'Photography  — candid moments, real ones' },
-    { t: 'Travel       — always planning the next one' },
+    { t: 'Travel       — always planning the next trip' },
     { t: 'Gymnastics   — currently perfecting back handsprings' },
     { t: 'Running      — just trying to finish (slowly)' },
     { t: 'Plants       — the desk vine is thriving' },
