@@ -216,15 +216,25 @@ if (bannerInner) {
 }
 
 /* ── Events ─────────────────────────────────────────────────────── */
+/*{ year:'201X', title:'XX',         tag:'Professional'  },*/
 const eventsData = [
-  { year:'2026', title:'Sworn into CASA in Orange County',          tag:'Advocacy' },
-  { year:'2026', title:'Increased accessibility to AI agents & services for small businesses and non-profits',   tag:'Civic'   },
-  { year:'2025', title:'Hired as Backend Software Engineer at Hashicorp, an IBM company',        tag:'Professional' },
-  { year:'2023', title:'Fundraised for Food for Lane County by coordinating Paella Fest',        tag:'Civic'      },
-  { year:'2022', title:'Hired as Software Consultant at Stride Consulting',      tag:'Professional'  },
-  { year:'2020', title:'Sworn into Citizen Review Board in Multnomah County',    tag:'Advocacy'  },
-  { year:'2020', title:'Hired as Software Engineer I at Optum',         tag:'Professional'  },
-  { year:'2019', title:'Awarded Karena Dokken Award for mentorship',    tag:'Award'   },
+  { year:'2026', title:'Sworn in as a CASA in Orange County',                                                                                       tag:'Advocacy' },
+  { year:'2026', title:'Increased accessibility to AI agents & services for small businesses and non-profits',                                   tag:'Civic'   },
+  { year:'2025', title:'Hired as Backend Software Engineer at Hashicorp, an IBM company',                                                        tag:'Professional' },
+  { year:'2025', title:'Began community outreach & support for women & non-binary individuals',                                                  tag:'Civic' },
+  { year:'2023', title:'Fundraised $30k for Food for Lane County by coordinating Paella Fest',                                                   tag:'Civic'      },
+  { year:'2022', title:'Received $20k grant for volunteering efforts from Last Mile Education Fund',                                             tag:'Award'  },
+  { year:'2022', title:'Hired as Software Consultant at Stride Consulting',                                                                      tag:'Professional'  },
+  { year:'2020', title:'Began fostering cats & dogs for Northwest Animal Companions in Portland, Oregon',                                        tag:'Hobby'  },
+  { year:'2020', title:'Sworn onto Citizen Review Board to serve in Multnomah County',                                                           tag:'Advocacy'  },
+  { year:'2020', title:'Sworn in as a CASA in Multnomah County',                                                                                    tag:'Advocacy'  },
+  { year:'2020', title:'Hired as Software Engineer I at Optum',                                                                                  tag:'Professional'  },
+  { year:'2019', title:'Awarded Karena Dokken Award for mentorship by Oregon State College of Engineering',                                      tag:'Award'   },
+  { year:'2019', title:'Sworn in as a CASA in Benton County',                                                                                       tag:'Advocacy'  },
+  { year:'2019', title:'Received $100k Learning Innovation Grant to conduct experiential research in teaching Computer Science to K-12',         tag:'Civic'  },
+  { year:'2018', title:'Advocated, fundraised, & initiated university scholarship program for the Grace Hopper Conference',                      tag:'Civic'  },
+  { year:'2017', title:'Certified for Open Water Scuba Diving through PADI',                                                                     tag:'Hobby'  },
+  { year:'2017', title:'TEDxTalk: A Story, My Story',                                                                                            tag:'Public Speaking'  },
 ];
 const evCountEl = document.getElementById('events-count');
 const evListEl  = document.getElementById('events-list');
@@ -245,7 +255,7 @@ if (evListEl) eventsData.forEach(ev => {
 // Just paste the image URL as the src. 6 slots total.
 const photoUrls = [
   'https://live.staticflickr.com/933/43011836814_56b118abed_k.jpg',
-    'https://live.staticflickr.com/65535/51972900612_18438db3cf_k.jpg',
+  'https://live.staticflickr.com/65535/51972900612_18438db3cf_k.jpg',
   'https://live.staticflickr.com/65535/51973992563_74b9420228_k.jpg',
   'https://live.staticflickr.com/856/41919257710_0852c8795f_k.jpg',
   'https://live.staticflickr.com/65535/51973981653_ce13787e72_k.jpg',
@@ -476,23 +486,23 @@ const triviaQuestions = [
   },
   {
     q: "What are Sharlena's primary production programming languages?",
-    choices: ['Python & JavaScript', 'Java & Kotlin', 'PHP & TypeScript', 'Go & Ruby on Rails'],
-    correct: 3,
+    choices: ['Python & JavaScript', 'Java & Kotlin', 'Go & Ruby on Rails', 'PHP & TypeScript' ],
+    correct: 2,
   },
   {
     q: 'Sharlena has visited 35+ countries. Which of these is on her travel map?',
-    choices: ['Iceland', 'Tahiti', 'Morocco', 'New Zealand'],
-    correct: 1,
+    choices: ['Tahiti', 'Iceland', 'Morocco', 'New Zealand'],
+    correct: 0,
   },
   {
     q: "Which of the following are NOT career paths that Sharlena has considered pursuing at some point?",
     choices: [
       'Event planner',
       'Teacher or professor',
-      'Acrobatic performance art',
       'Dog trainer',
+      'Acrobatic performance art',
     ],
-    correct: 2,
+    correct: 3,
   },
 ];
 

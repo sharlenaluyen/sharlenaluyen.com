@@ -214,14 +214,16 @@
   .orb {
     position: absolute;
     border-radius: 50%;
-    filter: blur(80px);
-    animation: drift 8s ease-in-out infinite alternate;
+    filter: blur(60px);
+    animation: drift 10s ease-in-out infinite alternate;
     pointer-events: none;
+    will-change: transform;
+    transform: translateZ(0);
   }
 
-  .orb1 { width:380px; height:380px; background:var(--pur);  top:10%;    right:8%;  opacity:0.4; animation-delay:0s; }
-  .orb2 { width:260px; height:260px; background:var(--pink); bottom:15%; left:5%;   opacity:0.35; animation-delay:2s; }
-  .orb3 { width:220px; height:220px; background:var(--cyan); top:55%;    right:28%; opacity:0.2; animation-delay:4s; }
+  .orb1 { width:380px; height:380px; background:var(--pur);  top:10%;    right:8%;  opacity:0.35; animation-delay:0s; }
+  .orb2 { width:260px; height:260px; background:var(--pink); bottom:15%; left:5%;   opacity:0.3;  animation-delay:2s; }
+  .orb3 { width:220px; height:220px; background:var(--cyan); top:55%;    right:28%; opacity:0.15; animation-delay:4s; }
 
   @keyframes drift {
     from { transform: translate(0,0) scale(1); }
@@ -1213,7 +1215,7 @@
             <div class="c-icon">&#9993;&#65039;</div>
             <div>
               <div class="c-label">Email</div>
-              <div class="c-val"><a href="mailto:office@eragymnastics.com">office@eragymnastics.com</a></div>
+              <div class="c-val"><a href="/cdn-cgi/l/email-protection#e38c85858a8086a3869182849a8e8d8290978a8090cd808c8e"><span class="__cf_email__" data-cfemail="0f606969666c6a4f6a7d6e687662616e7c7b666c7c216c6062">[email&#160;protected]</span></a></div>
             </div>
           </div>
           <div class="contact-item">
@@ -1266,7 +1268,7 @@
   <div class="footer-copy">&copy; 2025 ERA Gymnastics &middot; Anaheim, CA &middot; Nonprofit</div>
 </footer>
 
-<script>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
 (function () {
   'use strict';
 
@@ -1382,16 +1384,4 @@
   var io = new IntersectionObserver(function (entries) {
     entries.forEach(function (entry) {
       if (entry.isIntersecting) {
-        entry.target.style.opacity = '1';
-        entry.target.style.transform = 'translateY(0)';
-        io.unobserve(entry.target);
-      }
-    });
-  }, { threshold: 0.08 });
-
-  fadeEls.forEach(function (el) { io.observe(el); });
-
-}());
-</script>
-</body>
-</html>
+        entr
