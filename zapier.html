@@ -228,6 +228,27 @@ footer{background:var(--zap-dark-2);padding:2rem;text-align:center;border-top:1p
 .reveal.visible{opacity:1;transform:translateY(0)}
 .about-section{padding:6rem 2rem;background:var(--zap-bg)}
 
+/* QA SECTION */
+.qa-section{padding:6rem 2rem;background:var(--zap-dark);position:relative;overflow:hidden}
+.qa-section::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 70% 50% at 50% 50%,rgba(255,79,0,0.05) 0%,transparent 70%)}
+.qa-inner{max-width:860px;margin:0 auto;position:relative;z-index:2}
+.qa-title{font-family:'Bricolage Grotesque',sans-serif;font-size:clamp(1.8rem,4vw,2.8rem);font-weight:800;color:#fff;margin-bottom:.75rem;line-height:1.15}
+.qa-sub{color:rgba(255,255,255,0.5);font-size:1rem;font-weight:300;margin-bottom:3rem;max-width:540px}
+.qa-grid{display:flex;flex-direction:column;gap:1.5rem}
+.qa-card{background:rgba(255,255,255,.03);border:1.5px solid rgba(255,255,255,.08);border-radius:16px;padding:2rem;transition:all .25s}
+.qa-card:hover{border-color:rgba(255,79,0,.3);background:rgba(255,79,0,.03)}
+.qa-q-label{font-family:'Fira Code',monospace;font-size:.7rem;font-weight:500;color:var(--zap-orange);letter-spacing:.1em;text-transform:uppercase;margin-bottom:.6rem}
+.qa-question{font-family:'Bricolage Grotesque',sans-serif;font-size:1.05rem;font-weight:700;color:#fff;margin-bottom:1rem;line-height:1.4}
+.qa-a-label{font-family:'Fira Code',monospace;font-size:.7rem;font-weight:500;color:rgba(255,255,255,.3);letter-spacing:.1em;text-transform:uppercase;margin-bottom:.5rem}
+.qa-answer{font-size:.9rem;line-height:1.8;color:rgba(255,255,255,.6);font-weight:300}
+.qa-answer strong{color:rgba(255,255,255,.88);font-weight:600}
+.qa-answer p{margin-bottom:.75rem}
+.qa-answer p:last-child{margin-bottom:0}
+.qa-list{list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:.65rem}
+.qa-list li{font-size:.88rem;line-height:1.75;color:rgba(255,255,255,.6);padding-left:1.4rem;position:relative}
+.qa-list li::before{content:'→';position:absolute;left:0;color:var(--zap-orange);font-family:'Fira Code',monospace;font-size:.78rem;top:.05em}
+.qa-list li strong{color:rgba(255,255,255,.85);font-weight:600}
+
 @keyframes fadeUp{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:translateY(0)}}
 @keyframes fadeIn{from{opacity:0}to{opacity:1}}
 @keyframes floatBolt{0%,100%{transform:translateY(0) rotate(-5deg)}50%{transform:translateY(-12px) rotate(5deg)}}
@@ -260,6 +281,7 @@ footer{background:var(--zap-dark-2);padding:2rem;text-align:center;border-top:1p
   </a>
   <nav class="nav-links">
     <a href="#gauntlet">Auth Gauntlet</a>
+    <a href="#qa">Q&amp;A</a>
     <a href="#values">Values</a>
     <a href="#why">Why Zapier</a>
     <a href="#profile">About Me</a>
@@ -501,6 +523,67 @@ footer{background:var(--zap-dark-2);padding:2rem;text-align:center;border-top:1p
     <div class="reveal"><span class="stat-num">100%</span><span class="stat-label">remote-ready, async-first, written-comms native</span></div>
   </div>
 </div>
+
+<!-- QA -->
+<section class="qa-section" id="qa">
+  <div class="qa-inner">
+    <div class="section-eyebrow reveal">Screening Questions</div>
+    <h2 class="qa-title reveal">My Answers to<br/><span style="color:var(--zap-orange)">Your Questions.</span></h2>
+    <p class="qa-sub reveal">Honest answers to the questions from the application process.</p>
+    <div class="qa-grid">
+
+      <div class="qa-card reveal">
+        <div class="qa-q-label">Q_01 ///</div>
+        <div class="qa-question">Walk us through how AI shows up in your day-to-day development workflow.</div>
+        <div class="qa-a-label">answer:</div>
+        <div class="qa-answer">
+          <p>AI is pretty embedded in how I work at this point. I use it as a <strong>thinking partner and a speed multiplier</strong> — for scaffolding, for getting unstuck faster, and for learning concepts outside my immediate domain.</p>
+          <p>Concretely: I've been building custom single-page websites and lightweight automation workflows for local small businesses and nonprofit organizations in my community. The AI piece isn't just "generate this code" — it's more like pair programming where I'm driving and the AI is handling the parts I'd otherwise spend 45 minutes looking up. Due to NDAs, I can't share specifics on the client work, but the pattern is: I define what the system needs to do, I use AI to accelerate the implementation, and I review and own the output.</p>
+          <p>I also use it personally to learn. When I'm working near a protocol or a concept I haven't built from scratch, I use AI to go from <strong>"I've heard of this"</strong> to <strong>"I understand this well enough to ask good questions about it"</strong> a lot faster than I used to.</p>
+        </div>
+      </div>
+
+      <div class="qa-card reveal">
+        <div class="qa-q-label">Q_02 ///</div>
+        <div class="qa-question">Tell us about a time you identified a gap or blocker technically outside your team's ownership.</div>
+        <div class="qa-a-label">answer:</div>
+        <div class="qa-answer">
+          <p>This came up constantly — our team was the integration layer between two or three other teams at any given time, so "this isn't our problem but it's blocking us" was basically a weekly occurrence.</p>
+          <p>A specific example: we had an <strong>outdated Docker base image</strong> that was creating a Go version mismatch between our service and the products we were integrating with. It wasn't my team's image to own, but it was causing real inconsistency across the stack. I created a ticket, wrote the PR myself to update the Go versioning, got eyes on it from the team that owned the image, and got it merged. No drama, no long escalation chain. I just made it easy for the right people to say yes.</p>
+          <p>That pattern — identifying something, not waiting for someone to assign it to you, and making the fix legible enough that the owning team can review it quickly — is something I do naturally.</p>
+        </div>
+      </div>
+
+      <div class="qa-card reveal">
+        <div class="qa-q-label">Q_03 ///</div>
+        <div class="qa-question">Production experience with Python/Django, Node.js/Fastify, React, Kubernetes, Terraform?</div>
+        <div class="qa-a-label">answer:</div>
+        <div class="qa-answer">
+          <ul class="qa-list">
+            <li><strong>Node.js / React + TypeScript:</strong> Built out a notifications dashboard for a Department of Defense project — frontend in React/TypeScript, Node on the backend.</li>
+            <li><strong>Terraform:</strong> Worked at HashiCorp, and Terraform is the company's flagship product. I have meaningful exposure and working familiarity with it from that context.</li>
+            <li><strong>Python/Django:</strong> No production experience. I'm familiar with Python and have used it outside of work, but I haven't shipped Django in a production environment.</li>
+            <li><strong>Kubernetes:</strong> No production experience to claim here.</li>
+            <li><strong>Fastify:</strong> No production experience.</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="qa-card reveal">
+        <div class="qa-q-label">Q_04 ///</div>
+        <div class="qa-question">Tell us about an identity or authentication system you built or meaningfully extended.</div>
+        <div class="qa-a-label">answer:</div>
+        <div class="qa-answer">
+          <p>At HashiCorp, I built the <strong>SCIM API layer</strong> that enterprise customers used to provision and sync users from their identity providers — Okta, Azure AD — into the HashiCorp Cloud Platform. I was implementing the endpoints, working through attribute mapping logic, handling idempotency, and dealing with the real-world quirks that only show up when actual IdPs start pushing data at you.</p>
+          <p>I also worked on the <strong>SAML integration layer</strong> on the same platform — the API surface sitting between the enterprise customer's IdP and our system. We had 10 clients at beta release, roughly 2–3 million users. Honestly, the scale wasn't the hard part. The system was robust and well-tested enough that the protocol layer held up fine.</p>
+          <p>The hard part was <strong>coordination</strong>. Building an API in isolation is straightforward. Building one that has to stay in sync with 2–3 other teams' products and integration dependencies simultaneously is where it gets genuinely difficult: keeping the contracts stable, communicating breaking changes, and making sure our implementation didn't become a blocker for everyone downstream. That's the muscle I built most on this project — navigating a complex dependency surface while still shipping.</p>
+          <p>I want to be transparent about scope: I owned the integration layer, not the full protocol implementation underneath. But I got close enough to the internals to understand how they work and where they break.</p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
 
 <!-- VALUES -->
 <section class="values-section" id="values">
