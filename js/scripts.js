@@ -289,6 +289,7 @@ const travelData = [
   ['Germany',             52.52,   13.40],
   ['Spain',               40.42,   -3.70],
   ['Italy',               41.90,   12.49],
+  ['Switzerland',         46.95,    7.45],
   // Caribbean
   ['Bahamas',             25.04,  -77.34],
   ['Turks & Caicos',      21.69,  -71.80],
@@ -314,6 +315,7 @@ const travelData = [
   ['Vietnam',             21.03,  105.85],
   ['Philippines',         14.60,  121.00],
   ['India',               20.59,   78.96],
+  ['Indonesia',           -0.79,  113.92],
   // Pacific
   ['Australia',          -25.27,  133.78],
   ['Fiji',               -18.14,  178.44],
@@ -670,13 +672,13 @@ const COMMANDS = {
   ],
   travel: () => [
     { t: 'EUROPE: UK, Scotland, Ireland, Isle of Man,' },
-    { t: 'France, Belgium, Netherlands, Germany, Spain, Italy.' },
+    { t: 'France, Belgium, Netherlands, Germany, Spain, Italy, Switzerland.' },
     { t: 'CARIBBEAN: Bahamas, Turks & Caicos, Puerto Rico,' },
     { t: 'Anguilla, St. Martin, St. Kitts, Antigua, St. Lucia, Barbados.' },
     { t: 'AMERICAS: Mexico, Guatemala, Belize, Costa Rica, Peru, Canada.' },
-    { t: 'ASIA: Japan, South Korea, Taiwan, Vietnam, Philippines, India.' },
+    { t: 'ASIA: Japan, South Korea, Taiwan, Vietnam, Philippines, India, Indonesia.' },
     { t: 'PACIFIC: Australia, Fiji, Tonga, French Polynesia.' },
-    { cls: 'muted', t: `That's ${36} countries. Next target: New Zealand.` },
+    { cls: 'muted', t: `That's ${38} countries. Next target: New Zealand.` },
     { t: '' },
   ],
   hobbies: () => [
