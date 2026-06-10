@@ -1,0 +1,899 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hotel Content — Sharlena Luyen</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,700;1,400;1,500&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --sand:    #F5EFE6;
+    --cream:   #FAF6F1;
+    --forest:  #1C2B1E;
+    --sage:    #8FA98C;
+    --rose:    #C9937A;
+    --rose-lt: #E8C4B1;
+    --muted:   #6B7B6D;
+    --ink:     #2A2A2A;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Inter', sans-serif;
+    background: var(--cream);
+    color: var(--ink);
+    overflow-x: hidden;
+  }
+
+  /* ── BYLINE NAV ── */
+  .byline {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 48px;
+    mix-blend-mode: normal;
+    transition: background 0.4s, padding 0.3s;
+  }
+  .byline.scrolled {
+    background: rgba(250,246,241,0.95);
+    backdrop-filter: blur(8px);
+    padding: 14px 48px;
+    border-bottom: 1px solid rgba(28,43,30,0.08);
+  }
+  .byline-name {
+    font-family: 'Inter', sans-serif;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--cream);
+    transition: color 0.4s;
+  }
+  .byline.scrolled .byline-name { color: var(--forest); }
+  .byline-cta {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--cream);
+    text-decoration: none;
+    padding: 9px 20px;
+    border: 1px solid rgba(255,255,255,0.5);
+    border-radius: 2px;
+    transition: all 0.3s;
+  }
+  .byline.scrolled .byline-cta {
+    color: var(--forest);
+    border-color: var(--forest);
+  }
+  .byline-cta:hover {
+    background: var(--rose);
+    border-color: var(--rose);
+    color: white !important;
+  }
+
+  /* ── HERO ── */
+  .hero {
+    position: relative;
+    height: 100vh;
+    min-height: 640px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    overflow: hidden;
+  }
+  .hero-bg {
+    position: absolute;
+    inset: 0;
+    background:
+      linear-gradient(to top, rgba(28,43,30,0.82) 0%, rgba(28,43,30,0.3) 50%, rgba(28,43,30,0.1) 100%),
+      linear-gradient(135deg, #b8a99a 0%, #c4b49e 25%, #d4c4ae 50%, #c8b89c 75%, #b4a48e 100%);
+    background-size: cover;
+    background-position: center;
+  }
+  /* Simulated atmospheric photo texture */
+  .hero-bg::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image:
+      radial-gradient(ellipse at 30% 40%, rgba(205,185,160,0.4) 0%, transparent 60%),
+      radial-gradient(ellipse at 70% 60%, rgba(160,140,120,0.3) 0%, transparent 50%),
+      radial-gradient(ellipse at 50% 80%, rgba(100,80,60,0.2) 0%, transparent 40%);
+  }
+  .hero-content {
+    position: relative;
+    z-index: 2;
+    padding: 0 48px 72px;
+    max-width: 900px;
+  }
+  .hero-eyebrow {
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--rose-lt);
+    margin-bottom: 20px;
+  }
+  .hero-headline {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(42px, 6vw, 88px);
+    font-weight: 400;
+    line-height: 1.06;
+    color: white;
+    margin-bottom: 28px;
+    letter-spacing: -0.01em;
+  }
+  .hero-headline em {
+    font-style: italic;
+    color: var(--rose-lt);
+  }
+  .hero-sub {
+    font-size: 16px;
+    font-weight: 300;
+    line-height: 1.7;
+    color: rgba(255,255,255,0.78);
+    max-width: 520px;
+    margin-bottom: 40px;
+  }
+  .hero-scroll {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    color: rgba(255,255,255,0.5);
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+  }
+  .hero-scroll-line {
+    width: 40px;
+    height: 1px;
+    background: rgba(255,255,255,0.3);
+    animation: scrollpulse 2s ease-in-out infinite;
+  }
+  @keyframes scrollpulse {
+    0%, 100% { opacity: 0.3; width: 40px; }
+    50% { opacity: 0.7; width: 56px; }
+  }
+
+  /* ── INTRO ── */
+  .intro {
+    background: var(--cream);
+    padding: 100px 48px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    align-items: start;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  .intro-label {
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--sage);
+    margin-bottom: 24px;
+  }
+  .intro-headline {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(28px, 3.5vw, 46px);
+    font-weight: 400;
+    line-height: 1.15;
+    color: var(--forest);
+    letter-spacing: -0.01em;
+  }
+  .intro-headline em { font-style: italic; }
+  .intro-body p {
+    font-size: 15px;
+    line-height: 1.85;
+    color: var(--muted);
+    margin-bottom: 20px;
+  }
+  .intro-body p:last-child { margin-bottom: 0; }
+  .intro-body strong { color: var(--ink); font-weight: 500; }
+
+  /* ── SECTION LABEL ── */
+  .section-wrap {
+    padding: 0 48px;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  .section-header {
+    display: flex;
+    align-items: baseline;
+    gap: 20px;
+    margin-bottom: 48px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid rgba(28,43,30,0.1);
+  }
+  .section-label {
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--sage);
+  }
+  .section-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(22px, 2.5vw, 32px);
+    font-weight: 400;
+    color: var(--forest);
+    letter-spacing: -0.01em;
+  }
+
+  /* ── PORTFOLIO GRID ── */
+  .portfolio-section {
+    padding: 80px 48px;
+    background: var(--sand);
+  }
+  .portfolio-intro {
+    max-width: 1200px;
+    margin: 0 auto 52px;
+  }
+  .portfolio-note {
+    font-size: 13px;
+    font-weight: 400;
+    color: var(--muted);
+    font-style: italic;
+    margin-top: 10px;
+  }
+  .grid {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    grid-template-rows: auto;
+    gap: 12px;
+  }
+  .grid-item {
+    position: relative;
+    overflow: hidden;
+    border-radius: 3px;
+    cursor: pointer;
+  }
+  .grid-item:nth-child(1)  { grid-column: 1/8;  grid-row: 1; aspect-ratio: 4/3; }
+  .grid-item:nth-child(2)  { grid-column: 8/13; grid-row: 1; aspect-ratio: 3/4; }
+  .grid-item:nth-child(3)  { grid-column: 1/5;  grid-row: 2; aspect-ratio: 1/1; }
+  .grid-item:nth-child(4)  { grid-column: 5/9;  grid-row: 2; aspect-ratio: 4/3; }
+  .grid-item:nth-child(5)  { grid-column: 9/13; grid-row: 2; aspect-ratio: 1/1; }
+  .grid-item:nth-child(6)  { grid-column: 1/6;  grid-row: 3; aspect-ratio: 3/2; }
+  .grid-item:nth-child(7)  { grid-column: 6/13; grid-row: 3; aspect-ratio: 16/9; }
+
+  /* Photo placeholder backgrounds */
+  .grid-item:nth-child(1)  .photo { background: linear-gradient(135deg, #c8b8a0 0%, #b0a090 40%, #98887a 100%); }
+  .grid-item:nth-child(2)  .photo { background: linear-gradient(160deg, #b8c8b0 0%, #9ab89a 50%, #7a9878 100%); }
+  .grid-item:nth-child(3)  .photo { background: linear-gradient(120deg, #e0d0b8 0%, #c8b8a0 60%, #b0a090 100%); }
+  .grid-item:nth-child(4)  .photo { background: linear-gradient(150deg, #d0c0a8 0%, #b8a898 50%, #a09080 100%); }
+  .grid-item:nth-child(5)  .photo { background: linear-gradient(130deg, #c0d0c0 0%, #a8b8a8 50%, #909890 100%); }
+  .grid-item:nth-child(6)  .photo { background: linear-gradient(145deg, #d8c8b0 0%, #c0b098 40%, #a89880 100%); }
+  .grid-item:nth-child(7)  .photo { background: linear-gradient(140deg, #b0c0b0 0%, #98b098 50%, #809880 100%); }
+
+  /* Simulated photo content */
+  .grid-item:nth-child(1)  .photo::after { content:''; position:absolute; inset:0; background: radial-gradient(ellipse at 60% 40%, rgba(255,240,220,0.3) 0%, transparent 60%), radial-gradient(ellipse at 20% 70%, rgba(100,80,60,0.2) 0%, transparent 40%); }
+  .grid-item:nth-child(2)  .photo::after { content:''; position:absolute; inset:0; background: radial-gradient(ellipse at 40% 30%, rgba(220,240,220,0.3) 0%, transparent 50%), radial-gradient(ellipse at 70% 80%, rgba(60,80,60,0.2) 0%, transparent 40%); }
+  .grid-item:nth-child(3)  .photo::after { content:''; position:absolute; inset:0; background: radial-gradient(ellipse at 50% 50%, rgba(255,245,230,0.4) 0%, transparent 60%); }
+  .grid-item:nth-child(4)  .photo::after { content:''; position:absolute; inset:0; background: radial-gradient(ellipse at 30% 60%, rgba(255,240,210,0.35) 0%, transparent 55%); }
+  .grid-item:nth-child(5)  .photo::after { content:''; position:absolute; inset:0; background: radial-gradient(ellipse at 60% 40%, rgba(200,220,200,0.3) 0%, transparent 50%); }
+  .grid-item:nth-child(6)  .photo::after { content:''; position:absolute; inset:0; background: radial-gradient(ellipse at 40% 50%, rgba(255,240,220,0.3) 0%, transparent 60%), radial-gradient(ellipse at 80% 30%, rgba(220,200,180,0.2) 0%, transparent 40%); }
+  .grid-item:nth-child(7)  .photo::after { content:''; position:absolute; inset:0; background: radial-gradient(ellipse at 50% 40%, rgba(220,240,220,0.25) 0%, transparent 55%); }
+
+  .photo {
+    position: absolute;
+    inset: 0;
+    transition: transform 0.6s cubic-bezier(0.25,0.46,0.45,0.94);
+  }
+  .grid-item:hover .photo { transform: scale(1.04); }
+
+  /* Caption overlay */
+  .grid-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top, rgba(28,43,30,0.88) 0%, rgba(28,43,30,0.3) 45%, transparent 70%);
+    opacity: 0;
+    transition: opacity 0.4s ease;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding: 24px;
+    z-index: 2;
+  }
+  .grid-item:hover .grid-overlay { opacity: 1; }
+  .overlay-tag {
+    font-size: 9px;
+    font-weight: 600;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--rose-lt);
+    margin-bottom: 6px;
+  }
+  .overlay-caption {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(13px, 1.5vw, 17px);
+    font-style: italic;
+    color: white;
+    line-height: 1.4;
+  }
+  .overlay-type {
+    margin-top: 10px;
+    font-size: 10px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.5);
+  }
+
+  /* ── WHAT YOU GET ── */
+  .deliverables-section {
+    padding: 100px 48px;
+    background: var(--cream);
+  }
+  .deliverables-grid {
+    max-width: 1200px;
+    margin: 60px auto 0;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2px;
+    background: rgba(28,43,30,0.08);
+    border-radius: 4px;
+    overflow: hidden;
+  }
+  .deliverable-item {
+    background: var(--cream);
+    padding: 44px 36px;
+    transition: background 0.3s;
+  }
+  .deliverable-item:hover { background: var(--sand); }
+  .deliverable-num {
+    font-family: 'Playfair Display', serif;
+    font-size: 40px;
+    font-weight: 400;
+    color: var(--rose);
+    opacity: 0.6;
+    line-height: 1;
+    margin-bottom: 16px;
+  }
+  .deliverable-title {
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--forest);
+    margin-bottom: 12px;
+  }
+  .deliverable-body {
+    font-size: 14px;
+    line-height: 1.75;
+    color: var(--muted);
+  }
+
+  /* ── HOW IT WORKS ── */
+  .process-section {
+    padding: 100px 48px;
+    background: var(--forest);
+  }
+  .process-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  .process-section .section-label { color: var(--sage); }
+  .process-section .section-title { color: white; }
+  .process-section .section-header { border-color: rgba(255,255,255,0.1); }
+  .process-steps {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 48px;
+    margin-top: 60px;
+  }
+  .step {
+    position: relative;
+  }
+  .step::after {
+    content: '→';
+    position: absolute;
+    right: -28px;
+    top: 0;
+    color: rgba(255,255,255,0.15);
+    font-size: 20px;
+  }
+  .step:last-child::after { display: none; }
+  .step-num {
+    font-family: 'Playfair Display', serif;
+    font-size: 52px;
+    font-weight: 400;
+    color: rgba(255,255,255,0.08);
+    line-height: 1;
+    margin-bottom: 16px;
+  }
+  .step-title {
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--rose-lt);
+    margin-bottom: 12px;
+  }
+  .step-body {
+    font-size: 14px;
+    line-height: 1.75;
+    color: rgba(255,255,255,0.55);
+  }
+
+  /* ── ABOUT ── */
+  .about-section {
+    padding: 100px 48px;
+    background: var(--sand);
+  }
+  .about-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 5fr 7fr;
+    gap: 80px;
+    align-items: center;
+  }
+  .about-portrait {
+    aspect-ratio: 4/5;
+    border-radius: 3px;
+    background: linear-gradient(160deg, #c0b0a0 0%, #a89888 50%, #908070 100%);
+    position: relative;
+    overflow: hidden;
+  }
+  .about-portrait::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse at 50% 30%, rgba(255,240,220,0.3) 0%, transparent 50%),
+      radial-gradient(ellipse at 30% 80%, rgba(80,60,50,0.2) 0%, transparent 40%);
+  }
+  .about-portrait-label {
+    position: absolute;
+    bottom: 20px;
+    left: 20px;
+    right: 20px;
+    z-index: 2;
+    font-size: 10px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.6);
+    text-align: center;
+  }
+  .about-text .section-header { margin-bottom: 32px; }
+  .about-headline {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(24px, 2.8vw, 36px);
+    font-weight: 400;
+    line-height: 1.2;
+    color: var(--forest);
+    margin-bottom: 28px;
+  }
+  .about-headline em { font-style: italic; }
+  .about-body {
+    font-size: 15px;
+    line-height: 1.85;
+    color: var(--muted);
+  }
+  .about-body p { margin-bottom: 18px; }
+  .about-body p:last-child { margin-bottom: 0; }
+  .about-body strong { color: var(--ink); font-weight: 500; }
+  .about-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 28px;
+  }
+  .about-tag {
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--forest);
+    border: 1px solid rgba(28,43,30,0.25);
+    padding: 6px 14px;
+    border-radius: 2px;
+  }
+
+  /* ── CTA ── */
+  .cta-section {
+    padding: 120px 48px;
+    background: var(--cream);
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .cta-section::before {
+    content: '';
+    position: absolute;
+    top: -100px; left: 50%;
+    transform: translateX(-50%);
+    width: 600px; height: 600px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(201,147,122,0.08) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .cta-inner {
+    position: relative;
+    z-index: 1;
+    max-width: 680px;
+    margin: 0 auto;
+  }
+  .cta-eyebrow {
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--sage);
+    margin-bottom: 24px;
+  }
+  .cta-headline {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(32px, 4.5vw, 60px);
+    font-weight: 400;
+    line-height: 1.1;
+    color: var(--forest);
+    margin-bottom: 24px;
+    letter-spacing: -0.01em;
+  }
+  .cta-headline em { font-style: italic; color: var(--rose); }
+  .cta-sub {
+    font-size: 16px;
+    line-height: 1.7;
+    color: var(--muted);
+    margin-bottom: 48px;
+  }
+  .cta-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    background: var(--forest);
+    color: white;
+    text-decoration: none;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    padding: 18px 40px;
+    border-radius: 2px;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+  }
+  .cta-btn::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: var(--rose);
+    transform: translateX(-100%);
+    transition: transform 0.4s cubic-bezier(0.25,0.46,0.45,0.94);
+  }
+  .cta-btn:hover::before { transform: translateX(0); }
+  .cta-btn span { position: relative; z-index: 1; }
+  .cta-btn svg { position: relative; z-index: 1; transition: transform 0.3s; }
+  .cta-btn:hover svg { transform: translateX(4px); }
+  .cta-note {
+    margin-top: 20px;
+    font-size: 12px;
+    color: var(--muted);
+    letter-spacing: 0.02em;
+  }
+
+  /* ── FOOTER ── */
+  footer {
+    padding: 32px 48px;
+    background: var(--forest);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  footer .name {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.5);
+  }
+  footer .email {
+    font-size: 12px;
+    color: var(--sage);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+  footer .email:hover { color: var(--rose-lt); }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 900px) {
+    .byline, footer { padding-left: 24px; padding-right: 24px; }
+    .hero-content { padding: 0 24px 56px; }
+    .intro { grid-template-columns: 1fr; gap: 40px; padding: 72px 24px; }
+    .portfolio-section { padding: 64px 24px; }
+    .grid { grid-template-columns: 1fr 1fr; gap: 8px; }
+    .grid-item:nth-child(1) { grid-column: 1/3; grid-row: 1; }
+    .grid-item:nth-child(2) { grid-column: 1/2; grid-row: 2; }
+    .grid-item:nth-child(3) { grid-column: 2/3; grid-row: 2; }
+    .grid-item:nth-child(4) { grid-column: 1/3; grid-row: 3; }
+    .grid-item:nth-child(5) { grid-column: 1/2; grid-row: 4; }
+    .grid-item:nth-child(6) { grid-column: 2/3; grid-row: 4; }
+    .grid-item:nth-child(7) { grid-column: 1/3; grid-row: 5; }
+    .deliverables-section { padding: 72px 24px; }
+    .deliverables-grid { grid-template-columns: 1fr; gap: 2px; }
+    .process-section { padding: 72px 24px; }
+    .process-steps { grid-template-columns: 1fr 1fr; gap: 32px; }
+    .step::after { display: none; }
+    .about-section { padding: 72px 24px; }
+    .about-inner { grid-template-columns: 1fr; gap: 40px; }
+    .about-portrait { max-width: 320px; }
+    .cta-section { padding: 80px 24px; }
+    .section-wrap { padding: 0 24px; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    * { animation: none !important; transition: none !important; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="byline" id="byline">
+  <span class="byline-name">Sharlena Luyen</span>
+  <a href="#book" class="byline-cta">Book a Call</a>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-content">
+    <p class="hero-eyebrow">Hospitality Content · Photography & Video</p>
+    <h1 class="hero-headline">The story<br>your property<br><em>hasn't told yet.</em></h1>
+    <p class="hero-sub">Professional photo and video content for boutique hotels and hospitality brands — in exchange for a complimentary stay.</p>
+    <div class="hero-scroll">
+      <div class="hero-scroll-line"></div>
+      See the work
+    </div>
+  </div>
+</section>
+
+<!-- INTRO -->
+<section class="intro">
+  <div>
+    <p class="intro-label">The approach</p>
+    <h2 class="intro-headline">Content that sells the <em>feeling</em> of being there.</h2>
+  </div>
+  <div class="intro-body">
+    <p>Most hospitality photography fills rooms. Mine makes people book them. The difference is attention to what I call <strong>evidence of life</strong> — the details that tell a story before a guest even arrives. The light on the linen. The cup at the window. The texture of a place.</p>
+    <p>My background is in portrait photography, which means I'm trained to find the unrehearsed moment — the image that doesn't look like it was staged, because it wasn't. I bring that instinct to interiors, architecture, and the atmosphere that defines a property.</p>
+    <p>The result is content that performs: on your website, your OTA listings, your social channels, and in the memory of anyone who sees it.</p>
+  </div>
+</section>
+
+<!-- PORTFOLIO -->
+<section class="portfolio-section">
+  <div class="portfolio-intro section-wrap">
+    <div class="section-header">
+      <span class="section-label">Portfolio</span>
+      <h2 class="section-title">Spec work — the kind of content I'd create for your property</h2>
+    </div>
+    <p class="portfolio-note">Hover each image to see how I'd caption it for your brand.</p>
+  </div>
+  <div class="grid">
+    <div class="grid-item">
+      <div class="photo"></div>
+      <div class="grid-overlay">
+        <span class="overlay-tag">Interior · Natural Light</span>
+        <p class="overlay-caption">"The afternoon finds its way in here every day at the same time. The guests never mind."</p>
+        <span class="overlay-type">Hero image · Web & OTA</span>
+      </div>
+    </div>
+    <div class="grid-item">
+      <div class="photo"></div>
+      <div class="grid-overlay">
+        <span class="overlay-tag">Exterior · Golden Hour</span>
+        <p class="overlay-caption">"Some places look better at dusk. This is one of them."</p>
+        <span class="overlay-type">Social · Instagram / Reels cover</span>
+      </div>
+    </div>
+    <div class="grid-item">
+      <div class="photo"></div>
+      <div class="grid-overlay">
+        <span class="overlay-tag">Detail · Still Life</span>
+        <p class="overlay-caption">"The kind of cup you take a photo of before you pick it up."</p>
+        <span class="overlay-type">Brand texture · Stories & ads</span>
+      </div>
+    </div>
+    <div class="grid-item">
+      <div class="photo"></div>
+      <div class="grid-overlay">
+        <span class="overlay-tag">Amenity · Natural Context</span>
+        <p class="overlay-caption">"Nothing staged here. Just the pool, the light, and a very good morning."</p>
+        <span class="overlay-type">Feature shot · OTA & homepage</span>
+      </div>
+    </div>
+    <div class="grid-item">
+      <div class="photo"></div>
+      <div class="grid-overlay">
+        <span class="overlay-tag">Architecture · Facade</span>
+        <p class="overlay-caption">"First impressions. Make them count."</p>
+        <span class="overlay-type">Hero · Google listing & press</span>
+      </div>
+    </div>
+    <div class="grid-item">
+      <div class="photo"></div>
+      <div class="grid-overlay">
+        <span class="overlay-tag">Interior · Atmosphere</span>
+        <p class="overlay-caption">"You don't have to be a guest to feel at home in the lobby."</p>
+        <span class="overlay-type">Lifestyle · Brand content</span>
+      </div>
+    </div>
+    <div class="grid-item">
+      <div class="photo"></div>
+      <div class="grid-overlay">
+        <span class="overlay-tag">Surroundings · Destination</span>
+        <p class="overlay-caption">"The neighborhood is part of the stay. This is why people choose location."</p>
+        <span class="overlay-type">Destination content · Blog & social</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- DELIVERABLES -->
+<section class="deliverables-section">
+  <div class="section-wrap">
+    <div class="section-header">
+      <span class="section-label">What you receive</span>
+      <h2 class="section-title">A complete content package, fully licensed</h2>
+    </div>
+  </div>
+  <div class="deliverables-grid">
+    <div class="deliverable-item">
+      <div class="deliverable-num">20+</div>
+      <div class="deliverable-title">Edited Still Photos</div>
+      <div class="deliverable-body">High-resolution DSLR images across interior rooms, amenities, exterior, and surrounding area. Shot and edited for web, OTA listings, print, and social use.</div>
+    </div>
+    <div class="deliverable-item">
+      <div class="deliverable-num">2</div>
+      <div class="deliverable-title">Short-Form Videos</div>
+      <div class="deliverable-body">60–90 second atmospheric walkthroughs, ready for Instagram Reels, your website, or OTA video features. Warm, unhurried, cinematic.</div>
+    </div>
+    <div class="deliverable-item">
+      <div class="deliverable-num">∞</div>
+      <div class="deliverable-title">Full Usage License</div>
+      <div class="deliverable-body">Every asset is yours to use across all channels — website, social, OTA, email, press — with no expiration and no attribution required.</div>
+    </div>
+    <div class="deliverable-item">
+      <div class="deliverable-num">2</div>
+      <div class="deliverable-title">Orientations Per Shot</div>
+      <div class="deliverable-body">Both horizontal and vertical compositions for every key image, so your content works natively on every platform without cropping or compromise.</div>
+    </div>
+    <div class="deliverable-item">
+      <div class="deliverable-num">14</div>
+      <div class="deliverable-title">Day Delivery</div>
+      <div class="deliverable-body">Full edited delivery within 14 days of the stay. A first selection of hero images within 48 hours if you have an upcoming campaign deadline.</div>
+    </div>
+    <div class="deliverable-item">
+      <div class="deliverable-num">1</div>
+      <div class="deliverable-title">Cohesive Visual Style</div>
+      <div class="deliverable-body">Every image in the set is edited to a consistent palette and tone — warm, natural light. Your content will look like a brand, not a photo dump.</div>
+    </div>
+  </div>
+</section>
+
+<!-- PROCESS -->
+<section class="process-section">
+  <div class="process-inner">
+    <div class="section-header">
+      <span class="section-label">How it works</span>
+      <h2 class="section-title" style="color:white;">Simple from first email to final file</h2>
+    </div>
+    <div class="process-steps">
+      <div class="step">
+        <div class="step-num">01</div>
+        <div class="step-title">We Connect</div>
+        <div class="step-body">Book a 20-minute call to talk through your property, your content needs, and what a partnership would look like. No pressure, no pitch deck.</div>
+      </div>
+      <div class="step">
+        <div class="step-num">02</div>
+        <div class="step-title">We Agree</div>
+        <div class="step-body">We confirm the deliverables, dates, and access needed in a simple one-page agreement. A complimentary stay in exchange for a full content package.</div>
+      </div>
+      <div class="step">
+        <div class="step-num">03</div>
+        <div class="step-title">I Shoot</div>
+        <div class="step-body">I stay as a guest and document your property with intention — interiors, exterior, details, surroundings, atmosphere. Everything on the list, and everything in between.</div>
+      </div>
+      <div class="step">
+        <div class="step-num">04</div>
+        <div class="step-title">You Receive</div>
+        <div class="step-body">A Dropbox folder with your full edited library arrives within 14 days. Every file labeled, sized, and ready to use. The content is yours, forever.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section class="about-section">
+  <div class="about-inner">
+    <div class="about-portrait-wrap">
+      <div class="about-portrait">
+        <div class="about-portrait-label">Sharlena Luyen · Photographer</div>
+      </div>
+    </div>
+    <div class="about-text">
+      <div class="section-header">
+        <span class="section-label">About</span>
+      </div>
+      <h2 class="about-headline">I photograph <em>what it feels like</em> to be somewhere.</h2>
+      <div class="about-body">
+        <p>My training is in portrait photography — which means my eye is trained to find the moment, not manufacture it. I've spent years learning how to make a subject look the way they actually feel at their best. I apply that same instinct to spaces.</p>
+        <p>I shoot with <strong>DSLR and mobile</strong> to give you both high-resolution hero images and native-feeling social content. I edit in Darkroom and deliver consistent, warm, natural-light images that make people feel something.</p>
+        <p>The partnership model is simple: I experience your property as a guest, document it as a photographer, and deliver a library of content that would cost thousands to commission commercially. You get the content. I get the experience.</p>
+      </div>
+      <div class="about-tags">
+        <span class="about-tag">DSLR Photography</span>
+        <span class="about-tag">Short-Form Video</span>
+        <span class="about-tag">Natural Light</span>
+        <span class="about-tag">Detail & Still Life</span>
+        <span class="about-tag">Exterior & Architecture</span>
+        <span class="about-tag">Full Usage License</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-section" id="book">
+  <div class="cta-inner">
+    <p class="cta-eyebrow">Let's talk</p>
+    <h2 class="cta-headline">Ready to see what<br>your property <em>could look like?</em></h2>
+    <p class="cta-sub">Book a free 20-minute call. We'll talk through your property, your content needs, and whether this kind of partnership makes sense for you.</p>
+    <a href="https://calendly.com/sharlenaluyen" class="cta-btn" target="_blank" rel="noopener">
+      <span>Book a Free Call</span>
+      <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+        <path d="M3 8h10M9 4l4 4-4 4" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </a>
+    <p class="cta-note">No commitment. No sales pitch. Just a conversation.</p>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <span class="name">Sharlena Luyen</span>
+  <a href="mailto:your@email.com" class="email">your@email.com</a>
+</footer>
+
+<script>
+  // Sticky nav behavior
+  const byline = document.getElementById('byline');
+  window.addEventListener('scroll', () => {
+    byline.classList.toggle('scrolled', window.scrollY > 80);
+  });
+
+  // Scroll reveal
+  const revealEls = document.querySelectorAll('.deliverable-item, .step, .intro > *, .about-inner > *');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.style.opacity = '1';
+        e.target.style.transform = 'translateY(0)';
+        observer.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.12 });
+
+  revealEls.forEach(el => {
+    el.style.opacity = '0';
+    el.style.transform = 'translateY(24px)';
+    el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+    observer.observe(el);
+  });
+</script>
+</body>
+</html>
