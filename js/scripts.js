@@ -452,9 +452,9 @@ if (svgEl) {
 ════════════════════════════════════════════════════════════════ */
 const triviaQuestions = [
   {
-    q: 'What kinds of systems does Sharlena prefer to work on in development?',
-    choices: ['Front-end ecosystems', 'Database management', 'Distributed systems', 'Site reliability'],
-    correct: 2,
+    q: 'What does Sharlena focus on creating content around?',
+    choices: ['Stories, travel & behind-the-scenes moments', 'Stock market analysis', 'Product unboxings', 'Tech tutorials only'],
+    correct: 0,
   },
   {
     q: 'What is Sharlena known for baking?',
@@ -477,9 +477,9 @@ const triviaQuestions = [
     correct: 3,
   },
   {
-    q: 'Which enterprise identity protocols has Sharlena built API integration layers for?',
-    choices: ['OAuth 2.0 only', 'SCIM & SAML', 'JWT & OpenID Connect', 'Kerberos & LDAP'],
-    correct: 1,
+    q: 'What nonprofit did Sharlena found in high school?',
+    choices: ['Codemmnity', 'TechBridge', 'GirlsWhoCode Local', 'CodeForGood'],
+    correct: 0,
   },
   {
     q: "Which of the following is NOT one of Sharlena's hobbies in 2026?",
@@ -487,8 +487,8 @@ const triviaQuestions = [
     correct: 0,
   },
   {
-    q: "What are Sharlena's primary production programming languages?",
-    choices: ['Python & JavaScript', 'Java & Kotlin', 'Go & Ruby on Rails', 'PHP & TypeScript' ],
+    q: 'About how much has Sharlena fundraised by cooking paellas for 10+ people at a time?',
+    choices: ['$5k', '$15k', '$30k+', '$100k'],
     correct: 2,
   },
   {
