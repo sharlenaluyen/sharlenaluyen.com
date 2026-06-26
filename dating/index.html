@@ -1,0 +1,819 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>shar's dates 💜</title>
+
+  <!-- Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-7HYSL8NHNZ"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){ dataLayer.push(arguments); }
+    gtag('js', new Date());
+    gtag('config', 'G-7HYSL8NHNZ');
+  </script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@300;400&family=DM+Sans:wght@300;400;500&family=Cormorant+Garamond:ital,wght@0,300;1,300&display=swap" rel="stylesheet" />
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+  <style>
+    :root {
+      --peri:     #7c82e8;
+      --peri-l:   #abb0f5;
+      --lavender: #c0adf5;
+      --lilac:    #d4b4f5;
+      --rose:     #f090b8;
+      --sky:      #90c8f8;
+      --mint:     #90e8c0;
+      --bg:       #07070f;
+      --bg2:      #0e0e1c;
+      --card:     #12121f;
+      --border:   #1e1e36;
+      --border-hi:#2e2e52;
+      --text:     #e8e8f5;
+      --muted:    #6b6b9a;
+      --mono:     'DM Mono', 'Courier New', monospace;
+      --sans:     'DM Sans', system-ui, sans-serif;
+      --serif:    'Cormorant Garamond', Georgia, serif;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--sans);
+      min-height: 100vh;
+      padding: 3rem 1.5rem 6rem;
+    }
+
+    /* ── HEADER ── */
+    header {
+      max-width: 720px;
+      margin: 0 auto 3rem;
+      text-align: center;
+    }
+
+    .header-title {
+      font-family: var(--serif);
+      font-size: clamp(2.5rem, 6vw, 4rem);
+      font-weight: 300;
+      font-style: italic;
+      color: var(--peri-l);
+      letter-spacing: 0.02em;
+      margin-bottom: 0.5rem;
+    }
+
+    .header-sub {
+      font-family: var(--mono);
+      font-size: 0.72rem;
+      color: var(--muted);
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+
+    .header-divider {
+      width: 40px;
+      height: 1px;
+      background: var(--border-hi);
+      margin: 1.25rem auto;
+    }
+
+    /* ── SECTION LABEL ── */
+    .section-label {
+      max-width: 720px;
+      margin: 2.5rem auto 1rem;
+      font-family: var(--mono);
+      font-size: 0.65rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--muted);
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .section-label::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: var(--border);
+    }
+
+    /* ── CARD GRID ── */
+    .dates-grid {
+      max-width: 720px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    /* ── DATE CARD ── */
+    .date-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 1.5rem;
+      position: relative;
+      transition: border-color 0.2s;
+    }
+
+    .date-card:hover { border-color: var(--border-hi); }
+
+    .date-card-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 1rem;
+      margin-bottom: 0.9rem;
+    }
+
+    .guy-name {
+      font-family: var(--serif);
+      font-size: 1.6rem;
+      font-weight: 300;
+      color: var(--lavender);
+      line-height: 1.1;
+    }
+
+    .date-meta {
+      text-align: right;
+      flex-shrink: 0;
+    }
+
+    .date-day {
+      font-family: var(--mono);
+      font-size: 0.72rem;
+      color: var(--peri);
+      letter-spacing: 0.08em;
+    }
+
+    .date-time-str {
+      font-family: var(--mono);
+      font-size: 0.85rem;
+      color: var(--peri-l);
+      margin-top: 0.15rem;
+    }
+
+    .date-info-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-bottom: 0.9rem;
+      font-family: var(--mono);
+      font-size: 0.75rem;
+    }
+
+    .info-chip {
+      display: flex;
+      align-items: center;
+      gap: 0.35rem;
+      padding: 0.25rem 0.65rem;
+      border-radius: 20px;
+      border: 1px solid;
+    }
+
+    .chip-phone   { color: var(--mint);    border-color: rgba(144,232,192,0.25); background: rgba(144,232,192,0.05); }
+    .chip-loc     { color: var(--sky);     border-color: rgba(144,200,248,0.25); background: rgba(144,200,248,0.05); }
+    .chip-flowers { color: var(--rose);    border-color: rgba(240,144,184,0.25); background: rgba(240,144,184,0.05); }
+    .chip-noflowers { color: var(--muted); border-color: rgba(107,107,154,0.2);  background: transparent; }
+    .chip-driving { color: var(--mint);    border-color: rgba(144,232,192,0.25); background: rgba(144,232,192,0.05); }
+    .chip-pickup  { color: var(--sky);     border-color: rgba(144,200,248,0.25); background: rgba(144,200,248,0.05); }
+
+    /* ── NOTES BLOCKS ── */
+    .notes-blocks {
+      display: flex;
+      flex-direction: column;
+      gap: 0.6rem;
+      margin-top: 0.5rem;
+    }
+
+    .notes-block {
+      background: var(--bg2);
+      border-radius: 8px;
+      padding: 0.65rem 0.9rem;
+    }
+
+    .notes-eyebrow {
+      font-family: var(--mono);
+      font-size: 0.6rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 0.3rem;
+    }
+
+    .notes-text {
+      font-size: 0.85rem;
+      color: var(--text);
+      line-height: 1.55;
+    }
+
+    /* ── ADMIN EDIT BUTTONS (hidden until admin mode) ── */
+    .card-admin-btn {
+      position: absolute;
+      top: 1.25rem;
+      right: 1.25rem;
+      display: none;
+      background: var(--bg2);
+      border: 1px solid var(--border-hi);
+      border-radius: 8px;
+      padding: 0.3rem 0.7rem;
+      font-family: var(--mono);
+      font-size: 0.7rem;
+      color: var(--peri-l);
+      cursor: pointer;
+      transition: background 0.15s;
+    }
+
+    .card-admin-btn:hover { background: var(--border); }
+    body.admin-mode .card-admin-btn { display: block; }
+
+    /* ── PAST DATES DIM ── */
+    .past-card { opacity: 0.45; }
+    .past-card:hover { opacity: 0.7; }
+
+    /* ── EMPTY STATE ── */
+    .empty-state {
+      text-align: center;
+      padding: 4rem 2rem;
+      color: var(--muted);
+    }
+
+    .empty-icon { font-size: 2.5rem; margin-bottom: 0.75rem; }
+
+    .empty-label {
+      font-family: var(--mono);
+      font-size: 0.75rem;
+      letter-spacing: 0.1em;
+    }
+
+    /* ── FLOATING ADMIN BUTTON ── */
+    .fab {
+      position: fixed;
+      bottom: 2rem;
+      right: 2rem;
+      background: var(--peri);
+      color: #fff;
+      border: none;
+      border-radius: 10px;
+      padding: 0.75rem 1.25rem;
+      font-family: var(--mono);
+      font-size: 0.8rem;
+      letter-spacing: 0.08em;
+      cursor: pointer;
+      transition: background 0.2s, transform 0.15s;
+      z-index: 50;
+      box-shadow: 0 4px 20px rgba(124,130,232,0.3);
+    }
+
+    .fab:hover { background: var(--peri-l); transform: translateY(-2px); }
+
+    /* ── MODAL OVERLAY ── */
+    .overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(7,7,15,0.88);
+      z-index: 100;
+      align-items: center;
+      justify-content: center;
+      padding: 1rem;
+    }
+
+    .overlay.open { display: flex; }
+
+    .modal {
+      background: var(--card);
+      border: 1px solid var(--border-hi);
+      border-radius: 18px;
+      padding: 2rem;
+      width: 100%;
+      max-width: 480px;
+      max-height: 90vh;
+      overflow-y: auto;
+    }
+
+    .modal-title {
+      font-family: var(--serif);
+      font-size: 1.5rem;
+      font-weight: 300;
+      font-style: italic;
+      color: var(--peri-l);
+      margin-bottom: 1.5rem;
+    }
+
+    /* ── FORM ── */
+    .form-section-label {
+      font-family: var(--mono);
+      font-size: 0.6rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--peri);
+      margin: 1.25rem 0 0.75rem;
+      padding-bottom: 0.4rem;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .form-group { margin-bottom: 0.85rem; }
+
+    .form-label {
+      display: block;
+      font-family: var(--mono);
+      font-size: 0.65rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 0.3rem;
+    }
+
+    .form-input,
+    .form-textarea,
+    .form-select {
+      width: 100%;
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 0.6rem 0.8rem;
+      color: var(--text);
+      font-family: var(--sans);
+      font-size: 0.875rem;
+      transition: border-color 0.15s;
+    }
+
+    .form-input:focus,
+    .form-textarea:focus,
+    .form-select:focus {
+      outline: none;
+      border-color: var(--peri);
+    }
+
+    .form-textarea { resize: vertical; min-height: 75px; line-height: 1.5; }
+
+    .form-select { cursor: pointer; }
+
+    .checkbox-row {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      cursor: pointer;
+      user-select: none;
+    }
+
+    .checkbox-row input[type="checkbox"] {
+      width: 16px;
+      height: 16px;
+      accent-color: var(--peri);
+      cursor: pointer;
+      flex-shrink: 0;
+    }
+
+    .checkbox-label {
+      font-size: 0.875rem;
+      color: var(--text);
+    }
+
+    /* ── BUTTON ROW ── */
+    .btn-row {
+      display: flex;
+      gap: 0.65rem;
+      margin-top: 1.5rem;
+    }
+
+    .btn {
+      flex: 1;
+      padding: 0.65rem 1rem;
+      border-radius: 8px;
+      border: none;
+      font-family: var(--mono);
+      font-size: 0.78rem;
+      letter-spacing: 0.06em;
+      cursor: pointer;
+      transition: opacity 0.15s, transform 0.1s;
+    }
+
+    .btn:active { transform: scale(0.98); }
+    .btn:hover  { opacity: 0.88; }
+
+    .btn-primary   { background: var(--peri);  color: #fff; }
+    .btn-secondary { background: transparent; border: 1px solid var(--border-hi); color: var(--muted); }
+    .btn-danger    { background: transparent; border: 1px solid var(--rose);      color: var(--rose); }
+
+    /* ── SHAKE ANIMATION FOR BAD PASSWORD ── */
+    @keyframes shake {
+      0%,100% { transform: translateX(0); }
+      20%,60%  { transform: translateX(-6px); }
+      40%,80%  { transform: translateX(6px); }
+    }
+    .shake { animation: shake 0.4s ease; }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 480px) {
+      .date-card-top { flex-direction: column; }
+      .date-meta { text-align: left; }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1 class="header-title">shar's dates</h1>
+    <div class="header-divider"></div>
+    <p class="header-sub" id="page-date"></p>
+  </header>
+
+  <!-- Upcoming dates -->
+  <div class="section-label">upcoming</div>
+  <div class="dates-grid" id="upcoming-grid">
+    <div class="empty-state">
+      <div class="empty-icon">🔮</div>
+      <div class="empty-label">loading...</div>
+    </div>
+  </div>
+
+  <!-- Past dates (hidden until there are any) -->
+  <div class="section-label" id="past-label" style="display:none;">past</div>
+  <div class="dates-grid" id="past-grid"></div>
+
+  <!-- Floating admin button -->
+  <button class="fab" id="fab">admin</button>
+
+
+  <!-- ── PASSWORD MODAL ── -->
+  <div class="overlay" id="pw-overlay">
+    <div class="modal" style="max-width:360px;">
+      <p class="modal-title">admin access</p>
+      <div class="form-group">
+        <label class="form-label">password</label>
+        <input type="password" class="form-input" id="pw-input" placeholder="••••••••" autocomplete="current-password" />
+      </div>
+      <div class="btn-row">
+        <button class="btn btn-primary"   id="pw-submit">enter</button>
+        <button class="btn btn-secondary" id="pw-cancel">cancel</button>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- ── DATE FORM MODAL ── -->
+  <div class="overlay" id="form-overlay">
+    <div class="modal">
+      <p class="modal-title" id="form-title">new date</p>
+
+      <!-- Hidden state -->
+      <input type="hidden" id="f-date-id" />
+      <input type="hidden" id="f-man-id" />
+
+      <!-- About him -->
+      <div class="form-section-label">about him</div>
+
+      <div class="form-group">
+        <label class="form-label">his name</label>
+        <input type="text" class="form-input" id="f-name" placeholder="first name" autocomplete="off" />
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">his phone number</label>
+        <input type="tel" class="form-input" id="f-phone" placeholder="503-555-0100" />
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">notes about him</label>
+        <textarea class="form-textarea" id="f-man-notes" placeholder="where did you meet? what do you know about him?"></textarea>
+      </div>
+
+      <!-- About the date -->
+      <div class="form-section-label">about the date</div>
+
+      <div class="form-group">
+        <label class="form-label">date and time</label>
+        <input type="datetime-local" class="form-input" id="f-datetime" />
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">location</label>
+        <input type="text" class="form-input" id="f-location" placeholder="restaurant, park, coffee shop..." />
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">notes about the date</label>
+        <textarea class="form-textarea" id="f-date-notes" placeholder="what are you doing? anything your friends should know?"></textarea>
+      </div>
+
+      <div class="form-group" style="margin-top:1rem;">
+        <label class="checkbox-row">
+          <input type="checkbox" id="f-flowers" />
+          <span class="checkbox-label">he brought flowers 🌸</span>
+        </label>
+      </div>
+
+      <div class="form-group" style="margin-top:0.75rem;">
+        <label class="form-label">transportation</label>
+        <select class="form-select" id="f-driving">
+          <option value="false">he's picking me up 🚗</option>
+          <option value="true">i'm driving 🚗</option>
+        </select>
+      </div>
+
+      <div class="btn-row">
+        <button class="btn btn-primary"   id="f-save">save</button>
+        <button class="btn btn-secondary" id="f-cancel">cancel</button>
+        <button class="btn btn-danger"    id="f-delete" style="display:none; flex:0; padding: 0.65rem 1rem;">delete</button>
+      </div>
+    </div>
+  </div>
+
+
+  <script>
+    // ── CONFIG — replace these three values ─────────────────────────────────
+    const SUPABASE_URL    = 'https://ecikgowxeulvzekzfyws.supabase.co';
+    const SUPABASE_ANON   = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImVjaWtnb3d4ZXVsdnpla3pmeXdzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzU2MDYyMTIsImV4cCI6MjA5MTE4MjIxMn0.Wvi3JZIIqO2mVHkVsKyQPE2tRIQhsGrywDLuQjwiXxU';
+    const ADMIN_PASSWORD  = 'YOUR_CHOSEN_PASSWORD';         // 🔒 replace this before deploying
+    // ───────────────────────────────────────────────────────────────────────
+
+    const { createClient } = supabase;
+    const db = createClient(SUPABASE_URL, SUPABASE_ANON);
+
+    let isAdmin   = false;
+    let allDates  = [];
+
+    // ── PAGE DATE ──────────────────────────────────────────────────────────
+    document.getElementById('page-date').textContent =
+      new Date().toLocaleDateString('en-US', { weekday:'long', month:'long', day:'numeric', year:'numeric' });
+
+
+    // ── LOAD ───────────────────────────────────────────────────────────────
+    async function loadDates() {
+      const { data, error } = await db
+        .from('dates')
+        .select('*, men(*)')
+        .order('date_time', { ascending: true });
+
+      if (error) {
+        document.getElementById('upcoming-grid').innerHTML = `
+          <div class="empty-state">
+            <div class="empty-icon">💔</div>
+            <div class="empty-label">couldn't connect. check your supabase config.</div>
+          </div>`;
+        return;
+      }
+
+      allDates = data || [];
+      renderDates();
+    }
+
+    loadDates();
+
+
+    // ── RENDER ─────────────────────────────────────────────────────────────
+    function renderDates() {
+      const now      = new Date();
+      const upcoming = allDates.filter(d => new Date(d.date_time) >= now);
+      const past     = allDates.filter(d => new Date(d.date_time) <  now).reverse();
+
+      const upEl   = document.getElementById('upcoming-grid');
+      const pastEl = document.getElementById('past-grid');
+      const pastLbl = document.getElementById('past-label');
+
+      upEl.innerHTML = '';
+
+      if (upcoming.length === 0) {
+        upEl.innerHTML = `
+          <div class="empty-state">
+            <div class="empty-icon">🌙</div>
+            <div class="empty-label">no upcoming dates. add one!</div>
+          </div>`;
+      } else {
+        upcoming.forEach(d => upEl.appendChild(buildCard(d, false)));
+      }
+
+      pastEl.innerHTML = '';
+      if (past.length > 0) {
+        pastLbl.style.display = '';
+        past.forEach(d => pastEl.appendChild(buildCard(d, true)));
+      } else {
+        pastLbl.style.display = 'none';
+      }
+    }
+
+    function buildCard(d, isPast) {
+      const man = d.men || {};
+      const dt  = new Date(d.date_time);
+
+      const dayStr  = dt.toLocaleDateString('en-US', { weekday:'long', month:'short', day:'numeric' });
+      const timeStr = dt.toLocaleTimeString('en-US', { hour:'numeric', minute:'2-digit' });
+
+      const card = document.createElement('div');
+      card.className = 'date-card' + (isPast ? ' past-card' : '');
+
+      const chipsHtml = [
+        man.phone_number
+          ? `<span class="info-chip chip-phone">📞 ${man.phone_number}</span>` : '',
+        d.location
+          ? `<span class="info-chip chip-loc">📍 ${d.location}</span>` : '',
+        d.brought_flowers
+          ? `<span class="info-chip chip-flowers">🌸 flowers</span>`
+          : `<span class="info-chip chip-noflowers">no flowers</span>`,
+        d.i_am_driving
+          ? `<span class="info-chip chip-driving">🚗 i'm driving</span>`
+          : `<span class="info-chip chip-pickup">🚗 getting picked up</span>`,
+      ].filter(Boolean).join('');
+
+      const notesHtml = [
+        man.notes ? `
+          <div class="notes-block">
+            <div class="notes-eyebrow">about him</div>
+            <div class="notes-text">${escHtml(man.notes)}</div>
+          </div>` : '',
+        d.notes ? `
+          <div class="notes-block">
+            <div class="notes-eyebrow">about the date</div>
+            <div class="notes-text">${escHtml(d.notes)}</div>
+          </div>` : '',
+      ].filter(Boolean).join('');
+
+      card.innerHTML = `
+        <button class="card-admin-btn" data-id="${d.id}">✏ edit</button>
+        <div class="date-card-top">
+          <div class="guy-name">${escHtml(man.name || 'unknown')}</div>
+          <div class="date-meta">
+            <div class="date-day">${dayStr}</div>
+            <div class="date-time-str">${timeStr}</div>
+          </div>
+        </div>
+        <div class="date-info-row">${chipsHtml}</div>
+        ${notesHtml ? `<div class="notes-blocks">${notesHtml}</div>` : ''}
+      `;
+
+      card.querySelector('.card-admin-btn').addEventListener('click', () => openEdit(d));
+      return card;
+    }
+
+    function escHtml(str) {
+      return String(str)
+        .replace(/&/g,'&amp;')
+        .replace(/</g,'&lt;')
+        .replace(/>/g,'&gt;')
+        .replace(/"/g,'&quot;')
+        .replace(/\n/g,'<br>');
+    }
+
+
+    // ── PASSWORD GATE ──────────────────────────────────────────────────────
+    const fab       = document.getElementById('fab');
+    const pwOverlay = document.getElementById('pw-overlay');
+    const pwInput   = document.getElementById('pw-input');
+
+    fab.addEventListener('click', () => {
+      if (isAdmin) {
+        openNew();
+      } else {
+        pwInput.value = '';
+        pwOverlay.classList.add('open');
+        setTimeout(() => pwInput.focus(), 80);
+      }
+    });
+
+    document.getElementById('pw-cancel').addEventListener('click', () => {
+      pwOverlay.classList.remove('open');
+    });
+
+    document.getElementById('pw-submit').addEventListener('click', checkPw);
+    pwInput.addEventListener('keydown', e => { if (e.key === 'Enter') checkPw(); });
+
+    function checkPw() {
+      if (pwInput.value === ADMIN_PASSWORD) {
+        isAdmin = true;
+        document.body.classList.add('admin-mode');
+        fab.textContent = '+ add date';
+        pwOverlay.classList.remove('open');
+      } else {
+        pwInput.value = '';
+        pwInput.placeholder = 'wrong password';
+        pwInput.classList.add('shake');
+        pwInput.addEventListener('animationend', () => {
+          pwInput.classList.remove('shake');
+          pwInput.placeholder = '••••••••';
+        }, { once: true });
+      }
+    }
+
+
+    // ── FORM MODAL ─────────────────────────────────────────────────────────
+    const formOverlay = document.getElementById('form-overlay');
+
+    function openNew() {
+      clearForm();
+      document.getElementById('form-title').textContent = 'new date';
+      document.getElementById('f-delete').style.display = 'none';
+      formOverlay.classList.add('open');
+    }
+
+    function openEdit(d) {
+      const man = d.men || {};
+      const dt  = new Date(d.date_time);
+      // convert to local datetime-local string
+      const local = new Date(dt.getTime() - dt.getTimezoneOffset() * 60000)
+        .toISOString().slice(0, 16);
+
+      document.getElementById('form-title').textContent   = 'edit date';
+      document.getElementById('f-date-id').value          = d.id;
+      document.getElementById('f-man-id').value           = man.id || '';
+      document.getElementById('f-name').value             = man.name || '';
+      document.getElementById('f-phone').value            = man.phone_number || '';
+      document.getElementById('f-man-notes').value        = man.notes || '';
+      document.getElementById('f-datetime').value         = local;
+      document.getElementById('f-location').value         = d.location || '';
+      document.getElementById('f-date-notes').value       = d.notes || '';
+      document.getElementById('f-flowers').checked        = d.brought_flowers || false;
+      document.getElementById('f-driving').value          = d.i_am_driving ? 'true' : 'false';
+      document.getElementById('f-delete').style.display  = '';
+
+      formOverlay.classList.add('open');
+    }
+
+    function clearForm() {
+      ['f-date-id','f-man-id','f-name','f-phone','f-man-notes',
+       'f-datetime','f-location','f-date-notes'].forEach(id => {
+        document.getElementById(id).value = '';
+      });
+      document.getElementById('f-flowers').checked = false;
+      document.getElementById('f-driving').value   = 'false';
+    }
+
+    document.getElementById('f-cancel').addEventListener('click', () => {
+      formOverlay.classList.remove('open');
+    });
+
+
+    // ── SAVE ───────────────────────────────────────────────────────────────
+    document.getElementById('f-save').addEventListener('click', async () => {
+      const dateId    = document.getElementById('f-date-id').value;
+      const manId     = document.getElementById('f-man-id').value;
+      const name      = document.getElementById('f-name').value.trim();
+      const phone     = document.getElementById('f-phone').value.trim();
+      const manNotes  = document.getElementById('f-man-notes').value.trim();
+      const dateTime  = document.getElementById('f-datetime').value;
+      const location  = document.getElementById('f-location').value.trim();
+      const dateNotes = document.getElementById('f-date-notes').value.trim();
+      const flowers   = document.getElementById('f-flowers').checked;
+      const driving   = document.getElementById('f-driving').value === 'true';
+
+      if (!name || !dateTime) {
+        document.getElementById('f-name').focus();
+        return;
+      }
+
+      // upsert the man record
+      let finalManId = manId;
+      if (manId) {
+        await db.from('men').update({
+          name, phone_number: phone || null, notes: manNotes || null
+        }).eq('id', manId);
+      } else {
+        const { data: newMan, error } = await db.from('men')
+          .insert({ name, phone_number: phone || null, notes: manNotes || null })
+          .select().single();
+        if (error || !newMan) { alert('error saving. check console.'); console.error(error); return; }
+        finalManId = newMan.id;
+      }
+
+      // upsert the date record
+      const datePayload = {
+        man_id: finalManId,
+        date_time: dateTime,
+        location: location || null,
+        notes: dateNotes || null,
+        brought_flowers: flowers,
+        i_am_driving: driving,
+      };
+
+      if (dateId) {
+        await db.from('dates').update(datePayload).eq('id', dateId);
+      } else {
+        await db.from('dates').insert(datePayload);
+      }
+
+      formOverlay.classList.remove('open');
+      await loadDates();
+    });
+
+
+    // ── DELETE ─────────────────────────────────────────────────────────────
+    document.getElementById('f-delete').addEventListener('click', async () => {
+      const dateId = document.getElementById('f-date-id').value;
+      if (!dateId || !confirm('delete this date?')) return;
+      await db.from('dates').delete().eq('id', dateId);
+      formOverlay.classList.remove('open');
+      await loadDates();
+    });
+
+  </script>
+</body>
+</html>
