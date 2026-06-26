@@ -1,0 +1,965 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SummerSlam Content Partnership — Sharlena Luyen</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --black:   #0D0D0D;
+    --offwhite:#F7F5F2;
+    --white:   #FFFFFF;
+    --red:     #CC0000;
+    --red-dk:  #A00000;
+    --gold:    #B8A070;
+    --charcoal:#1A1A1A;
+    --mid:     #3A3A3A;
+    --muted:   #888888;
+    --sand:    #F0ECE5;
+  }
+
+  html { scroll-behavior: smooth; }
+  body { font-family: 'Inter', sans-serif; background: var(--offwhite); color: var(--charcoal); overflow-x: hidden; }
+
+  /* ── NAV ── */
+  .nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 20px 56px;
+    transition: background 0.4s, padding 0.3s;
+  }
+  .nav.scrolled {
+    background: rgba(13,13,13,0.96);
+    backdrop-filter: blur(10px);
+    padding: 14px 56px;
+    border-bottom: 1px solid rgba(204,0,0,0.2);
+  }
+  .nav-name {
+    font-size: 11px; font-weight: 600;
+    letter-spacing: 0.2em; text-transform: uppercase;
+    color: rgba(255,255,255,0.5);
+    transition: color 0.3s;
+  }
+  .nav.scrolled .nav-name { color: rgba(255,255,255,0.7); }
+  .nav-links { display: flex; gap: 8px; }
+  .nav-link {
+    font-size: 11px; font-weight: 600;
+    letter-spacing: 0.12em; text-transform: uppercase;
+    color: rgba(255,255,255,0.6);
+    text-decoration: none;
+    padding: 8px 16px;
+    border: 1px solid rgba(255,255,255,0.15);
+    border-radius: 2px;
+    transition: all 0.25s;
+  }
+  .nav-link:hover { background: rgba(255,255,255,0.08); color: white; }
+  .nav-link.primary {
+    background: var(--red);
+    border-color: var(--red);
+    color: white;
+  }
+  .nav-link.primary:hover { background: var(--red-dk); border-color: var(--red-dk); }
+
+  /* ── HERO ── */
+  .hero {
+    min-height: 100vh;
+    background: var(--black);
+    display: flex; flex-direction: column;
+    justify-content: flex-end;
+    position: relative;
+    overflow: hidden;
+    padding: 0 56px 72px;
+  }
+
+  /* Atmospheric texture */
+  .hero-texture {
+    position: absolute; inset: 0;
+    background:
+      radial-gradient(ellipse at 80% 20%, rgba(204,0,0,0.12) 0%, transparent 50%),
+      radial-gradient(ellipse at 10% 80%, rgba(184,160,112,0.06) 0%, transparent 40%),
+      radial-gradient(ellipse at 50% 50%, rgba(255,255,255,0.015) 0%, transparent 70%);
+  }
+  /* Grid overlay — MSG arena lights feel */
+  .hero-grid {
+    position: absolute; inset: 0; opacity: 0.04;
+    background-image:
+      linear-gradient(rgba(255,255,255,0.8) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,0.8) 1px, transparent 1px);
+    background-size: 80px 80px;
+  }
+
+  /* Countdown */
+  .hero-ticker {
+    position: relative; z-index: 2;
+    display: flex; align-items: center; gap: 16px;
+    margin-bottom: 48px;
+  }
+  .ticker-label {
+    font-size: 10px; font-weight: 600;
+    letter-spacing: 0.22em; text-transform: uppercase;
+    color: var(--red);
+  }
+  .ticker-divider { width: 32px; height: 1px; background: rgba(255,255,255,0.15); }
+  .ticker-count {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 13px; letter-spacing: 0.15em;
+    color: rgba(255,255,255,0.35);
+  }
+  .ticker-count span { color: rgba(255,255,255,0.7); }
+
+  /* Main headline */
+  .hero-content { position: relative; z-index: 2; }
+
+  .hero-location {
+    font-size: 11px; font-weight: 600;
+    letter-spacing: 0.25em; text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 16px;
+    display: flex; align-items: center; gap: 12px;
+  }
+  .hero-location::before {
+    content: ''; display: block;
+    width: 24px; height: 1px; background: var(--gold);
+  }
+
+  .hero-headline {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(72px, 11vw, 168px);
+    line-height: 0.92;
+    color: white;
+    letter-spacing: 0.01em;
+    margin-bottom: 32px;
+  }
+  .hero-headline .red { color: var(--red); }
+  .hero-headline .dim { color: rgba(255,255,255,0.25); }
+
+  .hero-sub {
+    font-size: 15px; font-weight: 300; line-height: 1.75;
+    color: rgba(255,255,255,0.55);
+    max-width: 520px; margin-bottom: 48px;
+  }
+  .hero-sub strong { color: rgba(255,255,255,0.85); font-weight: 500; }
+
+  .hero-ctas { display: flex; gap: 12px; flex-wrap: wrap; }
+  .hero-btn {
+    font-size: 11px; font-weight: 600;
+    letter-spacing: 0.15em; text-transform: uppercase;
+    text-decoration: none;
+    padding: 14px 28px; border-radius: 2px;
+    transition: all 0.25s;
+    display: inline-flex; align-items: center; gap: 8px;
+  }
+  .hero-btn.primary {
+    background: var(--red); color: white; border: 1px solid var(--red);
+  }
+  .hero-btn.primary:hover { background: var(--red-dk); border-color: var(--red-dk); }
+  .hero-btn.secondary {
+    background: transparent; color: rgba(255,255,255,0.7);
+    border: 1px solid rgba(255,255,255,0.2);
+  }
+  .hero-btn.secondary:hover { border-color: rgba(255,255,255,0.5); color: white; }
+
+  /* Scroll hint */
+  .hero-scroll {
+    position: absolute; bottom: 32px; right: 56px;
+    display: flex; flex-direction: column; align-items: center; gap: 8px;
+    color: rgba(255,255,255,0.2); font-size: 9px;
+    letter-spacing: 0.2em; text-transform: uppercase;
+    z-index: 2;
+  }
+  .scroll-line {
+    width: 1px; height: 40px;
+    background: linear-gradient(to bottom, rgba(255,255,255,0.3), transparent);
+    animation: scrolldrop 2s ease-in-out infinite;
+  }
+  @keyframes scrolldrop {
+    0%, 100% { transform: scaleY(1); opacity: 0.3; }
+    50% { transform: scaleY(1.3); opacity: 0.7; }
+  }
+
+  /* ── BROADCAST STRIP ── */
+  .broadcast {
+    background: var(--red);
+    padding: 14px 56px;
+    display: flex; gap: 48px; align-items: center;
+    overflow: hidden;
+  }
+  .broadcast-item {
+    display: flex; align-items: center; gap: 12px;
+    white-space: nowrap; flex-shrink: 0;
+  }
+  .broadcast-label {
+    font-size: 9px; font-weight: 600;
+    letter-spacing: 0.2em; text-transform: uppercase;
+    color: rgba(255,255,255,0.65);
+  }
+  .broadcast-value {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 15px; letter-spacing: 0.1em;
+    color: white;
+  }
+  .broadcast-sep { color: rgba(255,255,255,0.25); font-size: 18px; }
+
+  /* ── PITCH SECTION ── */
+  .pitch {
+    padding: 100px 56px;
+    background: var(--offwhite);
+    max-width: 1200px; margin: 0 auto;
+    display: grid; grid-template-columns: 5fr 7fr; gap: 80px; align-items: start;
+  }
+  .pitch-left { position: sticky; top: 100px; }
+  .pitch-eyebrow {
+    font-size: 10px; font-weight: 600;
+    letter-spacing: 0.22em; text-transform: uppercase;
+    color: var(--red); margin-bottom: 20px;
+  }
+  .pitch-headline {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(36px, 4vw, 56px);
+    line-height: 1.0; color: var(--charcoal);
+    letter-spacing: 0.02em; margin-bottom: 24px;
+  }
+  .pitch-dek {
+    font-size: 14px; line-height: 1.85; color: var(--muted);
+  }
+  .pitch-dek strong { color: var(--charcoal); font-weight: 500; }
+
+  .pitch-body { display: flex; flex-direction: column; gap: 40px; padding-top: 8px; }
+
+  .pitch-block {
+    border-top: 1px solid rgba(0,0,0,0.08);
+    padding-top: 32px;
+  }
+  .pitch-block-label {
+    font-size: 10px; font-weight: 600;
+    letter-spacing: 0.18em; text-transform: uppercase;
+    color: var(--gold); margin-bottom: 12px;
+  }
+  .pitch-block-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 22px; letter-spacing: 0.05em;
+    color: var(--charcoal); margin-bottom: 10px;
+  }
+  .pitch-block-body {
+    font-size: 14px; line-height: 1.85; color: #555;
+  }
+
+  /* ── DELIVERABLES ── */
+  .deliverables {
+    background: var(--black); padding: 100px 56px;
+  }
+  .deliverables-inner { max-width: 1200px; margin: 0 auto; }
+  .del-header {
+    display: flex; justify-content: space-between; align-items: baseline;
+    margin-bottom: 56px; padding-bottom: 20px;
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+  }
+  .del-eyebrow {
+    font-size: 10px; font-weight: 600;
+    letter-spacing: 0.22em; text-transform: uppercase;
+    color: var(--red);
+  }
+  .del-headline {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(28px, 3vw, 42px);
+    letter-spacing: 0.03em; color: white;
+  }
+  .del-note {
+    font-size: 12px; color: rgba(255,255,255,0.3);
+    letter-spacing: 0.05em;
+  }
+
+  .del-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1px; background: rgba(255,255,255,0.06);
+    border-radius: 3px; overflow: hidden;
+  }
+  .del-item {
+    background: rgba(255,255,255,0.03);
+    padding: 40px 32px;
+    transition: background 0.3s;
+  }
+  .del-item:hover { background: rgba(204,0,0,0.08); }
+  .del-num {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 56px; line-height: 1;
+    color: var(--red); opacity: 0.5;
+    margin-bottom: 16px;
+  }
+  .del-title {
+    font-size: 11px; font-weight: 600;
+    letter-spacing: 0.15em; text-transform: uppercase;
+    color: rgba(255,255,255,0.7); margin-bottom: 10px;
+  }
+  .del-body {
+    font-size: 13px; line-height: 1.8;
+    color: rgba(255,255,255,0.38);
+  }
+
+  /* ── PORTFOLIO / CONTENT VISION ── */
+  .vision {
+    padding: 100px 56px;
+    background: var(--sand);
+  }
+  .vision-inner { max-width: 1200px; margin: 0 auto; }
+  .vision-header {
+    margin-bottom: 56px; padding-bottom: 20px;
+    border-bottom: 1px solid rgba(0,0,0,0.08);
+  }
+  .vision-eyebrow {
+    font-size: 10px; font-weight: 600;
+    letter-spacing: 0.22em; text-transform: uppercase;
+    color: var(--red); margin-bottom: 12px;
+  }
+  .vision-headline {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(28px, 3vw, 42px);
+    letter-spacing: 0.03em; color: var(--charcoal);
+  }
+
+  /* Shot list cards */
+  .shots {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px; margin-bottom: 60px;
+  }
+  .shot {
+    border-radius: 3px; overflow: hidden;
+    position: relative;
+    transition: transform 0.3s;
+  }
+  .shot:hover { transform: translateY(-3px); }
+  .shot-img {
+    height: 200px; position: relative;
+  }
+  /* Each shot has its own atmospheric bg */
+  .shot:nth-child(1) .shot-img { background: linear-gradient(160deg, #1a1a2e 0%, #2d1b1b 60%, #3d2020 100%); }
+  .shot:nth-child(2) .shot-img { background: linear-gradient(150deg, #0d0d0d 0%, #2a1a00 60%, #3d2a00 100%); }
+  .shot:nth-child(3) .shot-img { background: linear-gradient(140deg, #0a1a0a 0%, #1a2a1a 60%, #1a3a1a 100%); }
+  .shot:nth-child(4) .shot-img { background: linear-gradient(155deg, #1a0d1a 0%, #2a1a2a 60%, #1a0d2a 100%); }
+  .shot:nth-child(5) .shot-img { background: linear-gradient(145deg, #1a1a0d 0%, #2a2a1a 60%, #0d1a1a 100%); }
+  .shot:nth-child(6) .shot-img { background: linear-gradient(160deg, #1a0a0a 0%, #3a0000 50%, #1a0a0a 100%); }
+
+  /* Light suggestion in each */
+  .shot:nth-child(1) .shot-img::after { content:''; position:absolute; inset:0; background: radial-gradient(ellipse at 70% 30%, rgba(204,0,0,0.35) 0%, transparent 55%), radial-gradient(ellipse at 20% 80%, rgba(255,150,50,0.1) 0%, transparent 40%); }
+  .shot:nth-child(2) .shot-img::after { content:''; position:absolute; inset:0; background: radial-gradient(ellipse at 50% 40%, rgba(255,180,0,0.3) 0%, transparent 50%); }
+  .shot:nth-child(3) .shot-img::after { content:''; position:absolute; inset:0; background: radial-gradient(ellipse at 40% 50%, rgba(100,200,100,0.2) 0%, transparent 50%), radial-gradient(ellipse at 70% 20%, rgba(200,200,255,0.15) 0%, transparent 40%); }
+  .shot:nth-child(4) .shot-img::after { content:''; position:absolute; inset:0; background: radial-gradient(ellipse at 60% 60%, rgba(180,100,255,0.25) 0%, transparent 50%); }
+  .shot:nth-child(5) .shot-img::after { content:''; position:absolute; inset:0; background: radial-gradient(ellipse at 30% 40%, rgba(255,220,100,0.25) 0%, transparent 50%); }
+  .shot:nth-child(6) .shot-img::after { content:''; position:absolute; inset:0; background: radial-gradient(ellipse at 50% 50%, rgba(255,50,50,0.4) 0%, transparent 55%); }
+
+  .shot-caption {
+    background: var(--charcoal);
+    padding: 18px 20px;
+  }
+  .shot-type {
+    font-size: 9px; font-weight: 600;
+    letter-spacing: 0.2em; text-transform: uppercase;
+    color: var(--red); margin-bottom: 5px;
+  }
+  .shot-desc {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 15px; letter-spacing: 0.05em;
+    color: rgba(255,255,255,0.85);
+    line-height: 1.3;
+  }
+
+  /* Pull quote */
+  .pull-quote {
+    border-left: 3px solid var(--red);
+    padding: 24px 36px;
+    background: var(--offwhite);
+    border-radius: 0 3px 3px 0;
+  }
+  .pull-quote p {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(20px, 2.5vw, 28px);
+    letter-spacing: 0.03em;
+    color: var(--charcoal); line-height: 1.3;
+    margin-bottom: 12px;
+  }
+  .pull-quote cite {
+    font-size: 11px; font-weight: 500;
+    letter-spacing: 0.12em; text-transform: uppercase;
+    color: var(--muted); font-style: normal;
+  }
+
+  /* ── ABOUT ── */
+  .about {
+    padding: 100px 56px;
+    background: var(--offwhite);
+  }
+  .about-inner {
+    max-width: 1200px; margin: 0 auto;
+    display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center;
+  }
+  .about-eyebrow {
+    font-size: 10px; font-weight: 600;
+    letter-spacing: 0.22em; text-transform: uppercase;
+    color: var(--red); margin-bottom: 20px;
+  }
+  .about-headline {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(28px, 3.5vw, 48px);
+    line-height: 1.0; letter-spacing: 0.02em;
+    color: var(--charcoal); margin-bottom: 28px;
+  }
+  .about-body { font-size: 14px; line-height: 1.85; color: #555; }
+  .about-body p { margin-bottom: 16px; }
+  .about-body p:last-child { margin-bottom: 0; }
+  .about-body strong { color: var(--charcoal); font-weight: 500; }
+
+  .about-stats {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 2px;
+    background: rgba(0,0,0,0.06); border-radius: 3px; overflow: hidden;
+    margin-top: 36px;
+  }
+  .stat {
+    background: var(--offwhite); padding: 28px 24px;
+    transition: background 0.2s;
+  }
+  .stat:hover { background: var(--sand); }
+  .stat-num {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 42px; line-height: 1; color: var(--red);
+    margin-bottom: 6px;
+  }
+  .stat-label {
+    font-size: 11px; font-weight: 500;
+    letter-spacing: 0.1em; text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  /* About visual */
+  .about-visual {
+    position: relative;
+  }
+  .about-img {
+    aspect-ratio: 4/5; border-radius: 3px;
+    background: linear-gradient(160deg, #1a1a2e 0%, #0d0d1a 50%, #1a0a0a 100%);
+    position: relative; overflow: hidden;
+  }
+  .about-img::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: radial-gradient(ellipse at 40% 35%, rgba(204,0,0,0.2) 0%, transparent 50%),
+      radial-gradient(ellipse at 70% 70%, rgba(184,160,112,0.1) 0%, transparent 40%);
+  }
+  .about-img-label {
+    position: absolute; bottom: 0; left: 0; right: 0;
+    padding: 40px 24px 24px;
+    background: linear-gradient(to top, rgba(0,0,0,0.8) 0%, transparent 100%);
+    z-index: 2;
+  }
+  .about-img-name {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 22px; letter-spacing: 0.08em; color: white; line-height: 1.1;
+  }
+  .about-img-title {
+    font-size: 10px; font-weight: 500;
+    letter-spacing: 0.18em; text-transform: uppercase;
+    color: var(--gold); margin-top: 4px;
+  }
+  .about-accent {
+    position: absolute; top: -12px; right: -12px;
+    background: var(--red); color: white;
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 11px; letter-spacing: 0.15em;
+    padding: 8px 14px; border-radius: 2px;
+    white-space: nowrap; z-index: 3;
+  }
+
+  /* ── CTA ── */
+  .cta-section {
+    background: var(--charcoal);
+    padding: 100px 56px;
+  }
+  .cta-inner { max-width: 1200px; margin: 0 auto; }
+  .cta-top {
+    text-align: center; margin-bottom: 64px;
+  }
+  .cta-eyebrow {
+    font-size: 10px; font-weight: 600;
+    letter-spacing: 0.22em; text-transform: uppercase;
+    color: var(--red); margin-bottom: 20px;
+  }
+  .cta-headline {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(40px, 5vw, 72px);
+    letter-spacing: 0.02em; color: white;
+    line-height: 0.95; margin-bottom: 20px;
+  }
+  .cta-headline .red { color: var(--red); }
+  .cta-sub {
+    font-size: 15px; font-weight: 300; line-height: 1.75;
+    color: rgba(255,255,255,0.45); max-width: 500px; margin: 0 auto;
+  }
+
+  /* Three CTA cards */
+  .cta-cards {
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px;
+    background: rgba(255,255,255,0.06); border-radius: 3px; overflow: hidden;
+  }
+  .cta-card {
+    background: rgba(255,255,255,0.04);
+    padding: 48px 36px;
+    display: flex; flex-direction: column;
+    transition: background 0.3s;
+    text-decoration: none;
+  }
+  .cta-card:hover { background: rgba(204,0,0,0.1); }
+  .cta-card.featured { background: var(--red); }
+  .cta-card.featured:hover { background: var(--red-dk); }
+  .cta-card-icon {
+    font-size: 28px; margin-bottom: 20px;
+    color: rgba(255,255,255,0.4);
+  }
+  .cta-card.featured .cta-card-icon { color: rgba(255,255,255,0.7); }
+  .cta-card-label {
+    font-size: 9px; font-weight: 600;
+    letter-spacing: 0.22em; text-transform: uppercase;
+    color: rgba(255,255,255,0.4); margin-bottom: 8px;
+  }
+  .cta-card.featured .cta-card-label { color: rgba(255,255,255,0.65); }
+  .cta-card-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 24px; letter-spacing: 0.05em;
+    color: white; margin-bottom: 10px; line-height: 1.1;
+  }
+  .cta-card-body {
+    font-size: 13px; line-height: 1.7;
+    color: rgba(255,255,255,0.38); flex: 1;
+  }
+  .cta-card.featured .cta-card-body { color: rgba(255,255,255,0.65); }
+  .cta-card-action {
+    margin-top: 28px;
+    font-size: 10px; font-weight: 600;
+    letter-spacing: 0.18em; text-transform: uppercase;
+    color: var(--red);
+    display: flex; align-items: center; gap: 8px;
+  }
+  .cta-card.featured .cta-card-action { color: rgba(255,255,255,0.9); }
+  .cta-card-action::after {
+    content: '→';
+    transition: transform 0.2s;
+  }
+  .cta-card:hover .cta-card-action::after { transform: translateX(4px); }
+
+  /* ── DEADLINE BANNER ── */
+  .deadline {
+    background: var(--red);
+    padding: 20px 56px;
+    display: flex; justify-content: center; align-items: center; gap: 20px;
+  }
+  .deadline-icon { font-size: 14px; color: rgba(255,255,255,0.7); }
+  .deadline-text {
+    font-size: 12px; font-weight: 600;
+    letter-spacing: 0.1em; text-transform: uppercase;
+    color: white;
+  }
+  .deadline-text span { color: rgba(255,255,255,0.65); font-weight: 400; }
+
+  /* ── FOOTER ── */
+  footer {
+    background: var(--black);
+    padding: 28px 56px;
+    display: flex; justify-content: space-between; align-items: center;
+    border-top: 1px solid rgba(255,255,255,0.05);
+  }
+  .footer-name {
+    font-size: 10px; font-weight: 600;
+    letter-spacing: 0.2em; text-transform: uppercase;
+    color: rgba(255,255,255,0.3);
+  }
+  .footer-links { display: flex; gap: 24px; }
+  .footer-link {
+    font-size: 11px; color: rgba(255,255,255,0.3);
+    text-decoration: none; letter-spacing: 0.08em;
+    transition: color 0.2s;
+  }
+  .footer-link:hover { color: rgba(255,255,255,0.6); }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 900px) {
+    .nav, .hero, .broadcast, .pitch-wrap, .deliverables, .vision, .about, .cta-section, .deadline, footer {
+      padding-left: 24px; padding-right: 24px;
+    }
+    .nav-links .nav-link:not(.primary) { display: none; }
+    .hero { padding-bottom: 56px; }
+    .hero-scroll { display: none; }
+    .pitch { grid-template-columns: 1fr; gap: 40px; }
+    .pitch-left { position: static; }
+    .del-grid { grid-template-columns: 1fr; }
+    .del-header { flex-direction: column; gap: 8px; }
+    .shots { grid-template-columns: 1fr 1fr; }
+    .about-inner { grid-template-columns: 1fr; }
+    .about-img { max-width: 340px; }
+    .cta-cards { grid-template-columns: 1fr; }
+    .broadcast { gap: 24px; overflow-x: auto; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    * { animation: none !important; transition-duration: 0.01ms !important; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="nav" id="nav">
+  <span class="nav-name">Sharlena Luyen</span>
+  <div class="nav-links">
+    <a href="#pitch" class="nav-link">The Pitch</a>
+    <a href="#vision" class="nav-link">Content Vision</a>
+    <a href="#contact" class="nav-link primary">Get in Touch</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-texture"></div>
+  <div class="hero-grid"></div>
+
+  <div class="hero-ticker">
+    <span class="ticker-label">Countdown to SummerSlam</span>
+    <div class="ticker-divider"></div>
+    <span class="ticker-count"><span id="days-count">--</span> days · <span id="hours-count">--</span> hrs · <span id="mins-count">--</span> min</span>
+  </div>
+
+  <div class="hero-content">
+    <p class="hero-location">U.S. Bank Stadium · Minneapolis, Minnesota · Aug 1–2, 2026</p>
+    <h1 class="hero-headline">
+      The fan<br>
+      <span class="red">story</span><br>
+      <span class="dim">no one's</span><br>
+      shooting.
+    </h1>
+    <p class="hero-sub">
+      I'm a photographer and content creator proposing a partnership for
+      <strong>SummerSlam,</strong>
+      complimentary tickets in exchange for a complete package of fan-perspective
+      photography, video, and editorial content, fully licensed for WWE's use.
+    </p>
+    <div class="hero-ctas">
+      <a href="#contact" class="hero-btn primary">See the Full Proposal</a>
+      <a href="#vision" class="hero-btn secondary">View Content Vision</a>
+    </div>
+  </div>
+
+  <div class="hero-scroll">
+    <div class="scroll-line"></div>
+    Scroll
+  </div>
+</section>
+
+<!-- BROADCAST STRIP -->
+<div class="broadcast">
+  <div class="broadcast-item">
+    <span class="broadcast-label">Event</span>
+    <span class="broadcast-value">SummerSlam 2026</span>
+  </div>
+  <span class="broadcast-sep">·</span>
+  <div class="broadcast-item">
+    <span class="broadcast-label">Venue</span>
+    <span class="broadcast-value">U.S. Bank Stadium</span>
+  </div>
+  <span class="broadcast-sep">·</span>
+  <div class="broadcast-item">
+    <span class="broadcast-label">Dates</span>
+    <span class="broadcast-value">Aug 1–2, 2026</span>
+  </div>
+  <span class="broadcast-sep">·</span>
+  <div class="broadcast-item">
+    <span class="broadcast-label">Location</span>
+    <span class="broadcast-value">Minneapolis, Minnesota</span>
+  </div>
+  <span class="broadcast-sep">·</span>
+  <div class="broadcast-item">
+    <span class="broadcast-label">WWE's Biggest Event</span>
+    <span class="broadcast-value">of the Summer</span>
+  </div>
+</div>
+
+<!-- PITCH -->
+<section id="pitch" style="background: var(--offwhite); padding: 100px 0;">
+  <div class="pitch">
+    <div class="pitch-left">
+      <p class="pitch-eyebrow">The proposal</p>
+      <h2 class="pitch-headline">What I'm offering. What I'm asking for.</h2>
+      <p class="pitch-dek">
+        WWE's production coverage owns the ring. 
+        What it can't capture is what's happening <strong>in the seats,</strong>
+        and that's exactly where I work.
+      </p>
+    </div>
+    <div class="pitch-body">
+      <div class="pitch-block">
+        <p class="pitch-block-label">The Angle</p>
+        <h3 class="pitch-block-title">Fan Energy Is the Story Nobody Tells Well</h3>
+        <p class="pitch-block-body">The most shareable WWE content on social media isn't the in-ring action; it's the dad who can't keep it together when his kid's favorite superstar appears, the section that loses their minds at the pyro, the crowd at full volume on the biggest weekend of the year. That's the content I create. My background is in portrait photography, which means I'm trained to find the unrehearsed human moment. A live WWE event is the richest possible environment for that kind of work.</p>
+      </div>
+      <div class="pitch-block">
+        <p class="pitch-block-label">The Event</p>
+        <h3 class="pitch-block-title">The Biggest Stage. The Loudest Crowd.</h3>
+        <p class="pitch-block-body">SummerSlam at U.S. Bank Stadium on August 1–2 is WWE's marquee summer event — two nights, one of the largest venues in the country, and a crowd that travels from everywhere to be there. That scale creates a fan energy story that can't be replicated at any other event on the calendar, and it deserves to be told by someone trained to find it.</p>
+      </div>
+      <div class="pitch-block">
+        <p class="pitch-block-label">The Ask</p>
+        <h3 class="pitch-block-title">Four Tickets. One Complete Content Package.</h3>
+        <p class="pitch-block-body">I'm requesting two complimentary tickets for each night — August 1 and August 2. In return, WWE receives a full set of fan-perspective photos, short-form video content, and a written editorial recap covering both nights. All assets are fully licensed for use across WWE's web, social, and marketing channels, delivered within one week of the event.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- DELIVERABLES -->
+<section class="deliverables" id="deliverables">
+  <div class="deliverables-inner">
+    <div class="del-header">
+      <div>
+        <p class="del-eyebrow">Deliverables</p>
+        <h2 class="del-headline">What WWE Receives</h2>
+      </div>
+      <span class="del-note">All assets fully licensed · No expiration · No attribution required</span>
+    </div>
+    <div class="del-grid">
+      <div class="del-item">
+        <div class="del-num">30+</div>
+        <div class="del-title">Event Photos</div>
+        <div class="del-body">High-resolution edited stills. Fan reactions, crowd energy, SummerSlam atmosphere, arena scale. Shot with DSLR and mobile for both polished and native-feeling formats.</div>
+      </div>
+      <div class="del-item">
+        <div class="del-num">2</div>
+        <div class="del-title">Short-Form Videos</div>
+        <div class="del-body">30–60 second Reels-ready atmospheric clips capturing the fan experience. Suitable for WWE social channels or Peacock promotional use.</div>
+      </div>
+      <!-- <div class="del-item">
+        <div class="del-num">1</div>
+        <div class="del-title">Written Recap</div>
+        <div class="del-body">A 600–800 word editorial-style fan experience recap. Suitable for WWE.com, the WWE newsletter, or licensed to a media partner.</div>
+      </div> -->
+      <div class="del-item">
+        <div class="del-num">48h</div>
+        <div class="del-title">First Selects</div>
+        <div class="del-body">A curated first delivery of 8–10 hero images within 48 hours of the event, ready for any same-week campaign or social moment needs.</div>
+      </div>
+      <div class="del-item">
+        <div class="del-num">2x</div>
+        <div class="del-title">Orientations</div>
+        <div class="del-body">Every key image delivered in both horizontal and vertical composition. Optimized for web, OTA, Instagram, and broadcast use without cropping.</div>
+      </div>
+      <div class="del-item">
+        <div class="del-num">∞</div>
+        <div class="del-title">Full Usage License</div>
+        <div class="del-body">All content is yours. Unlimited commercial use across all channels and platforms, no expiration date, no attribution clause, no royalty structure.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- VISION -->
+<section class="vision" id="vision">
+  <div class="vision-inner">
+    <div class="vision-header">
+      <p class="vision-eyebrow">Content Vision</p>
+      <h2 class="vision-headline">Six Shots I'd Come Home With</h2>
+    </div>
+    <div class="shots">
+      <div class="shot">
+        <div class="shot-img"></div>
+        <div class="shot-caption">
+          <p class="shot-type">Crowd · Reaction</p>
+          <p class="shot-desc">The section that loses it when the pyro hits</p>
+        </div>
+      </div>
+      <div class="shot">
+        <div class="shot-img"></div>
+        <div class="shot-caption">
+          <p class="shot-type">Atmosphere · Scale</p>
+          <p class="shot-desc">U.S. Bank Stadium at full capacity; the arena as character</p>
+        </div>
+      </div>
+      <div class="shot">
+        <div class="shot-img"></div>
+        <div class="shot-caption">
+          <p class="shot-type">Portrait · Anticipation</p>
+          <p class="shot-desc">The face before the entrance music drops</p>
+        </div>
+      </div>
+      <div class="shot">
+        <div class="shot-img"></div>
+        <div class="shot-caption">
+          <p class="shot-type">Detail · Merch & Culture</p>
+          <p class="shot-desc">The signs, the gear, the evidence of fandom</p>
+        </div>
+      </div>
+      <div class="shot">
+        <div class="shot-img"></div>
+        <div class="shot-caption">
+          <p class="shot-type">Moment · Connection</p>
+          <p class="shot-desc">The reason people drive hours to be here in person</p>
+        </div>
+      </div>
+      <div class="shot">
+        <div class="shot-img"></div>
+        <div class="shot-caption">
+          <p class="shot-type">Exterior · Arrival</p>
+          <p class="shot-desc">U.S. Bank Stadium lit up on an August night in Minneapolis</p>
+        </div>
+      </div>
+    </div>
+    <div class="pull-quote">
+      <p>"WWE has world-class coverage of what happens inside the ring. The fan experience: that's the story that makes someone want to go next time."</p>
+      <cite>— The angle I'd tell</cite>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section class="about">
+  <div class="about-inner">
+    <div>
+      <p class="about-eyebrow">About</p>
+      <h2 class="about-headline">A Portrait Photographer. A Genuine Fan.</h2>
+      <div class="about-body">
+        <p>My training is in portrait photography, which means my eye is built for the human moment. I don't manufacture emotion. I find it. That skill set makes a live event with 20,000 people one of the most compelling subjects I can point a camera at.</p>
+        <p>I shoot with <strong>DSLR for hero stills</strong> and mobile for native-feeling social content, giving WWE a complete library rather than a single format. I edit to a consistent, intentional look - not a filter, but a point of view.</p>
+        <p>This isn't about clout. I'm proposing this because SummerSlam is WWE's biggest summer moment and I think the fan story deserves to be told by someone who understands both sides of the lens.</p>
+      </div>
+      <div class="about-stats">
+        <div class="stat">
+          <div class="stat-num">DSLR</div>
+          <div class="stat-label">+ Mobile</div>
+        </div>
+        <div class="stat">
+          <div class="stat-num">7 days</div>
+          <div class="stat-label">Full Delivery</div>
+        </div>
+        <div class="stat">
+          <div class="stat-num">48 hrs</div>
+          <div class="stat-label">First Selects</div>
+        </div>
+        <div class="stat">
+          <div class="stat-num">100%</div>
+          <div class="stat-label">Licensed to WWE</div>
+        </div>
+      </div>
+    </div>
+    <div class="about-visual">
+      <div class="about-img">
+        <img src="assets/img/selfportrait.JPG" alt="Sharlena Luyen" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center top;z-index:1;">
+        <div class="about-img-label">
+          <p class="about-img-name">Sharlena Luyen</p>
+          <p class="about-img-title">Photographer & Content Creator</p>
+        </div>
+      </div>
+      <div class="about-accent">Available · Aug 1–2</div>
+    </div>
+  </div>
+</section>
+
+<!-- DEADLINE BANNER
+<div class="deadline">
+  <span class="deadline-text">
+    ⚡ Credential deadline approaching — 
+    <span>Submit via access.wwe.com or contact press@wwe.com</span>
+  </span>
+</div> -->
+
+<!-- CTA -->
+<section class="cta-section" id="contact">
+  <div class="cta-inner">
+    <div class="cta-top">
+      <p class="cta-eyebrow">Let's make it happen</p>
+      <h2 class="cta-headline">Three ways to<br><span class="red">get in touch.</span></h2>
+      <p class="cta-sub">Pick whatever works best for your team. I'm responsive, flexible, and ready to move quickly given the timeline.</p>
+    </div>
+    <div class="cta-cards">
+      <a href="https://calendly.com/sharlena/personal-meeting" target="_blank" rel="noopener" class="cta-card featured">
+        <div class="cta-card-icon">📅</div>
+        <p class="cta-card-label">Fastest path</p>
+        <h3 class="cta-card-title">Book a 20-Minute Call</h3>
+        <p class="cta-card-body">Talk through the proposal, ask any questions, and confirm the partnership in one conversation. No prep needed on your end.</p>
+        <span class="cta-card-action">Schedule Now</span>
+      </a>
+      <a href="mailto:sharlenaluyen@gmail.com" class="cta-card">
+        <div class="cta-card-icon">✉️</div>
+        <p class="cta-card-label">Direct line</p>
+        <h3 class="cta-card-title">Send an Email</h3>
+        <p class="cta-card-body">Prefer async? Reach me directly. I'll respond within 24 hours and can send a portfolio, answer specific questions, or jump to a proposal review.</p>
+        <span class="cta-card-action">Email Me</span>
+      </a>
+      <a href="assets/wwe_pitch_proposal.pdf" class="cta-card">
+        <div class="cta-card-icon">📄</div>
+        <p class="cta-card-label">Full details</p>
+        <h3 class="cta-card-title">Download the Proposal</h3>
+        <p class="cta-card-body">The complete written proposal with deliverables, usage terms, and turnaround timeline. Ready to forward to your team or route through your partnerships process.</p>
+        <span class="cta-card-action">Download PDF</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <span class="footer-name">Sharlena Luyen · Content Partnership</span>
+  <div class="footer-links">
+    <a href="mailto:sharlenaluyen@gmail.com" class="footer-link">sharlenaluyen@gmail.com</a>
+    <!-- <a href="/" class="footer-link">Portfolio</a> -->
+  </div>
+</footer>
+
+<script>
+  // Nav scroll
+  const nav = document.getElementById('nav');
+  window.addEventListener('scroll', () => {
+    nav.classList.toggle('scrolled', window.scrollY > 60);
+  });
+
+  // Live countdown to SummerSlam Aug 1, 2026 7:30 PM CT
+  function updateCountdown() {
+    const event = new Date('2026-08-02T00:30:00Z'); // 7:30 PM CT = 00:30 UTC next day
+    const now = new Date();
+    const diff = event - now;
+    if (diff <= 0) {
+      document.getElementById('days-count').textContent = '0';
+      document.getElementById('hours-count').textContent = '0';
+      document.getElementById('mins-count').textContent = '0';
+      return;
+    }
+    const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+    const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    const mins = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+    document.getElementById('days-count').textContent = days;
+    document.getElementById('hours-count').textContent = hours;
+    document.getElementById('mins-count').textContent = mins;
+  }
+  updateCountdown();
+  setInterval(updateCountdown, 30000);
+
+  // Scroll reveal
+  const els = document.querySelectorAll('.pitch-block, .del-item, .shot, .stat, .cta-card, .about-visual');
+  const obs = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.style.opacity = '1';
+        e.target.style.transform = 'translateY(0)';
+        obs.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.1 });
+  els.forEach(el => {
+    el.style.opacity = '0';
+    el.style.transform = 'translateY(20px)';
+    el.style.transition = 'opacity 0.55s ease, transform 0.55s ease';
+    obs.observe(el);
+  });
+</script>
+</body>
+</html>
