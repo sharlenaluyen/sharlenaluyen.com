@@ -478,7 +478,7 @@ const triviaQuestions = [
   },
   {
     q: 'What nonprofit did Sharlena found in high school?',
-    choices: ['Codemmnity', 'TechBridge', 'GirlsWhoCode Local', 'CodeForGood'],
+    choices: ['Codemmunity', 'TechBridge', 'GirlsWhoCode Local', 'CodeForGood'],
     correct: 0,
   },
   {
