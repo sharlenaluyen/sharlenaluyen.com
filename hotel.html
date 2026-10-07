@@ -55,6 +55,7 @@
     letter-spacing: 0.18em;
     text-transform: uppercase;
     color: var(--cream);
+    text-decoration: none;
     transition: color 0.4s;
   }
   .byline.scrolled .byline-name { color: var(--forest); }
@@ -66,9 +67,21 @@
     color: var(--cream);
     text-decoration: none;
     padding: 9px 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    line-height: 1.2;
     border: 1px solid rgba(255,255,255,0.5);
     border-radius: 2px;
     transition: all 0.3s;
+  }
+  .byline-cta-sub {
+    font-size: 8px;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    opacity: 0.7;
+    margin-top: 2px;
   }
   .byline.scrolled .byline-cta {
     color: var(--forest);
@@ -94,20 +107,12 @@
     position: absolute;
     inset: 0;
     background:
+      linear-gradient(to bottom, rgba(28,43,30,0.55) 0%, transparent 22%),
       linear-gradient(to top, rgba(28,43,30,0.82) 0%, rgba(28,43,30,0.3) 50%, rgba(28,43,30,0.1) 100%),
+      url('assets/img/hotel/arrival-bed-suitcase.jpg') center / cover no-repeat,
       linear-gradient(135deg, #b8a99a 0%, #c4b49e 25%, #d4c4ae 50%, #c8b89c 75%, #b4a48e 100%);
     background-size: cover;
     background-position: center;
-  }
-  /* Simulated atmospheric photo texture */
-  .hero-bg::after {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background-image:
-      radial-gradient(ellipse at 30% 40%, rgba(205,185,160,0.4) 0%, transparent 60%),
-      radial-gradient(ellipse at 70% 60%, rgba(160,140,120,0.3) 0%, transparent 50%),
-      radial-gradient(ellipse at 50% 80%, rgba(100,80,60,0.2) 0%, transparent 40%);
   }
   .hero-content {
     position: relative;
@@ -251,7 +256,7 @@
     margin: 0 auto;
     display: grid;
     grid-template-columns: repeat(12, 1fr);
-    grid-template-rows: auto;
+    grid-auto-rows: 260px;
     gap: 12px;
   }
   .grid-item {
@@ -260,31 +265,20 @@
     border-radius: 3px;
     cursor: pointer;
   }
-  .grid-item:nth-child(1)  { grid-column: 1/8;  grid-row: 1; aspect-ratio: 4/3; }
-  .grid-item:nth-child(2)  { grid-column: 8/13; grid-row: 1; aspect-ratio: 3/4; }
-  .grid-item:nth-child(3)  { grid-column: 1/5;  grid-row: 2; aspect-ratio: 1/1; }
-  .grid-item:nth-child(4)  { grid-column: 5/9;  grid-row: 2; aspect-ratio: 4/3; }
-  .grid-item:nth-child(5)  { grid-column: 9/13; grid-row: 2; aspect-ratio: 1/1; }
-  .grid-item:nth-child(6)  { grid-column: 1/6;  grid-row: 3; aspect-ratio: 3/4; }
-  .grid-item:nth-child(7)  { grid-column: 6/13; grid-row: 3; }
+  .g-arrival  { grid-column: 1/8;  grid-row: 1 / span 2; }
+  .g-room     { grid-column: 8/13; grid-row: 1 / span 3; }
+  .g-view     { grid-column: 1/5;  grid-row: 3; }
+  .g-tray     { grid-column: 5/8;  grid-row: 3; }
+  .g-spread   { grid-column: 1/8;  grid-row: 4 / span 2; }
+  .g-welcome  { grid-column: 8/13; grid-row: 4 / span 2; }
+  .g-map      { grid-column: 1/13; grid-row: 6 / span 2; }
 
-  /* Photo placeholder backgrounds */
-  .grid-item:nth-child(1)  .photo { background-image: url('assets/img/hotel/interior-natural-light.jpg'); background-size: cover; background-position: center; }
-  .grid-item:nth-child(2)  .photo { background-image: url('assets/img/hotel/exterior-golden-hour.jpg'); background-size: cover; background-position: center; }
-  .grid-item:nth-child(3)  .photo { background-image: url('assets/img/hotel/detail-still-life.jpg'); background-size: cover; background-position: center 20%; }
-  .grid-item:nth-child(4)  .photo { background-image: url('assets/img/hotel/amenity-natural-context.jpg'); background-size: cover; background-position: center; }
-  .grid-item:nth-child(5)  .photo { background-image: url('assets/img/hotel/architecture-facade.jpg'); background-size: cover; background-position: center; }
-  .grid-item:nth-child(6)  .photo { background-image: url('assets/img/hotel/interior-atmosphere.jpg'); background-size: cover; background-position: center; }
-  .grid-item:nth-child(7)  .photo { background-image: url('assets/img/hotel/surroundings-destination.jpg'); background-size: cover; background-position: center; }
-
-  /* Simulated photo content */
-  .grid-item:nth-child(1)  .photo::after { content:''; position:absolute; inset:0; background: radial-gradient(ellipse at 60% 40%, rgba(255,240,220,0.3) 0%, transparent 60%), radial-gradient(ellipse at 20% 70%, rgba(100,80,60,0.2) 0%, transparent 40%); }
-  .grid-item:nth-child(2)  .photo::after { content:''; position:absolute; inset:0; background: radial-gradient(ellipse at 40% 30%, rgba(220,240,220,0.3) 0%, transparent 50%), radial-gradient(ellipse at 70% 80%, rgba(60,80,60,0.2) 0%, transparent 40%); }
-  .grid-item:nth-child(3)  .photo::after { content:''; position:absolute; inset:0; background: radial-gradient(ellipse at 50% 50%, rgba(255,245,230,0.4) 0%, transparent 60%); }
-  .grid-item:nth-child(4)  .photo::after { content:''; position:absolute; inset:0; background: radial-gradient(ellipse at 30% 60%, rgba(255,240,210,0.35) 0%, transparent 55%); }
-  .grid-item:nth-child(5)  .photo::after { content:''; position:absolute; inset:0; background: radial-gradient(ellipse at 60% 40%, rgba(200,220,200,0.3) 0%, transparent 50%); }
-  .grid-item:nth-child(6)  .photo::after { content:''; position:absolute; inset:0; background: radial-gradient(ellipse at 40% 50%, rgba(255,240,220,0.3) 0%, transparent 60%), radial-gradient(ellipse at 80% 30%, rgba(220,200,180,0.2) 0%, transparent 40%); }
-  .grid-item:nth-child(7)  .photo::after { content:''; position:absolute; inset:0; background: radial-gradient(ellipse at 50% 40%, rgba(220,240,220,0.25) 0%, transparent 55%); }
+  .photo img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
 
   .photo {
     position: absolute;
@@ -328,6 +322,84 @@
     letter-spacing: 0.12em;
     text-transform: uppercase;
     color: rgba(255,255,255,0.5);
+  }
+
+  /* ── MORE WORK (spec grid) ── */
+  .portfolio-section.more-work { background: var(--cream); }
+  .grid-spec { grid-auto-rows: 280px; }
+  .grid-spec .grid-item:nth-child(1)  { grid-column: 1/8;  grid-row: 1 / span 2; }
+  .grid-spec .grid-item:nth-child(2)  { grid-column: 8/13; grid-row: 1 / span 2; }
+  .grid-spec .grid-item:nth-child(3)  { grid-column: 1/5;  grid-row: 3; }
+  .grid-spec .grid-item:nth-child(4)  { grid-column: 5/9;  grid-row: 3; }
+  .grid-spec .grid-item:nth-child(5)  { grid-column: 9/13; grid-row: 3; }
+  .grid-spec .grid-item:nth-child(6)  { grid-column: 1/6;  grid-row: 4 / span 2; }
+  .grid-spec .grid-item:nth-child(7)  { grid-column: 6/13; grid-row: 4 / span 2; }
+
+  /* Photo placeholder backgrounds */
+  .grid-spec .grid-item:nth-child(1)  .photo { background-image: url('assets/img/hotel/interior-natural-light.jpg'); background-size: cover; background-position: center; }
+  .grid-spec .grid-item:nth-child(2)  .photo { background-image: url('assets/img/hotel/exterior-golden-hour.jpg'); background-size: cover; background-position: center; }
+  .grid-spec .grid-item:nth-child(3)  .photo { background-image: url('assets/img/hotel/detail-still-life.jpg'); background-size: cover; background-position: center 20%; }
+  .grid-spec .grid-item:nth-child(4)  .photo { background-image: url('assets/img/hotel/amenity-natural-context.jpg'); background-size: cover; background-position: center; }
+  .grid-spec .grid-item:nth-child(5)  .photo { background-image: url('assets/img/hotel/architecture-facade.jpg'); background-size: cover; background-position: center; }
+  .grid-spec .grid-item:nth-child(6)  .photo { background-image: url('assets/img/hotel/interior-atmosphere.jpg'); background-size: cover; background-position: center; }
+  .grid-spec .grid-item:nth-child(7)  .photo { background-image: url('assets/img/hotel/surroundings-destination.jpg'); background-size: cover; background-position: center; }
+
+  /* Simulated photo content */
+  .grid-spec .grid-item:nth-child(1)  .photo::after { content:''; position:absolute; inset:0; background: radial-gradient(ellipse at 60% 40%, rgba(255,240,220,0.3) 0%, transparent 60%), radial-gradient(ellipse at 20% 70%, rgba(100,80,60,0.2) 0%, transparent 40%); }
+  .grid-spec .grid-item:nth-child(2)  .photo::after { content:''; position:absolute; inset:0; background: radial-gradient(ellipse at 40% 30%, rgba(220,240,220,0.3) 0%, transparent 50%), radial-gradient(ellipse at 70% 80%, rgba(60,80,60,0.2) 0%, transparent 40%); }
+  .grid-spec .grid-item:nth-child(3)  .photo::after { content:''; position:absolute; inset:0; background: radial-gradient(ellipse at 50% 50%, rgba(255,245,230,0.4) 0%, transparent 60%); }
+  .grid-spec .grid-item:nth-child(4)  .photo::after { content:''; position:absolute; inset:0; background: radial-gradient(ellipse at 30% 60%, rgba(255,240,210,0.35) 0%, transparent 55%); }
+  .grid-spec .grid-item:nth-child(5)  .photo::after { content:''; position:absolute; inset:0; background: radial-gradient(ellipse at 60% 40%, rgba(200,220,200,0.3) 0%, transparent 50%); }
+  .grid-spec .grid-item:nth-child(6)  .photo::after { content:''; position:absolute; inset:0; background: radial-gradient(ellipse at 40% 50%, rgba(255,240,220,0.3) 0%, transparent 60%), radial-gradient(ellipse at 80% 30%, rgba(220,200,180,0.2) 0%, transparent 40%); }
+  .grid-spec .grid-item:nth-child(7)  .photo::after { content:''; position:absolute; inset:0; background: radial-gradient(ellipse at 50% 40%, rgba(220,240,220,0.25) 0%, transparent 55%); }
+
+  /* ── CASE STUDY DOWNLOADS ── */
+  .casestudy-docs {
+    max-width: 1200px;
+    margin: 56px auto 0;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+  }
+  .doc-card {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 28px;
+    padding: 36px;
+    background: var(--forest);
+    border-radius: 3px;
+    text-decoration: none;
+    color: white;
+    transition: background 0.3s, transform 0.3s;
+  }
+  .doc-card:hover { background: #26392a; transform: translateY(-3px); }
+  .doc-tag {
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--rose-lt);
+    margin-bottom: 14px;
+  }
+  .doc-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(22px, 2.4vw, 30px);
+    line-height: 1.2;
+    margin-bottom: 12px;
+  }
+  .doc-title em { font-style: italic; color: var(--rose-lt); }
+  .doc-body {
+    font-size: 14px;
+    line-height: 1.7;
+    color: rgba(255,255,255,0.6);
+  }
+  .doc-link {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--rose-lt);
   }
 
   /* ── WHAT YOU GET ── */
@@ -630,14 +702,23 @@
     .hero-content { padding: 0 24px 56px; }
     .intro { grid-template-columns: 1fr; gap: 40px; padding: 72px 24px; }
     .portfolio-section { padding: 64px 24px; }
-    .grid { grid-template-columns: 1fr 1fr; gap: 8px; }
-    .grid-item:nth-child(1) { grid-column: 1/3; grid-row: 1; }
-    .grid-item:nth-child(2) { grid-column: 1/2; grid-row: 2; }
-    .grid-item:nth-child(3) { grid-column: 2/3; grid-row: 2; }
-    .grid-item:nth-child(4) { grid-column: 1/3; grid-row: 3; }
-    .grid-item:nth-child(5) { grid-column: 1/2; grid-row: 4; }
-    .grid-item:nth-child(6) { grid-column: 2/3; grid-row: 4; }
-    .grid-item:nth-child(7) { grid-column: 1/3; grid-row: 5; }
+    .grid { grid-template-columns: 1fr 1fr; grid-auto-rows: 180px; gap: 8px; }
+    .g-arrival { grid-column: 1/3; grid-row: auto / span 2; }
+    .g-room    { grid-column: 1/2; grid-row: auto / span 3; }
+    .g-view    { grid-column: 2/3; grid-row: auto / span 1; }
+    .g-tray    { grid-column: 2/3; grid-row: auto / span 2; }
+    .g-spread  { grid-column: 1/3; grid-row: auto / span 2; }
+    .g-welcome { grid-column: 1/3; grid-row: auto / span 2; }
+    .g-map     { grid-column: 1/3; grid-row: auto / span 2; }
+    .casestudy-docs { grid-template-columns: 1fr; }
+    .grid-spec .grid-item:nth-child(1) { grid-column: 1/3; grid-row: 1; }
+    .grid-spec .grid-item:nth-child(2) { grid-column: 1/2; grid-row: 2; }
+    .grid-spec .grid-item:nth-child(3) { grid-column: 2/3; grid-row: 2; }
+    .grid-spec .grid-item:nth-child(4) { grid-column: 1/3; grid-row: 3; }
+    .grid-spec .grid-item:nth-child(5) { grid-column: 1/2; grid-row: 4; }
+    .grid-spec .grid-item:nth-child(6) { grid-column: 2/3; grid-row: 4; }
+    .grid-spec .grid-item:nth-child(7) { grid-column: 1/3; grid-row: 5; }
+    .grid-spec { grid-auto-rows: 200px; }
     .deliverables-section { padding: 72px 24px; }
     .deliverables-grid { grid-template-columns: 1fr; gap: 2px; }
     .process-section { padding: 72px 24px; }
@@ -659,9 +740,10 @@
 
 <!-- NAV -->
 <nav class="byline" id="byline">
-  <span class="byline-name">Sharlena Luyen</span>
+  <a href="/hotel" class="byline-name">Sharlena Luyen</a>
   <div style="display:flex;gap:10px;">
-    <a href="assets/sharlena_luyen_portfolio.pdf" class="byline-cta" target="_blank" rel="noopener">Portfolio</a>
+    <a href="assets/pdfs/sharlena_luyen_sunstar_alaska_case_study.pdf" class="byline-cta" download>Case Study<span class="byline-cta-sub">download</span></a>
+    <a href="assets/sharlena_luyen_portfolio.pdf" class="byline-cta" download>Portfolio<span class="byline-cta-sub">download</span></a>
     <a href="https://calendly.com/sharlena/personal-meeting" class="byline-cta">Book a Call</a>
   </div>
 </nav>
@@ -675,7 +757,7 @@
     <p class="hero-sub">Professional photo and video content for boutique hotels and hospitality brands, in exchange for a complimentary stay.</p>
     <div class="hero-scroll">
       <div class="hero-scroll-line"></div>
-      See the work
+      See the SunStar Alaska case study
     </div>
   </div>
 </section>
@@ -693,16 +775,104 @@
   </div>
 </section>
 
-<!-- PORTFOLIO -->
-<section class="portfolio-section">
+<!-- CASE STUDY -->
+<section class="portfolio-section" id="case-study">
   <div class="portfolio-intro section-wrap">
     <div class="section-header">
-      <span class="section-label">Portfolio</span>
+      <span class="section-label">Case study</span>
+      <h2 class="section-title">SunStar Alaska, Anchorage · Autumn 2026</h2>
+    </div>
+    <p class="portfolio-note">A real stay, shot as a guest. Hover each image to see how I'd caption it for the brand.</p>
+  </div>
+  <div class="grid">
+    <div class="grid-item g-arrival">
+      <div class="photo"><img src="assets/img/hotel/arrival-bed-suitcase.jpg" alt="Rumpled white bedding on a dark sleigh bed with a gold suitcase and knit cardigan beside it" loading="lazy"></div>
+      <div class="grid-overlay">
+        <span class="overlay-tag">Arrival · The Room</span>
+        <p class="overlay-caption">"The suitcase is still standing. The bed has already been tested."</p>
+        <span class="overlay-type">Hero image · Web &amp; OTA</span>
+      </div>
+    </div>
+    <div class="grid-item g-room">
+      <div class="photo"><img src="assets/img/hotel/moody-hotel-room.jpg" alt="Warm lamplight on a sleigh bed, nightstand and leather armchair seen through a doorway" loading="lazy"></div>
+      <div class="grid-overlay">
+        <span class="overlay-tag">Rooms · Evening Light</span>
+        <p class="overlay-caption">"Lamps on, curtains half drawn. This is the room at 6pm."</p>
+        <span class="overlay-type">Vertical · Reels &amp; Stories</span>
+      </div>
+    </div>
+    <div class="grid-item g-view">
+      <div class="photo"><img src="assets/img/hotel/artsy-view-hotel-room.jpg" alt="A bed lit by a floor lamp, with the coffee and snack station reflected in a mirror" loading="lazy"></div>
+      <div class="grid-overlay">
+        <span class="overlay-tag">Rooms · Through the Door</span>
+        <p class="overlay-caption">"Coffee, water and snacks within reach. The small things people mention in reviews."</p>
+        <span class="overlay-type">Amenity feature · OTA</span>
+      </div>
+    </div>
+    <div class="grid-item g-tray">
+      <div class="photo"><img src="assets/img/hotel/bed-spread.jpg" alt="A breakfast tray with toast, juice and a SunStar mug on a grey duvet, with Anchorage maps beside it" loading="lazy"></div>
+      <div class="grid-overlay">
+        <span class="overlay-tag">Breakfast · In Bed</span>
+        <p class="overlay-caption">"Breakfast on the bed, tomorrow's plan spread out beside it."</p>
+        <span class="overlay-type">Lifestyle · Social</span>
+      </div>
+    </div>
+    <div class="grid-item g-spread">
+      <div class="photo"><img src="assets/img/hotel/breakfast.jpg" alt="An overhead view of a breakfast table of waffles, fruit, hash and juice with a tattooed arm reaching for toast" loading="lazy"></div>
+      <div class="grid-overlay">
+        <span class="overlay-tag">Breakfast · The Table</span>
+        <p class="overlay-caption">"Cooked to order. Someone is already reaching for the toast."</p>
+        <span class="overlay-type">Overhead · Website &amp; Instagram</span>
+      </div>
+    </div>
+    <div class="grid-item g-welcome">
+      <div class="photo"><img src="assets/img/hotel/welcome-letter-board.jpg" alt="A welcome letter board, framed Alaska photos and a Bear Feet Welcome sign above an entry shelf" loading="lazy"></div>
+      <div class="grid-overlay">
+        <span class="overlay-tag">Arrival · The Entry</span>
+        <p class="overlay-caption">"Bear feet welcome. Please remove your shoes."</p>
+        <span class="overlay-type">Brand texture · Stories &amp; print</span>
+      </div>
+    </div>
+    <div class="grid-item g-map">
+      <div class="photo"><img src="assets/img/hotel/map-exploring.jpg" alt="A guest kneeling on the floor pointing at an Alaska map surrounded by Anchorage guides" loading="lazy"></div>
+      <div class="grid-overlay">
+        <span class="overlay-tag">Outside the Door · Planning</span>
+        <p class="overlay-caption">"Every trip starts on the floor with a map and a finger on the place you've always wanted to go."</p>
+        <span class="overlay-type">Destination content · Blog &amp; social</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="casestudy-docs">
+    <a class="doc-card" href="assets/pdfs/sharlena_luyen_sunstar_alaska_case_study.pdf" target="_blank" rel="noopener">
+      <div>
+        <div class="doc-tag">Case study · PDF</div>
+        <div class="doc-title">Sunstar <em>Alaska.</em></div>
+        <div class="doc-body">The full story of the stay: arrival, rooms, breakfast, the residents and what's just outside the door.</div>
+      </div>
+      <span class="doc-link">Read the case study →</span>
+    </a>
+    <a class="doc-card" href="assets/pdfs/SunStar%20Alaska%20Trifold.pdf" target="_blank" rel="noopener">
+      <div>
+        <div class="doc-tag">Print piece · PDF</div>
+        <div class="doc-title">The SunStar <em>trifold.</em></div>
+        <div class="doc-body">A guest-facing brochure built from the shoot: rooms, breakfast, the neighborhood and a direct-booking offer.</div>
+      </div>
+      <span class="doc-link">View the trifold →</span>
+    </a>
+  </div>
+</section>
+
+<!-- MORE WORK -->
+<section class="portfolio-section more-work">
+  <div class="portfolio-intro section-wrap">
+    <div class="section-header">
+      <span class="section-label">More work</span>
       <h2 class="section-title">Spec work: the kind of content I'd create for your property</h2>
     </div>
     <p class="portfolio-note">Hover each image to see how I'd caption it for your brand.</p>
   </div>
-  <div class="grid">
+  <div class="grid grid-spec">
     <div class="grid-item">
       <div class="photo"></div>
       <div class="grid-overlay">
@@ -879,7 +1049,9 @@
       </svg>
     </a>
     <p class="cta-note">No commitment. No sales pitch. Just a conversation.</p>
-    <a href="assets/Sharlena_Luyen_Example_Brand_Guidelines.pdf" target="_blank" rel="noopener" class="cta-guidelines-link">Download brand guidelines ↓</a>
+    <a href="assets/pdfs/sharlena_luyen_sunstar_alaska_case_study.pdf" target="_blank" rel="noopener" class="cta-guidelines-link">SunStar Alaska case study ↓</a>
+    &nbsp;&nbsp;
+    <a href="assets/Sharlena_Luyen_Example_Brand_Guidelines.pdf" target="_blank" rel="noopener" class="cta-guidelines-link">Brand guidelines ↓</a>
   </div>
 </section>
 
