@@ -1,0 +1,986 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Destination Content by Sharlena Luyen</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,700;1,400;1,500&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --sand:    #F5EFE6;
+    --cream:   #FAF6F1;
+    --forest:  #1C2B1E;
+    --sage:    #8FA98C;
+    --rose:    #C9937A;
+    --rose-lt: #E8C4B1;
+    --muted:   #6B7B6D;
+    --ink:     #2A2A2A;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Inter', sans-serif;
+    background: var(--cream);
+    color: var(--ink);
+    overflow-x: hidden;
+  }
+
+  /* ── BYLINE NAV ── */
+  .byline {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 48px;
+    transition: background 0.4s, padding 0.3s;
+  }
+  .byline.scrolled {
+    background: rgba(250,246,241,0.95);
+    backdrop-filter: blur(8px);
+    padding: 14px 48px;
+    border-bottom: 1px solid rgba(28,43,30,0.08);
+  }
+  .byline-name {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--cream);
+    text-decoration: none;
+    transition: color 0.4s;
+  }
+  .byline.scrolled .byline-name { color: var(--forest); }
+  .byline-actions { display: flex; gap: 10px; }
+  .byline-cta {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--cream);
+    text-decoration: none;
+    padding: 9px 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    line-height: 1.2;
+    border: 1px solid rgba(255,255,255,0.5);
+    border-radius: 2px;
+    transition: all 0.3s;
+  }
+  .byline-cta-sub {
+    font-size: 8px;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    opacity: 0.7;
+    margin-top: 2px;
+  }
+  .byline.scrolled .byline-cta { color: var(--forest); border-color: var(--forest); }
+  .byline-cta:hover {
+    background: var(--rose);
+    border-color: var(--rose);
+    color: white !important;
+  }
+
+  /* ── HERO ── */
+  .hero {
+    position: relative;
+    height: 100vh;
+    min-height: 640px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    overflow: hidden;
+  }
+  .hero-bg {
+    position: absolute;
+    inset: 0;
+    background:
+      linear-gradient(to bottom, rgba(28,43,30,0.55) 0%, transparent 22%),
+      linear-gradient(to top, rgba(28,43,30,0.85) 0%, rgba(28,43,30,0.3) 50%, rgba(28,43,30,0.1) 100%),
+      url('assets/img/excursions/wetlands-boardwalk.jpg') center / cover no-repeat,
+      #4a5a4c;
+  }
+  .hero-content {
+    position: relative;
+    z-index: 2;
+    padding: 0 48px 72px;
+    max-width: 920px;
+  }
+  .hero-eyebrow {
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--rose-lt);
+    margin-bottom: 20px;
+  }
+  .hero-headline {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(42px, 6vw, 88px);
+    font-weight: 400;
+    line-height: 1.06;
+    color: white;
+    margin-bottom: 28px;
+    letter-spacing: -0.01em;
+  }
+  .hero-headline em { font-style: italic; color: var(--rose-lt); }
+  .hero-sub {
+    font-size: 16px;
+    font-weight: 300;
+    line-height: 1.7;
+    color: rgba(255,255,255,0.8);
+    max-width: 560px;
+    margin-bottom: 40px;
+  }
+  .hero-scroll {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    color: rgba(255,255,255,0.5);
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+  }
+  .hero-scroll-line {
+    width: 40px;
+    height: 1px;
+    background: rgba(255,255,255,0.3);
+    animation: scrollpulse 2s ease-in-out infinite;
+  }
+  @keyframes scrollpulse {
+    0%, 100% { opacity: 0.3; width: 40px; }
+    50% { opacity: 0.7; width: 56px; }
+  }
+
+  /* Keep last lines of text blocks from ending short */
+  .hero-sub, .cta-sub, .cta-note, .gallery-note, .doc-body, .step-body,
+  .about-headline, .plusone-headline, .cta-headline, .intro-headline, .section-title, .doc-title,
+  .exchange-lede, .exchange-list li span, .intro-body p, .plusone-body p, .about-body p {
+    text-wrap: balance;
+  }
+
+  /* ── SHARED SECTION BITS ── */
+  .section-wrap { max-width: 1200px; margin: 0 auto; }
+  .section-header {
+    display: flex;
+    align-items: baseline;
+    gap: 20px;
+    margin-bottom: 48px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid rgba(28,43,30,0.1);
+  }
+  .section-label {
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--sage);
+    white-space: nowrap;
+  }
+  .section-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(22px, 2.5vw, 32px);
+    font-weight: 400;
+    color: var(--forest);
+    letter-spacing: -0.01em;
+  }
+
+  /* ── INTRO ── */
+  .intro {
+    padding: 100px 48px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    align-items: start;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  .intro-label {
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--sage);
+    margin-bottom: 24px;
+  }
+  .intro-headline {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(28px, 3.5vw, 46px);
+    font-weight: 400;
+    line-height: 1.15;
+    color: var(--forest);
+    letter-spacing: -0.01em;
+  }
+  .intro-headline em { font-style: italic; }
+  .intro-body p {
+    font-size: 15px;
+    line-height: 1.85;
+    color: var(--muted);
+    margin-bottom: 20px;
+  }
+  .intro-body p:last-child { margin-bottom: 0; }
+  .intro-body strong { color: var(--ink); font-weight: 500; }
+
+  /* ── THE EXCHANGE ── */
+  .exchange-section {
+    padding: 100px 48px;
+    background: var(--forest);
+  }
+  .exchange-section .section-label { color: var(--sage); }
+  .exchange-section .section-title { color: white; }
+  .exchange-section .section-header { border-color: rgba(255,255,255,0.1); }
+  .exchange-grid {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2px;
+    background: rgba(255,255,255,0.08);
+    border-radius: 4px;
+    overflow: hidden;
+  }
+  .exchange-col {
+    background: var(--forest);
+    padding: 48px 44px;
+  }
+  .exchange-col h3 {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--rose-lt);
+    margin-bottom: 8px;
+  }
+  .exchange-col .exchange-lede {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(22px, 2.4vw, 30px);
+    line-height: 1.2;
+    color: white;
+    margin-bottom: 32px;
+  }
+  .exchange-col .exchange-lede em { font-style: italic; color: var(--rose-lt); }
+  .exchange-list { list-style: none; }
+  .exchange-list li {
+    padding: 16px 0;
+    border-top: 1px solid rgba(255,255,255,0.1);
+    font-size: 14px;
+    line-height: 1.65;
+    color: rgba(255,255,255,0.6);
+  }
+  .exchange-list li span { display: block; }
+  .exchange-list li strong {
+    display: block;
+    color: white;
+    font-weight: 500;
+    font-size: 15px;
+    margin-bottom: 2px;
+  }
+
+  /* ── PLUS ONE ── */
+  .plusone-section {
+    padding: 100px 48px;
+    background: var(--sand);
+  }
+  .plusone-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 5fr 7fr;
+    gap: 80px;
+    align-items: center;
+  }
+  .plusone-photo {
+    aspect-ratio: 4/5;
+    border-radius: 3px;
+    overflow: hidden;
+    position: relative;
+  }
+  .plusone-photo img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .plusone-photo-label {
+    position: absolute;
+    left: 0; right: 0; bottom: 0;
+    padding: 36px 20px 18px;
+    background: linear-gradient(to top, rgba(28,43,30,0.75), transparent);
+    font-size: 10px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.8);
+    text-align: center;
+  }
+  .plusone-headline {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(24px, 2.8vw, 36px);
+    font-weight: 400;
+    line-height: 1.2;
+    color: var(--forest);
+    margin-bottom: 28px;
+  }
+  .plusone-headline em { font-style: italic; }
+  .plusone-body { font-size: 15px; line-height: 1.85; color: var(--muted); }
+  .plusone-body p { margin-bottom: 18px; }
+  .plusone-body p:last-child { margin-bottom: 0; }
+  .plusone-body strong { color: var(--ink); font-weight: 500; }
+
+  /* ── CASE STUDY GALLERY ── */
+  .gallery-section {
+    padding: 100px 48px 80px;
+    background: var(--cream);
+  }
+  .gallery-note {
+    max-width: 1200px;
+    margin: -24px auto 40px;
+    font-size: 13px;
+    font-style: italic;
+    color: var(--muted);
+  }
+  .gallery {
+    max-width: 1200px;
+    margin: 0 auto;
+    column-count: 3;
+    column-gap: 12px;
+  }
+  .shot {
+    position: relative;
+    overflow: hidden;
+    border-radius: 3px;
+    margin-bottom: 12px;
+    break-inside: avoid;
+    cursor: pointer;
+  }
+  .shot img {
+    width: 100%;
+    display: block;
+    transition: transform 0.6s cubic-bezier(0.25,0.46,0.45,0.94);
+  }
+  .shot:hover img { transform: scale(1.04); }
+  .shot-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top, rgba(28,43,30,0.88) 0%, rgba(28,43,30,0.3) 45%, transparent 70%);
+    opacity: 0;
+    transition: opacity 0.4s ease;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding: 22px;
+  }
+  .shot:hover .shot-overlay { opacity: 1; }
+  .shot-tag {
+    font-size: 9px;
+    font-weight: 600;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--rose-lt);
+    margin-bottom: 6px;
+  }
+  .shot-caption {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(13px, 1.4vw, 16px);
+    font-style: italic;
+    color: white;
+    line-height: 1.4;
+  }
+
+  .docs {
+    max-width: 1200px;
+    margin: 44px auto 0;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+  }
+  .doc-card {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 28px;
+    padding: 36px;
+    background: var(--forest);
+    border-radius: 3px;
+    text-decoration: none;
+    color: white;
+    transition: background 0.3s, transform 0.3s;
+  }
+  .doc-card:hover { background: #26392a; transform: translateY(-3px); }
+  .doc-tag {
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--rose-lt);
+    margin-bottom: 14px;
+  }
+  .doc-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(22px, 2.4vw, 30px);
+    line-height: 1.2;
+    margin-bottom: 12px;
+  }
+  .doc-title em { font-style: italic; color: var(--rose-lt); }
+  .doc-body { font-size: 14px; line-height: 1.7; color: rgba(255,255,255,0.6); }
+  .doc-link {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--rose-lt);
+  }
+
+  /* ── PROCESS ── */
+  .process-section {
+    padding: 100px 48px;
+    background: var(--sand);
+  }
+  .process-inner { max-width: 1200px; margin: 0 auto; }
+  .process-steps {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 48px;
+    margin-top: 12px;
+  }
+  .step { position: relative; }
+  .step::after {
+    content: '→';
+    position: absolute;
+    right: -28px;
+    top: 0;
+    color: rgba(28,43,30,0.2);
+    font-size: 20px;
+  }
+  .step:last-child::after { display: none; }
+  .step-num {
+    font-family: 'Playfair Display', serif;
+    font-size: 52px;
+    color: var(--rose);
+    opacity: 0.5;
+    line-height: 1;
+    margin-bottom: 16px;
+  }
+  .step-title {
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--forest);
+    margin-bottom: 12px;
+  }
+  .step-body { font-size: 14px; line-height: 1.75; color: var(--muted); }
+
+  /* ── ABOUT ── */
+  .about-section {
+    padding: 100px 48px;
+    background: var(--cream);
+  }
+  .about-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 5fr 7fr;
+    gap: 80px;
+    align-items: center;
+  }
+  .about-portrait {
+    aspect-ratio: 4/5;
+    border-radius: 3px;
+    background: linear-gradient(160deg, #c0b0a0 0%, #a89888 50%, #908070 100%) center top / cover;
+    position: relative;
+    overflow: hidden;
+  }
+  .about-portrait-label {
+    position: absolute;
+    left: 0; right: 0; bottom: 0;
+    padding: 36px 20px 18px;
+    background: linear-gradient(to top, rgba(28,43,30,0.7), transparent);
+    font-size: 10px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.85);
+    text-align: center;
+  }
+  .about-text .section-header { margin-bottom: 32px; }
+  .about-headline {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(24px, 2.8vw, 36px);
+    font-weight: 400;
+    line-height: 1.2;
+    color: var(--forest);
+    margin-bottom: 28px;
+  }
+  .about-headline em { font-style: italic; }
+  .about-body { font-size: 15px; line-height: 1.85; color: var(--muted); }
+  .about-body p { margin-bottom: 18px; }
+  .about-body p:last-child { margin-bottom: 0; }
+  .about-body strong { color: var(--ink); font-weight: 500; }
+  .about-tags { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 28px; }
+  .about-tag {
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--forest);
+    border: 1px solid rgba(28,43,30,0.25);
+    padding: 6px 14px;
+    border-radius: 2px;
+  }
+
+  /* ── CTA ── */
+  .cta-section {
+    padding: 120px 48px;
+    background: var(--sand);
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .cta-section::before {
+    content: '';
+    position: absolute;
+    top: -100px; left: 50%;
+    transform: translateX(-50%);
+    width: 600px; height: 600px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(201,147,122,0.08) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .cta-inner { position: relative; z-index: 1; max-width: 700px; margin: 0 auto; }
+  .cta-eyebrow {
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--sage);
+    margin-bottom: 24px;
+  }
+  .cta-headline {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(32px, 4.5vw, 60px);
+    font-weight: 400;
+    line-height: 1.1;
+    color: var(--forest);
+    margin-bottom: 24px;
+    letter-spacing: -0.01em;
+  }
+  .cta-headline em { font-style: italic; color: var(--rose); }
+  .cta-sub { font-size: 16px; line-height: 1.7; color: var(--muted); margin-bottom: 48px; }
+  .cta-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    background: var(--forest);
+    color: white;
+    text-decoration: none;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    padding: 18px 40px;
+    border-radius: 2px;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+  }
+  .cta-btn::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: var(--rose);
+    transform: translateX(-100%);
+    transition: transform 0.4s cubic-bezier(0.25,0.46,0.45,0.94);
+  }
+  .cta-btn:hover::before { transform: translateX(0); }
+  .cta-btn span, .cta-btn svg { position: relative; z-index: 1; }
+  .cta-btn svg { transition: transform 0.3s; }
+  .cta-btn:hover svg { transform: translateX(4px); }
+  .cta-note { margin-top: 20px; font-size: 12px; color: var(--muted); }
+  .cta-links { margin-top: 16px; display: flex; justify-content: center; gap: 24px; flex-wrap: wrap; }
+  .cta-link {
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--sage);
+    text-decoration: none;
+    border-bottom: 1px solid rgba(143,169,140,0.4);
+    padding-bottom: 2px;
+    transition: color 0.2s, border-color 0.2s;
+  }
+  .cta-link:hover { color: var(--rose); border-color: var(--rose); }
+
+  /* ── FOOTER ── */
+  footer {
+    padding: 32px 48px;
+    background: var(--forest);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  footer .name {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.5);
+  }
+  footer .email { font-size: 12px; color: var(--sage); text-decoration: none; transition: color 0.2s; }
+  footer .email:hover { color: var(--rose-lt); }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 900px) {
+    .byline, .byline.scrolled { padding-left: 24px; padding-right: 24px; }
+    .byline-cta { padding: 8px 12px; font-size: 10px; }
+    .hero-content { padding: 0 24px 56px; }
+    .intro { grid-template-columns: 1fr; gap: 40px; padding: 72px 24px; }
+    .exchange-section, .plusone-section, .process-section, .about-section { padding: 72px 24px; }
+    .about-inner { grid-template-columns: 1fr; gap: 40px; }
+    .about-portrait { max-width: 320px; }
+    .exchange-grid { grid-template-columns: 1fr; }
+    .exchange-col { padding: 36px 28px; }
+    .plusone-inner { grid-template-columns: 1fr; gap: 40px; }
+    .plusone-photo { max-width: 320px; }
+    .gallery-section { padding: 72px 24px 64px; }
+    .gallery { column-count: 2; column-gap: 8px; }
+    .shot { margin-bottom: 8px; }
+    .docs { grid-template-columns: 1fr; }
+    .process-steps { grid-template-columns: 1fr 1fr; gap: 32px; }
+    .step::after { display: none; }
+    .cta-section { padding: 80px 24px; }
+    .section-header { flex-direction: column; gap: 8px; }
+    footer { padding-left: 24px; padding-right: 24px; flex-direction: column; gap: 12px; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    * { animation: none !important; transition: none !important; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="byline" id="byline">
+  <a href="/destination" class="byline-name">Sharlena Luyen</a>
+  <div class="byline-actions">
+    <a href="assets/pdfs/sharlena_luyen_alaska_destination_case_study.pdf" class="byline-cta" download>Case Study<span class="byline-cta-sub">download</span></a>
+    <a href="https://calendly.com/sharlena/personal-meeting" class="byline-cta">Book a Call</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-content">
+    <p class="hero-eyebrow">Destination Content · Photography &amp; Video</p>
+    <h1 class="hero-headline">Send two of us.<br>We'll bring back<br><em>the real thing.</em></h1>
+    <p class="hero-sub">A photographer and a plus one, fully hosted for the trip, in exchange for a library of photo and video content that looks like a place actually lived in, not one that was staged.</p>
+    <div class="hero-scroll">
+      <div class="hero-scroll-line"></div>
+      See the proposal
+    </div>
+  </div>
+</section>
+
+<!-- INTRO -->
+<section class="intro">
+  <div>
+    <p class="intro-label">The approach</p>
+    <h2 class="intro-headline">Content that sells the <em>seat</em>, not just the scenery.</h2>
+  </div>
+  <div class="intro-body">
+    <p>Most destination content is a view. A beautiful one, and one a traveler has already scrolled past a hundred times. What makes someone book is the moment they can picture themselves in: <strong>a grin mid-ride, a reindeer leaning in at the fence to say hello, a river you want to stand beside</strong>.</p>
+    <p>My background is portrait photography, so I'm trained to find the unrehearsed moment rather than manufacture it. I travel as a guest, take every experience the way a visitor would, and photograph what actually happens. Muddy trails, wet boardwalks, a porcupine who wants a closer look.</p>
+    <p>Every moment found, never staged. That's the content people believe, and the content that gets saved, shared and booked.</p>
+  </div>
+</section>
+
+<!-- THE EXCHANGE -->
+<section class="exchange-section" id="proposal">
+  <div class="section-wrap">
+    <div class="section-header">
+      <span class="section-label">The exchange</span>
+      <h2 class="section-title">A hosted trip for a full content library</h2>
+    </div>
+  </div>
+  <div class="exchange-grid">
+    <div class="exchange-col">
+      <h3>What I'm asking for</h3>
+      <p class="exchange-lede">The trip, <em>covered end to end</em>, for two travelers.</p>
+      <ul class="exchange-list">
+        <li><strong>Roundtrip airfare</strong><span>Flights for me and my plus one, to and from the destination.</span></li>
+        <li><strong>Lodging</strong><span>Hotels, B&amp;Bs or lodges for the length of the stay. Local, independent properties welcome.</span></li>
+        <li><strong>Activities &amp; excursions</strong><span>Tours, trails, wildlife, cultural experiences and anything else you want featured, taken the way a guest would take them.</span></li>
+        <li><strong>Meals</strong><span>Breakfast, lunch and dinner at the places you'd send a visitor.</span></li>
+        <li><strong>Getting around</strong><span>Rental car or local transfers, plus any access or permissions a shoot needs.</span></li>
+      </ul>
+    </div>
+    <div class="exchange-col">
+      <h3>What you receive</h3>
+      <p class="exchange-lede">A content library <em>fully licensed</em> to you.</p>
+      <ul class="exchange-list">
+        <li><strong>Edited still photography</strong><span>High-resolution images across every experience, stay and meal, in both horizontal and vertical.</span></li>
+        <li><strong>Short-form video</strong><span>Vertical and horizontal clips built for Reels, your website and partner channels.</span></li>
+        <li><strong>Full usage license</strong><span>Yours across web, social, email, press and print, with no expiration.</span></li>
+        <li><strong>One cohesive look</strong><span>Warm, natural light, consistent edit. A library that looks like a brand, not a photo dump.</span></li>
+        <li><strong>Itinerary-based delivery</strong><span>Organized by experience and labeled, so your team can find and use everything fast.</span></li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- PLUS ONE -->
+<section class="plusone-section">
+  <div class="plusone-inner">
+    <div class="plusone-photo">
+      <img src="assets/img/excursions/dogsled-aspens.jpg" alt="View over a dog sled's handlebar of a team running through golden aspens" loading="lazy">
+      <div class="plusone-photo-label">The view from the sled · Anchorage, AK</div>
+    </div>
+    <div>
+      <div class="section-header" style="margin-bottom:32px;">
+        <span class="section-label">Why two</span>
+      </div>
+      <h2 class="plusone-headline">The plus one is <em>part of the shot.</em></h2>
+      <div class="plusone-body">
+        <p>A second traveler changes the content. There's someone to point at the map with, laugh on the ride with, and react to the thing you came to see. It's the difference between a photo of an experience and a photo of someone <strong>having</strong> one.</p>
+        <p>It also lets me work the way a real visitor does. One of us can be in the moment while the other captures it, and the two-person pace shows what a trip for two feels like, which is how most people travel.</p>
+        <p>You host two, and you get content with a real traveler in the frame, not a stock model.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CASE STUDY -->
+<section class="gallery-section" id="case-study">
+  <div class="section-wrap">
+    <div class="section-header">
+      <span class="section-label">Case study</span>
+      <h2 class="section-title">Welcome Anchorage · Tour &amp; Excursion Content, September 2026</h2>
+    </div>
+  </div>
+  <p class="gallery-note">Reindeer farm, dog sledding, wildlife and trails. Hover each image to see how I'd caption it for your brand.</p>
+  <div class="gallery">
+    <figure class="shot">
+      <img src="assets/img/excursions/dogsled-aspens.jpg" alt="Dog team running down a trail lined with golden aspens" loading="lazy">
+      <figcaption class="shot-overlay">
+        <span class="shot-tag">Dog sledding</span>
+        <p class="shot-caption">"The best seat on the trail is the one at the back, with fall color all the way down."</p>
+      </figcaption>
+    </figure>
+    <figure class="shot">
+      <img src="assets/img/excursions/reindeer-velvet.jpg" alt="A reindeer with velvet antlers looking toward the camera, mountains behind" loading="lazy">
+      <figcaption class="shot-overlay">
+        <span class="shot-tag">Reindeer farm</span>
+        <p class="shot-caption">"Velvet season. He came over to say hello before we'd even opened the gate."</p>
+      </figcaption>
+    </figure>
+    <figure class="shot">
+      <img src="assets/img/excursions/wetlands-boardwalk.jpg" alt="A wet boardwalk curving toward a mountain through autumn wetlands" loading="lazy">
+      <figcaption class="shot-overlay">
+        <span class="shot-tag">Trails · Wildlife center</span>
+        <p class="shot-caption">"Rain on the boardwalk, mountain at the end of it. Bring a jacket, skip the umbrella."</p>
+      </figcaption>
+    </figure>
+    <figure class="shot">
+      <img src="assets/img/excursions/bear-on-rocks.jpg" alt="A brown bear on mossy rocks in misty autumn grass with a raven overhead" loading="lazy">
+      <figcaption class="shot-overlay">
+        <span class="shot-tag">Wildlife</span>
+        <p class="shot-caption">"Fog, a raven overhead, and a bear who clearly owns the place."</p>
+      </figcaption>
+    </figure>
+    <figure class="shot">
+      <img src="assets/img/excursions/dogsled-mud-trail.jpg" alt="Sled dogs from behind on a muddy trail between yellow birch trees" loading="lazy">
+      <figcaption class="shot-overlay">
+        <span class="shot-tag">Dog sledding</span>
+        <p class="shot-caption">"Muddy, loud and exactly as good as it sounds."</p>
+      </figcaption>
+    </figure>
+    <figure class="shot">
+      <img src="assets/img/excursions/porcupine.jpg" alt="A porcupine standing on its hind legs against a wire fence" loading="lazy">
+      <figcaption class="shot-overlay">
+        <span class="shot-tag">Wildlife</span>
+        <p class="shot-caption">"Somebody wanted a closer look at us, too."</p>
+      </figcaption>
+    </figure>
+    <figure class="shot">
+      <img src="assets/img/excursions/glacial-river.jpg" alt="A turquoise glacial river reflecting a mountain and autumn trees" loading="lazy">
+      <figcaption class="shot-overlay">
+        <span class="shot-tag">Outside the door</span>
+        <p class="shot-caption">"Glacier water, just beyond the stay."</p>
+      </figcaption>
+    </figure>
+    <figure class="shot">
+      <img src="assets/img/excursions/reindeer-closeup.jpg" alt="A close-up of a reindeer with long antlers leaning toward the camera at a fence" loading="lazy">
+      <figcaption class="shot-overlay">
+        <span class="shot-tag">Reindeer farm</span>
+        <p class="shot-caption">"A reindeer leaning in at the fence. This is the moment people book for."</p>
+      </figcaption>
+    </figure>
+    <figure class="shot">
+      <img src="assets/img/excursions/car-mirror-mountain.jpg" alt="A side mirror reflecting a mountain road lined with autumn trees" loading="lazy">
+      <figcaption class="shot-overlay">
+        <span class="shot-tag">The drive</span>
+        <p class="shot-caption">"Objects in mirror are closer than they appear. So is the mountain."</p>
+      </figcaption>
+    </figure>
+    <figure class="shot">
+      <img src="assets/img/excursions/highland-calves.jpg" alt="Two shaggy highland calves at a wire fence" loading="lazy">
+      <figcaption class="shot-overlay">
+        <span class="shot-tag">Farm visit</span>
+        <p class="shot-caption">"The welcome committee has opinions about the snacks."</p>
+      </figcaption>
+    </figure>
+    <figure class="shot">
+      <img src="assets/img/excursions/sunset-trail.jpg" alt="Low sun over a lake and mountains seen through trees on a leaf-covered trail" loading="lazy">
+      <figcaption class="shot-overlay">
+        <span class="shot-tag">Trails</span>
+        <p class="shot-caption">"The trail ends at the water, and the light is doing the rest."</p>
+      </figcaption>
+    </figure>
+    <figure class="shot">
+      <img src="assets/img/excursions/reindeer-mountain.jpg" alt="Reindeer resting in a field below a snow-capped mountain" loading="lazy">
+      <figcaption class="shot-overlay">
+        <span class="shot-tag">Reindeer farm</span>
+        <p class="shot-caption">"A quiet afternoon at the farm, with a very large mountain for a backdrop."</p>
+      </figcaption>
+    </figure>
+  </div>
+
+  <div class="docs">
+    <a class="doc-card" href="assets/pdfs/sharlena_luyen_welcome_anchorage_case_study.pdf" download>
+      <div>
+        <div class="doc-tag">Tour &amp; excursion case study · PDF</div>
+        <div class="doc-title">Welcome <em>Anchorage.</em></div>
+        <div class="doc-body">The full story of the excursions: reindeer farm, dog sledding, wildlife and trails, shot the way a traveler would live them.</div>
+      </div>
+      <span class="doc-link">Download the case study →</span>
+    </a>
+    <a class="doc-card" href="/hotel">
+      <div>
+        <div class="doc-tag">Lodging case study · Page</div>
+        <div class="doc-title">Sunstar <em>Alaska.</em></div>
+        <div class="doc-body">The stay side of the same trip: a bed and breakfast photographed as a guest, with rumpled sheets and a coffee gone cold included.</div>
+      </div>
+      <span class="doc-link">See the hotel work →</span>
+    </a>
+  </div>
+</section>
+
+<!-- PROCESS -->
+<section class="process-section">
+  <div class="process-inner">
+    <div class="section-header">
+      <span class="section-label">How it works</span>
+      <h2 class="section-title">From first call to final file</h2>
+    </div>
+    <div class="process-steps">
+      <div class="step">
+        <div class="step-num">01</div>
+        <div class="step-title">We Connect</div>
+        <div class="step-body">A short call about your destination, the experiences you most want seen, and who you're hoping to reach.</div>
+      </div>
+      <div class="step">
+        <div class="step-num">02</div>
+        <div class="step-title">We Plan</div>
+        <div class="step-body">Together we build the itinerary, dates and deliverables, then confirm everything in a one-page agreement.</div>
+      </div>
+      <div class="step">
+        <div class="step-num">03</div>
+        <div class="step-title">We Travel</div>
+        <div class="step-body">Two travelers take your experiences as guests, and I photograph and film whatever really happens along the way.</div>
+      </div>
+      <div class="step">
+        <div class="step-num">04</div>
+        <div class="step-title">You Receive</div>
+        <div class="step-body">A labeled, organized library, edited and fully licensed. Photos and video, ready for every channel you use.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section class="about-section" id="about">
+  <div class="about-inner">
+    <div class="about-portrait-wrap">
+      <div class="about-portrait" style="background-image: url('assets/img/selfportrait.JPG')">
+        <div class="about-portrait-label">Sharlena Luyen · Photographer</div>
+      </div>
+    </div>
+    <div class="about-text">
+      <div class="section-header">
+        <span class="section-label">About</span>
+      </div>
+      <h2 class="about-headline">I photograph <em>what it feels like</em> to be there.</h2>
+      <div class="about-body">
+        <p>My training is in portrait photography, which means my eye is trained to find the moment, not manufacture it. I've spent years learning how to make a subject look the way they actually feel at their best. I bring that same instinct to places, from a sled dog team running through the aspens to a reindeer leaning in at the fence.</p>
+        <p>I shoot with <strong>DSLR and mobile</strong>, so you get high-resolution hero images and native-feeling social content from the same trip. I edit in Darkroom and deliver consistent, warm, natural-light images that make people feel something about the place.</p>
+        <p>The partnership model is simple: I experience your destination as a guest, document it as a photographer, and deliver a library of content that would cost thousands to commission commercially. You get the content, and I get the experience.</p>
+      </div>
+      <div class="about-tags">
+        <span class="about-tag">DSLR Photography</span>
+        <span class="about-tag">Short-Form Video</span>
+        <span class="about-tag">Natural Light</span>
+        <span class="about-tag">Travel &amp; Excursions</span>
+        <span class="about-tag">Wildlife &amp; Landscape</span>
+        <span class="about-tag">Full Usage License</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-section" id="book">
+  <div class="cta-inner">
+    <p class="cta-eyebrow">Let's talk</p>
+    <h2 class="cta-headline">Ready to show them what it's <em>really like?</em></h2>
+    <p class="cta-sub">Book a short call. We'll talk through your destination, what you'd like captured, and whether a hosted trip makes sense for both of us.</p>
+    <a href="https://calendly.com/sharlena/personal-meeting" class="cta-btn" target="_blank" rel="noopener">
+      <span>Book a Call</span>
+      <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+        <path d="M3 8h10M9 4l4 4-4 4" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </a>
+    <p class="cta-note">No commitment. Just a conversation.</p>
+    <div class="cta-links">
+      <a href="assets/pdfs/sharlena_luyen_alaska_destination_case_study.pdf" class="cta-link" download>Destination case study ↓</a>
+      <a href="assets/pdfs/sharlena_luyen_welcome_anchorage_case_study.pdf" class="cta-link" download>Tour &amp; excursion case study ↓</a>
+      <a href="assets/pdfs/sharlena_luyen_hotel_portfolio_2026.pdf" class="cta-link" download>Portfolio ↓</a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <span class="name">Sharlena Luyen</span>
+  <a href="mailto:sharlenaluyen@gmail.com" class="email">sharlenaluyen@gmail.com</a>
+</footer>
+
+<script>
+  const byline = document.getElementById('byline');
+  window.addEventListener('scroll', () => {
+    byline.classList.toggle('scrolled', window.scrollY > 80);
+  });
+
+  // Scroll reveal
+  const revealEls = document.querySelectorAll('.exchange-col, .step, .intro > *, .plusone-inner > *, .about-inner > *');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.style.opacity = '1';
+        e.target.style.transform = 'translateY(0)';
+        observer.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.12 });
+
+  revealEls.forEach(el => {
+    el.style.opacity = '0';
+    el.style.transform = 'translateY(24px)';
+    el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+    observer.observe(el);
+  });
+</script>
+</body>
+</html>
