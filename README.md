@@ -30,6 +30,9 @@ collaborations, sponsorships, affiliate links, merchandise.
 - `index.html` — the main hub: landing, about, brand pillars, philanthropy,
   photography, events, travel, trivia, an interactive terminal, and contact.
 - `hotel.html` — standalone page for hotel & experience collaboration pitches.
+- `destination.html` — standalone page for tour & excursion collaboration pitches. Its
+  SunStar Alaska section (`#hotel`) is the same as the case study section on
+  `hotel.html`, so keep the two in sync when editing either.
 - `wwe.html` — standalone partnership proposal (e.g. SummerSlam content pitch).
 - `1password.html`, `actblue.html`, `eragymnastics.html`, `launchdarkly.html`,
   `posthog.html`, `zapier.html` — standalone pages for specific
