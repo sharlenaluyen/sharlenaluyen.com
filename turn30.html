@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>turn 30 bingo</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600&family=Caveat:wght@600;700&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/canvas-confetti/1.9.3/confetti.browser.min.js"></script>
+
+<script type="module">
+import { initializeApp } from 'https://www.gstatic.com/firebasejs/12.15.0/firebase-app.js';
+import { getFirestore, doc, getDoc, setDoc } from 'https://www.gstatic.com/firebasejs/12.15.0/firebase-firestore.js';
+
+const _app = initializeApp({
+  apiKey: "AIzaSyAeARI7Yb8fMpkA9lrJKzl8EttWD4-wTPw",
+  authDomain: "turn30-14f9e.firebaseapp.com",
+  projectId: "turn30-14f9e",
+  storageBucket: "turn30-14f9e.firebasestorage.app",
+  messagingSenderId: "1063043007302",
+  appId: "1:1063043007302:web:8141e53f1e833d890d5b47"
+});
+const _db = getFirestore(_app);
+
+// Expose to classic scripts
+window._fsSet = (col, id, data) => setDoc(doc(_db, col, id), data, { merge: true });
+window._fsGet = (col, id) => getDoc(doc(_db, col, id)).then(s => s.exists() ? s.data() : null);
+window.dispatchEvent(new Event('fs-ready'));
+</script>
+
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --cream:  #FFF8EE;
+  --pink:   #FFC9DC;
+  --pink-dk:#F2749F;
+  --butter: #FFE9A8;
+  --mint:   #BDEBD3;
+  --lilac:  #D9CBFA;
+  --sky:    #BFE1FA;
+  --peach:  #FFD1B3;
+  --ink:    #4A3447;
+  --muted:  #9C8499;
+}
+
+html { scroll-behavior: smooth; }
+body {
+  font-family: 'Fredoka', sans-serif;
+  background: var(--cream);
+  background-image:
+    radial-gradient(circle at 12% 18%, var(--pink) 0 3px, transparent 4px),
+    radial-gradient(circle at 82% 12%, var(--butter) 0 4px, transparent 5px),
+    radial-gradient(circle at 70% 78%, var(--lilac) 0 3px, transparent 4px),
+    radial-gradient(circle at 25% 85%, var(--mint) 0 4px, transparent 5px);
+  background-size: 220px 220px;
+  color: var(--ink);
+  min-height: 100vh;
+  text-transform: lowercase;
+  overflow-x: hidden;
+}
+
+.wrap { max-width: 640px; margin: 0 auto; padding: 36px 16px 56px; text-align: center; }
+
+/* ── HEADER ── */
+.eyebrow { font-family: 'Caveat', cursive; font-size: 24px; color: var(--pink-dk); }
+h1 {
+  font-size: clamp(44px, 12vw, 72px);
+  font-weight: 600;
+  line-height: 1;
+  margin: 2px 0 8px;
+  letter-spacing: -0.02em;
+}
+h1 span { display: inline-block; animation: bob 3s ease-in-out infinite; }
+h1 span:nth-child(2n) { animation-delay: -0.8s; color: var(--pink-dk); }
+h1 span:nth-child(3n) { animation-delay: -1.6s; color: #8E6FE0; }
+@keyframes bob { 0%,100% { transform: translateY(0) rotate(-2deg); } 50% { transform: translateY(-6px) rotate(2deg); } }
+.sub { color: var(--muted); font-size: 15px; margin-bottom: 22px; }
+
+/* ── PROGRESS ── */
+.stats { display: flex; justify-content: center; gap: 10px; margin-bottom: 18px; flex-wrap: wrap; }
+.pill {
+  background: white; border: 2px solid var(--ink); border-radius: 999px;
+  padding: 6px 16px; font-size: 14px; font-weight: 500;
+  box-shadow: 3px 3px 0 var(--ink);
+}
+.pill b { color: var(--pink-dk); font-weight: 600; }
+
+/* ── CARD ── */
+.card {
+  background: white;
+  border: 3px solid var(--ink);
+  border-radius: 24px;
+  padding: 10px;
+  box-shadow: 6px 6px 0 var(--ink);
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 6px;
+}
+.sq {
+  position: relative;
+  aspect-ratio: 1;
+  border: 2px solid var(--ink);
+  border-radius: 14px;
+  background: var(--cream);
+  color: var(--ink);
+  font: inherit;
+  font-size: clamp(8.5px, 2.35vw, 13.5px);
+  font-weight: 500;
+  line-height: 1.2;
+  padding: 4px;
+  display: flex; align-items: center; justify-content: center;
+  text-align: center;
+  text-transform: lowercase;
+  cursor: pointer;
+  overflow: hidden;
+  hyphens: auto;
+  overflow-wrap: anywhere;
+  transition: transform 0.15s ease, background 0.2s ease;
+  -webkit-tap-highlight-color: transparent;
+}
+.sq:hover { transform: translateY(-2px) rotate(-1.5deg); }
+.sq:active { transform: scale(0.94); }
+.sq:focus-visible { outline: 3px dashed var(--pink-dk); outline-offset: 2px; }
+
+.sq .txt { position: relative; z-index: 1; }
+
+/* stamped squares */
+.sq.on { background: var(--c, var(--pink)); }
+.sq.on .txt { opacity: 0.55; text-decoration: line-through; text-decoration-thickness: 1.5px; }
+.sq .stamp {
+  position: absolute; inset: 0; z-index: 2;
+  display: none; align-items: center; justify-content: center;
+  font-size: clamp(22px, 7vw, 40px);
+  color: var(--ink);
+  pointer-events: none;
+  transform: rotate(var(--r, -8deg));
+}
+.sq.on .stamp { display: flex; }
+.sq.pop { animation: pop 0.45s cubic-bezier(.3,1.8,.5,1); }
+@keyframes pop { 0% { transform: scale(0.8); } 60% { transform: scale(1.12) rotate(3deg); } 100% { transform: scale(1); } }
+
+/* bingo lines */
+.sq.line { border-color: var(--pink-dk); box-shadow: inset 0 0 0 2px var(--pink-dk); animation: wiggle 1.6s ease-in-out infinite; }
+@keyframes wiggle { 0%,100% { transform: rotate(0); } 25% { transform: rotate(-2deg); } 75% { transform: rotate(2deg); } }
+
+/* free space */
+.sq.free {
+  background: var(--butter);
+  font-family: 'Caveat', cursive;
+  font-size: clamp(16px, 5vw, 28px);
+  font-weight: 700;
+  line-height: 1;
+  cursor: default;
+  flex-direction: column;
+  gap: 2px;
+}
+.sq.free:hover { transform: none; }
+.sq.free .star { font-size: clamp(14px, 4vw, 22px); animation: spin 6s linear infinite; display: inline-block; }
+@keyframes spin { to { transform: rotate(360deg); } }
+
+/* ── BANNER ── */
+.banner {
+  margin: 20px auto 0;
+  min-height: 44px;
+  font-family: 'Caveat', cursive;
+  font-size: 30px;
+  font-weight: 700;
+  color: var(--pink-dk);
+}
+.banner.show { animation: pop 0.6s cubic-bezier(.3,1.8,.5,1); }
+
+/* ── FOOTER ── */
+.foot { margin-top: 10px; font-size: 13px; color: var(--muted); }
+.reset {
+  margin-top: 14px;
+  background: none; border: none; font: inherit; font-size: 13px;
+  color: var(--muted); text-decoration: underline; text-underline-offset: 3px;
+  cursor: pointer; text-transform: lowercase;
+}
+.reset:hover { color: var(--pink-dk); }
+.sync { display: inline-block; width: 8px; height: 8px; border-radius: 50%; background: var(--mint); margin-right: 6px; border: 1.5px solid var(--ink); }
+.sync.off { background: var(--peach); }
+
+@media (max-width: 420px) {
+  .wrap { padding: 28px 10px 44px; }
+  .card { padding: 6px; gap: 4px; border-radius: 18px; }
+  .sq { border-radius: 10px; padding: 2px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  * { animation: none !important; transition: none !important; }
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="eyebrow">sharlena's</div>
+  <h1 id="title" aria-label="turn 30 bingo"></h1>
+  <p class="sub">tap a square when it's done. 5 in a row = bingo!</p>
+
+  <div class="stats">
+    <div class="pill">done <b id="count">0</b> / 24</div>
+    <div class="pill">bingos <b id="bingos">0</b></div>
+  </div>
+
+  <div class="card" id="card" role="grid" aria-label="turn 30 bingo card"></div>
+
+  <div class="banner" id="banner" aria-live="polite"></div>
+  <div class="foot"><span class="sync off" id="sync"></span><span id="syncText">saving on this device</span></div>
+  <button class="reset" id="reset" type="button">start over</button>
+</div>
+
+<script>
+var ITEMS = [
+  'run a full marathon',
+  'swim with a new sea animal, like an orca, beluga, or sunfish',
+  'do a street food tour in los angeles',
+  'go to catalina island',
+  'go to the channel islands',
+  'attend a live show taping in la',
+  'watch a midnight showing of a new movie',
+  'play in snow',
+  'hold a handstand for 15 seconds',
+  'host & win an ice cream eating contest',
+  'compete in a gymnastics competition',
+  'take a polar plunge',
+  'do a tandem paraglide off a cliff',
+  'spend a day at a motorsport track driving a race car',
+  'try glassblowing',
+  'take an international trip with carlo',
+  'sleep under the stars with carlo',
+  'watch a drive-in movie with carlo',
+  'run a 5k with carlo',
+  'adults only roar & snore at the san diego safari park',
+  'watch the sunset and sunrise in the same day',
+  'go axe throwing',
+  'go to souplantation',
+  'feel hot in my halloween costume'
+];
+
+var COLORS  = ['#FFC9DC', '#BDEBD3', '#D9CBFA', '#BFE1FA', '#FFD1B3', '#FFE9A8'];
+var STAMPS  = ['♥', '★', '✿', '☺', '✦', '♪'];
+var KEY     = 'turn30-bingo-v1';
+var COL     = 'turn30';
+var DOC     = 'bingo';
+var FREE    = 12;
+
+// state: order = 24 item ids in card order (free space skipped); marked = item ids that are done
+var state = { order: null, marked: [] };
+var lastBingos = 0;
+
+function shuffle(a) {
+  a = a.slice();
+  for (var i = a.length - 1; i > 0; i--) {
+    var j = Math.floor(Math.random() * (i + 1));
+    var t = a[i]; a[i] = a[j]; a[j] = t;
+  }
+  return a;
+}
+function newOrder() { return shuffle(ITEMS.map(function (_, i) { return i; })); }
+
+function validState(d) {
+  return d && Array.isArray(d.order) && d.order.length === 24 && Array.isArray(d.marked);
+}
+
+// ── persistence: localStorage cache + firestore (same pattern as carlo's page) ──
+function setSync(ok) {
+  document.getElementById('sync').classList.toggle('off', !ok);
+  document.getElementById('syncText').textContent = ok ? 'saved' : 'saving on this device';
+}
+function save() {
+  var d = { order: state.order, marked: state.marked };
+  try { localStorage.setItem(KEY, JSON.stringify(d)); } catch (e) {}
+  if (window._fsSet) {
+    window._fsSet(COL, DOC, d).then(function () { setSync(true); }).catch(function () { setSync(false); });
+  }
+}
+function loadLocal() {
+  try {
+    var d = JSON.parse(localStorage.getItem(KEY));
+    if (validState(d)) { state = { order: d.order, marked: d.marked }; return true; }
+  } catch (e) {}
+  return false;
+}
+
+// ── card ──
+function cellItem(pos) {            // pos 0..24 -> item id or null for free space
+  if (pos === FREE) return null;
+  return state.order[pos < FREE ? pos : pos - 1];
+}
+
+function build() {
+  var card = document.getElementById('card');
+  card.innerHTML = '';
+  for (var pos = 0; pos < 25; pos++) {
+    var id = cellItem(pos);
+    var el = document.createElement('button');
+    el.type = 'button';
+    el.className = 'sq';
+    el.dataset.pos = pos;
+    if (id === null) {
+      el.classList.add('free');
+      el.innerHTML = '<span class="star">✦</span><span>turn 30!</span>';
+      el.tabIndex = -1;
+    } else {
+      el.dataset.id = id;
+      el.style.setProperty('--c', COLORS[id % COLORS.length]);
+      el.style.setProperty('--r', ((id * 37) % 17 - 8) + 'deg');
+      el.innerHTML = '<span class="txt">' + ITEMS[id] + '</span><span class="stamp">' + STAMPS[id % STAMPS.length] + '</span>';
+      el.setAttribute('aria-pressed', 'false');
+      el.addEventListener('click', onTap);
+    }
+    card.appendChild(el);
+  }
+  paint();
+}
+
+function isOn(pos) {
+  if (pos === FREE) return true;
+  return state.marked.indexOf(cellItem(pos)) !== -1;
+}
+
+var LINES = (function () {
+  var L = [], i, j, r, c;
+  for (i = 0; i < 5; i++) {
+    r = []; c = [];
+    for (j = 0; j < 5; j++) { r.push(i * 5 + j); c.push(j * 5 + i); }
+    L.push(r, c);
+  }
+  L.push([0, 6, 12, 18, 24], [4, 8, 12, 16, 20]);
+  return L;
+})();
+
+function paint() {
+  var cells = document.querySelectorAll('.sq');
+  var winning = {};
+  var bingos = 0;
+  LINES.forEach(function (line) {
+    if (line.every(isOn)) { bingos++; line.forEach(function (p) { winning[p] = true; }); }
+  });
+  cells.forEach(function (el) {
+    var pos = +el.dataset.pos;
+    if (pos !== FREE) {
+      var on = isOn(pos);
+      el.classList.toggle('on', on);
+      el.setAttribute('aria-pressed', on ? 'true' : 'false');
+    }
+    el.classList.toggle('line', !!winning[pos]);
+  });
+  document.getElementById('count').textContent = state.marked.length;
+  document.getElementById('bingos').textContent = bingos;
+  return bingos;
+}
+
+function say(msg) {
+  var b = document.getElementById('banner');
+  b.textContent = msg;
+  b.classList.remove('show');
+  void b.offsetWidth;
+  if (msg) b.classList.add('show');
+}
+
+function party(big) {
+  if (typeof confetti !== 'function') return;
+  var colors = ['#F2749F', '#FFE9A8', '#BDEBD3', '#D9CBFA', '#BFE1FA'];
+  confetti({ particleCount: big ? 160 : 50, spread: big ? 100 : 60, origin: { y: 0.65 }, colors: colors });
+  if (big) {
+    setTimeout(function () { confetti({ particleCount: 90, spread: 70, origin: { x: 0.1, y: 0.7 }, colors: colors }); }, 300);
+    setTimeout(function () { confetti({ particleCount: 90, spread: 70, origin: { x: 0.9, y: 0.7 }, colors: colors }); }, 550);
+  }
+}
+
+function onTap(e) {
+  var el = e.currentTarget;
+  var id = +el.dataset.id;
+  var i = state.marked.indexOf(id);
+  if (i === -1) {
+    state.marked.push(id);
+    el.classList.remove('pop'); void el.offsetWidth; el.classList.add('pop');
+  } else {
+    state.marked.splice(i, 1);
+  }
+  var bingos = paint();
+  save();
+
+  if (state.marked.length === 24) { say('you did it all. happy 30th!'); party(true); }
+  else if (bingos > lastBingos) { say(bingos === 1 ? 'bingo!' : bingos + ' bingos!'); party(true); }
+  else if (i === -1) { say(''); party(false); }
+  else say('');
+  lastBingos = bingos;
+}
+
+function render() {
+  build();
+  lastBingos = +document.getElementById('bingos').textContent;
+}
+
+// ── title letters ──
+(function () {
+  var t = document.getElementById('title');
+  'turn 30 bingo'.split('').forEach(function (ch) {
+    var s = document.createElement('span');
+    s.textContent = ch === ' ' ? ' ' : ch;
+    s.setAttribute('aria-hidden', 'true');
+    t.appendChild(s);
+  });
+})();
+
+// ── start over ──
+document.getElementById('reset').addEventListener('click', function () {
+  if (!confirm('start over with a fresh card? this clears your progress.')) return;
+  state = { order: newOrder(), marked: [] };
+  save();
+  say('');
+  render();
+});
+
+// ── init: local cache first, then firestore wins if it has a card ──
+function init() {
+  if (!loadLocal()) {
+    state = { order: newOrder(), marked: [] };
+    try { localStorage.setItem(KEY, JSON.stringify(state)); } catch (e) {}
+  }
+  render();
+  if (window._fsGet) {
+    window._fsGet(COL, DOC).then(function (data) {
+      if (validState(data)) {
+        state = { order: data.order, marked: data.marked };
+        try { localStorage.setItem(KEY, JSON.stringify(state)); } catch (e) {}
+        render();
+        setSync(true);
+      } else {
+        save();   // first visit anywhere: store this card so every device sees the same one
+      }
+    }).catch(function () { setSync(false); });
+  }
+}
+
+var started = false;
+function start() { if (started) return; started = true; init(); }
+if (window._fsGet) start();
+else {
+  window.addEventListener('fs-ready', start);
+  setTimeout(start, 2000);
+}
+</script>
+</body>
+</html>
