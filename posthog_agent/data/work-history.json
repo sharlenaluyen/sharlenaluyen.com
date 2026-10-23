@@ -1,0 +1,54 @@
+[  {
+    "company": "Independent Contractor",
+    "title": "AI Applied Engineer",
+    "dates": "2025 - Present",
+    "location": "Remote",
+    "team": "self-employed",
+    "stack": ["Typescript", "bash", "Hermes", "n8n", "Claude", "GPT", "Gemini", "DeepSeek", "Model API Clients", "MCPs"],
+    "highlights": [
+      "Created, managed, & maintained fully custom AI features & agents for small businesses & nonprofit organizations, serving 1,000s of people daily: customer service FAQs, inbox management, calendar organization, social media posting & analytics, customer review replies, identify sales leads, draft sales pitches, & measure employee satisfaction",
+      "Agents are default human approval required; implemented a self-improvement loop that develops context & updates evals to allow agent more self-sufficiency. Users interact with web dashboard to pick various models, define tools with schemas, handle multi-step tool calling loops, approve/deny evals, & scope context & memory management"
+    ]
+  },
+  {
+    "company": "HashiCorp, an IBM Company",
+    "title": "Backend Software Engineer",
+    "dates": "2025",
+    "location": "Remote",
+    "team": "Cloud Enterprise Identity Team",
+    "stack": ["Go", "River Queue", "Postgres"],
+    "highlights": [
+      "Implemented System for Cross-Domain Identity Management (SCIM) across external identity providers (Okta, Azure) and HashiCorp's Cloud Platform for uniform identity access and management",
+      "Designed, prototyped, and implemented group functionality and group membership features, ensuring stability and usability",
+      "Researched and proposed job solutions in River Queue to avoid a race condition between jobs via an ADR document",
+      "Collaborated closely with Product Design and Product Management partners; project ran ahead of projected timeline for Private Beta customer testing",
+      "Participated in on-call rotations, pairing, and team planning to support product requirements"
+    ]
+  },
+  {
+    "company": "Stride Consulting",
+    "title": "Full Stack Software Engineer",
+    "dates": "2022 - 2023",
+    "location": "Remote",
+    "stack": ["Ruby on Rails", "TypeScript", "Go", "React", "Node", "Postgres", "Terraform", "CircleCI", "Jenkins", "DataDog", "Docker"],
+    "highlights": [
+      "Used TDD and Extreme Programming to build custom client applications while proactively advising stakeholders on project goals; consistently met or exceeded 98% of sprint goals",
+      "MoveHQ: delivered 12-17 features (approvals, notifications, data fixes) within 3 months, cutting testing errors by 60%, raising test coverage to 95%, and rectifying 5,000+ tests; supported an architecture restructure introducing a notification bus",
+      "Wunderkind: led greenfield coding initiatives, orchestrating authentication protocols, unifying graphics standardization, and refining testing procedures",
+      "Won the Stridee award within 3 months for building working relationships; created the first official matching fund and increased connection across remote employees"
+    ]
+  },
+  {
+    "company": "Optum",
+    "title": "Software Engineer",
+    "dates": "2020 - 2022",
+    "location": "Remote",
+    "stack": ["Java", "MySQL", "Jenkins", "Docker", "Kubernetes", "Azure"],
+    "highlights": [
+      "Maintained a RESTful web app with microservices enabling patient access to prescriptions, pharmacies, and billing information",
+      "Identified issues and code smells, reducing legacy code by 3%, with an average code review score of 4.5/5",
+      "Examined database functions and stored procedures to refactor run-time efficiency; automated dependencies",
+      "Investigated and debugged 50+ issues across production and staging environments"
+    ]
+  }
+]

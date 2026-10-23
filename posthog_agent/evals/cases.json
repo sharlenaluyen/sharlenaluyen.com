@@ -1,0 +1,62 @@
+[
+  {
+    "query": "Has she built anything agents actually use?",
+    "expected_tool": "search_projects",
+    "expected_tool_args": { "tag": "agents" },
+    "must_mention": ["Clippy", "RAG", "MCP"]
+  },
+    {
+    "query": "What is she doing right now?",
+    "expected_tool": "get_work_history",
+    "expected_tool_args": { "dates": "present" },
+    "must_mention": ["SCIM", "Okta", "River Queue"]
+  },
+  {
+    "query": "What did she do at HashiCorp?",
+    "expected_tool": "get_work_history",
+    "expected_tool_args": { "company": "hashicorp" },
+    "must_mention": ["SCIM", "Okta", "River Queue"]
+  },
+  {
+    "query": "What was her impact on MoveHQ?",
+    "expected_tool": "get_work_history",
+    "expected_tool_args": { "company": "stride" },
+    "must_mention": ["MoveHQ", "95%", "60%"]
+  },
+  {
+    "query": "Does she have experience with Kubernetes and Terraform?",
+    "expected_tool": "get_skills",
+    "expected_tool_args": { "category": "infraDevops" },
+    "must_mention": ["Kubernetes", "Terraform"]
+  },
+  {
+    "query": "Does she know Python or React?",
+    "expected_tool": "get_skills",
+    "expected_tool_args": {},
+    "must_mention": ["Python", "React"]
+  },
+  {
+    "query": "Where did she go to school?",
+    "expected_tool": "get_education",
+    "expected_tool_args": {},
+    "must_mention": ["Oregon State", "Computer Science"]
+  },
+  {
+    "query": "Has she built an MCP server before?",
+    "expected_tool": "search_projects",
+    "expected_tool_args": { "tag": "mcp" },
+    "must_mention": ["PostHog Agent MCP Server","PostHog Agent MCP Client", "agentFacing"]
+  },
+  {
+    "query": "Why does she want to work at PostHog?",
+    "expected_tool": "why_posthog",
+    "expected_tool_args": {},
+    "must_mention": ["autonomy", "culture"]
+  },
+  {
+    "query": "How do I book a call with her?",
+    "expected_tool": "contact_sharlena",
+    "expected_tool_args": { "method": "calendly" },
+    "must_mention": ["calendly.com"]
+  }
+]

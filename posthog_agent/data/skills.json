@@ -1,0 +1,7 @@
+{
+  "backend": ["Go/Golang", "Java", "Python", "C++", "C", "Ruby on Rails", "Node"],
+  "frontend": ["TypeScript", "JavaScript", "React", "HTML", "CSS"],
+  "infraDevops": ["AWS", "Azure", "GCP", "Docker", "Kubernetes", "Terraform", "Jenkins", "Travis CI", "CircleCI", "DataDog", "New Relic", "AWS SQS"],
+  "aiAgents": ["LLMs", "AGI", "RAG (via Clippy portfolio agent)", "MCP server development"],
+  "otherLanguages": ["Haskell", "bash"]
+}

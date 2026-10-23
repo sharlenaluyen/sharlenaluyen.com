@@ -1,0 +1,37 @@
+[
+  {
+    "name": "Clippy Portfolio Agent",
+    "description": "A Clippy-themed RAG agent embedded on sharlenaluyen.com via a self-injecting clippy.js script. Uses the Anthropic API, with a Cloudflare Workers proxy to avoid exposing the API key client-side. Answers visitor questions about Sharlena using a sharlena-knowledge.txt knowledge base.",
+    "tags": ["ai", "agents", "frontend", "backend"],
+    "link": "https://sharlenaluyen.com",
+    "agentFacing": true
+  },
+  {
+    "name": "sharlenaluyen.com",
+    "description": "Sharlena's personal website, built with Next.js and deployed on Vercel. Includes a custom Clippy-themed RAG agent, a blog, and a portfolio of Sharlena's work.",
+    "tags": ["frontend", "backend", "creative"],
+    "link": "https://sharlenaluyen.com",
+    "agentFacing": false
+  },
+  {
+    "name": "PostHog Agent",
+    "description": "A PostHog agent that exposes Sharlena's work history, projects, and skills as queryable tools. Built to demonstrate agent-facing API design for the PostHog Product Engineer application.",
+    "tags": ["ai", "agents", "backend", "mcp"],
+    "link": "https://posthog-mcp.sharlenatluyen.workers.dev/mcp",
+    "agentFacing": true
+  },
+  {
+    "name": "PostHog Agent MCP Server",
+    "description": "A remote MCP server exposing Sharlena's work history, projects, and skills as queryable tools. Built specifically to demonstrate agent-facing API design for the PostHog Product Engineer application.",
+    "tags": ["ai", "agents", "backend", "mcp"],
+    "link": "https://posthog-mcp.sharlenatluyen.workers.dev/mcp",
+    "agentFacing": true
+  },
+  {
+    "name": "PostHog Agent MCP Client",
+    "description": "A local MCP client that connects to the PostHog Agent MCP Server. Built specifically to demonstrate agent-facing API design for the PostHog Product Engineer application.",
+    "tags": ["ai", "agents", "backend", "mcp"],
+    "link": "https://posthog-mcp.sharlenatluyen.workers.dev/mcp",
+    "agentFacing": true
+  }
+]

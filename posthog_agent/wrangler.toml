@@ -1,0 +1,9 @@
+name = "posthog-mcp"
+main = "src/index.ts"
+compatibility_date = "2026-10-01"
+compatibility_flags = ["nodejs_compat"]
+
+# custom domain not possible currently because sharlenaluyen.com lives on namecheap - a logistical oversight error
+# use https://posthog-mcp.sharlenatluyen.workers.dev for now
+ # routes = [{ pattern ="mcp.sharlenaluyen.com", custom_domain = true }]
+ 
