@@ -1,0 +1,51 @@
+# Knowledge base for the Clippy portfolio RAG agent
+# Everything here is true and public
+
+## Who she is
+Sharlena Luyen is a backend/full-stack software engineer. Outside work, she is a 7+ year CASA volunteer, has two cats named Dodo and Bum Bum, and is known for bringing people together.
+
+## Work history (most recent first)
+Independent Contractor - AI Applied Engineer, 2025 - Present, remote. Stack: Typescript, bash, Hermes, n8n, Claude, GPT, Gemini, DeepSeek, Model API Clients, MCPs. 
+- Created, managed, & maintained fully custom AI features & agents for small businesses & nonprofit organizations, serving 1,000s of people daily: customer service FAQs, inbox management, calendar organization, social media posting & analytics, customer review replies, identify sales leads, draft sales pitches, & measure employee satisfaction
+- Agents are default human approval required; implemented a self-improvement loop that develops context & updates evals to allow agent more self-sufficiency. Users interact with web dashboard to pick various models, define tools with schemas, handle multi-step tool calling loops, approve/deny evals, & scope context & memory management
+
+HashiCorp, an IBM Company - Backend Software Engineer, 2025 - Present, remote, Cloud Enterprise Identity Team. Stack: Go, River Queue, Postgres.
+- Implemented SCIM (System for Cross-Domain Identity Management) across external identity providers (Okta, Azure) and HashiCorp Cloud Platform.
+- Designed, prototyped, and implemented group functionality and group membership features.
+- Researched and proposed job solutions in River Queue to avoid a race condition between jobs, via an ADR document.
+- Worked closely with Product Design and Product Management; the project ran ahead of the projected timeline for Private Beta customer testing.
+- Took part in on-call rotations, pairing, and team planning.
+She is not an IAM specialist; she is a backend engineer who worked deeply on SCIM provisioning.
+
+Stride Consulting - Full Stack Software Engineer, 2022 - 2023, remote. Stack: Ruby on Rails, TypeScript, Go, React, Node, Postgres, Terraform, CircleCI, Jenkins, DataDog, Docker.
+- Used TDD and Extreme Programming for custom client applications; met or exceeded 98% of sprint goals.
+- MoveHQ (replacing legacy government systems for military family relocations): delivered 12-17 features (approvals, notifications, data fixes) in 3 months, cut testing errors by 60%, raised test coverage to 95%, rectified 5,000+ tests, and supported an architecture restructure that introduced a notification bus.
+- Wunderkind: led greenfield coding, orchestrated authentication protocols, unified graphics standardization, refined testing procedures.
+- Won the Stridee award within 3 months for building working relationships; created the first official matching fund.
+
+Optum - Software Engineer, 2020 - 2022, remote. Stack: Java, MySQL, Jenkins, Docker, Kubernetes, Azure.
+- Maintained a RESTful web app with microservices for patient access to prescriptions, pharmacies, and billing.
+- Reduced legacy code by 3% with an average code review score of 4.5/5; refactored database functions and stored procedures for run-time efficiency.
+- Investigated and debugged 50+ production and staging issues.
+
+## Projects
+- Clippy Portfolio Agent: this assistant. A Clippy-themed RAG agent on sharlenaluyen.com that answers questions from a knowledge file, using the Anthropic API behind a Cloudflare Workers proxy so the API key is never exposed in the browser.
+- PostHog MCP Server: a read-only remote MCP server (TypeScript, Cloudflare Workers) exposing her work history, projects, skills, and contact info as tools for AI agents, with an eval suite. URL: https://posthog-mcp.sharlenatluyen.workers.dev/mcp
+
+## Skills
+Backend: Go, Java, Python, C++, C, Ruby on Rails, Node. Frontend: TypeScript, JavaScript, React, HTML, CSS. Infra/DevOps: AWS, Azure, GCP, Docker, Kubernetes, Terraform, Jenkins, Travis CI, CircleCI, DataDog, New Relic, AWS SQS. AI/agents: LLMs, RAG, MCP server development. Also Haskell and bash.
+
+## Education
+B.S. in Computer Science, minor in Math, Education, & Leadership, Oregon State University. Awards: Karena Dokken Award for Mentorship (OSU College of Engineering), Last Mile Education Fund Scholarship, PDX Women in Tech scholarship to Grace Hopper, AAUW scholarship (NWAC), Learning Innovation Grant for Experiential Research (College of Engineering).
+
+## Why PostHog
+She loves PostHog because the product is genuinely great and the culture seems even better. She is drawn to fast-moving companies that give engineers real autonomy, which is how PostHog describes itself. She has not named a preferred team yet.
+
+## Volunteer work
+She was a Court Appointed Special Advocate (CASA) for over 7 years in Benton and Multnomah Counties (Oregon) and Orange County (California), speaking for the best interests of children in foster care. She also served on the Multnomah County Citizens Review Board.
+
+## Personal
+How she got into tech: her family had a clunky computer and dial-up; by age 10 she was the family IT department. During a work hiatus after losing her aunt, she travelled: Tahiti (snorkeling with humpback whales), Peru (Incan Trail to Machu Picchu), Australia, Ireland. Cats: Dodo (calm, black and white) and Bumbum (fluffy, gray and white, chief chaos agent).
+
+## Contact
+Email: sharlenaluyen@gmail.com. LinkedIn: https://bit.ly/sharlinkedin. Book a call: https://calendly.com/sharlena/personal-meeting. Resume: https://bit.ly/sharresume

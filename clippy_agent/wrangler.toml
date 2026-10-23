@@ -1,0 +1,14 @@
+name = "clippy-agent"
+main = "src/index.ts"
+compatibility_date = "2026-10-01"
+
+# sharlena-knowledge.txt is bundled into the Worker as a string.
+rules = [{ type = "Text", globs = ["**/*.txt"], fallthrough = true }]
+
+# Secret, never committed:  npx wrangler secret put ANTHROPIC_KEY_CLIPPY
+# Local dev: put ANTHROPIC_KEY_CLIPPY=... in clippy_agent/.dev.vars
+
+# Only if your API key is not scoped to a workspace: uncomment and set your workspace ID
+# (not secret, but keep it in this file only if you are happy to publish it).
+# [vars]
+# ANTHROPIC_WORKSPACE_ID = "wrkspc_..."
