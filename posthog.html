@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>Sharlena x PostHog 🦔</title>
+<title>Sharlena x PostHog: Product Engineer 🦔</title>
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Fredoka:wght@300;400;500;600&family=IBM+Plex+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet"/>
 <style>
@@ -409,6 +409,25 @@ html,body{width:100%;overflow-x:hidden;font-family:'Fredoka',sans-serif;backgrou
 .homie-info h4{color:#fff;font-size:1rem;font-weight:600;margin-bottom:.2rem}
 .homie-info p{color:rgba(255,255,255,.45);font-size:.8rem;font-weight:300}
 
+/* ── POSTING FIT ── */
+.fit-section{background:#222;padding:4.5rem 2rem;border-top:4px solid var(--ph-yellow)}
+.fit-inner{max-width:900px;margin:0 auto}
+.fit-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:1.1rem}
+.fit-card{background:rgba(255,255,255,.04);border:1.5px solid rgba(255,255,255,.08);border-radius:14px;padding:1.3rem 1.4rem}
+.fit-card h4{font-family:'Fredoka One',sans-serif;font-weight:400;color:var(--ph-yellow);font-size:1.05rem;margin-bottom:.15rem}
+.fit-ask{color:rgba(255,255,255,.4);font-size:.76rem;font-style:italic;font-weight:300;margin-bottom:.6rem}
+.fit-card p{color:rgba(255,255,255,.72);font-size:.9rem;line-height:1.65;font-weight:300}
+.fit-card p strong{color:#fff;font-weight:600}
+.fit-card.open{border-color:rgba(245,78,0,.45)}
+.fit-card.open h4{color:var(--ph-orange)}
+
+.mcp-section{background:var(--ph-dark);padding:4.5rem 2rem;border-top:4px solid var(--ph-yellow)}
+.mcp-inner{max-width:900px;margin:0 auto}
+.mcp-url{display:block;font-family:'IBM Plex Mono',monospace;font-size:.85rem;color:var(--ph-yellow);background:rgba(249,189,43,.08);border:1.5px dashed rgba(249,189,43,.4);border-radius:10px;padding:.9rem 1.1rem;margin:1.2rem 0;word-break:break-all;user-select:all}
+.mcp-note{color:rgba(255,255,255,.6);font-size:.92rem;line-height:1.7;font-weight:300}
+.mcp-note strong{color:#fff;font-weight:600}
+.mcp-note code{font-family:'IBM Plex Mono',monospace;font-size:.8rem;color:var(--ph-yellow)}
+
 /* ── FOOTER ── */
 .footer{background:var(--ph-dark);border-top:4px solid var(--ph-yellow);padding:2rem;text-align:center}
 .footer-hog{font-size:2rem;margin-bottom:.4rem}
@@ -465,9 +484,9 @@ html,body{width:100%;overflow-x:hidden;font-family:'Fredoka',sans-serif;backgrou
 
 <!-- HEADER -->
 <header class="hdr">
-  <div class="hdr-chip">🦔 A message for the PostHog team</div>
+  <div class="hdr-chip">🦔 Applying: Product Engineer</div>
   <h1>Hi PostHog! I'm <span>Sharlena.</span></h1>
-  <p class="hdr-sub">Welcome to my little corner. Everything here tells a piece of my story. Look around! Things are friendlier than they look.</p>
+  <p class="hdr-sub">I read the posting twice. It asks for owners, users-talkers, writers, and a little weirdness. So I built this page instead of a cover letter. Look around, then scroll down for the receipts.</p>
   <div class="hdr-hint">
     <span>Hover over objects to wake them up, then click to learn more</span>
     <span class="bob">&#8595;</span>
@@ -644,7 +663,7 @@ html,body{width:100%;overflow-x:hidden;font-family:'Fredoka',sans-serif;backgrou
           <div class="lp-display">
             <div class="lp-hog">🦔</div>
             <div class="lp-code">
-              why_posthog.md<span class="cursor-blink">_</span><br/>
+              why_product_eng.md<span class="cursor-blink">_</span><br/>
               ――――――――――――――<br/>
               click to read &#8594;
             </div>
@@ -753,10 +772,67 @@ html,body{width:100%;overflow-x:hidden;font-family:'Fredoka',sans-serif;backgrou
 </div><!-- /room -->
 </main>
 
+<!-- POSTING FIT -->
+<section class="fit-section">
+  <div class="fit-inner">
+    <div class="people-eyebrow">Product Engineer &bull; Replay, APM &amp; Error Tracking</div>
+    <h2 class="people-title">What you asked for, and what I've got</h2>
+    <p class="people-sub">Your posting, point by point. Honest about the gaps.</p>
+    <div class="fit-grid">
+      <div class="fit-card">
+        <h4>Full-stack, Python + React</h4>
+        <div class="fit-ask">"Python or similar, React or similar, big data is a bonus"</div>
+        <p>Rails and React at MoveHQ, and backend services at HashiCorp. I'm a "or similar" person today and I pick up stacks fast. Django and TypeScript-React are where I'd grow next.</p>
+      </div>
+      <div class="fit-card">
+        <h4>0 to 1</h4>
+        <div class="fit-ask">"Taking a project from 0 to 1"</div>
+        <p>As a consultant and independent contractor, I helped stand up <strong>MoveHQ</strong>, replacing legacy government systems for military family relocations and installing <strong>AI features and agents</strong> that I build for small businesses and nonprofits. At HashiCorp, I built SCIM provisioning for HCP from the ground up.</p>
+      </div>
+      <div class="fit-card">
+        <h4>Strong writing</h4>
+        <div class="fit-ask">"We document everything, most of it publicly"</div>
+        <p>You're reading it. I'd rather write the doc, the PR description, or the "here's what we got wrong" post than hold another meeting. PRs &gt; Issues &gt; Slack suits me.</p>
+      </div>
+      <div class="fit-card">
+        <h4>Talking to users, doing support</h4>
+        <div class="fit-ask">"Great product engineers have users they're friendly with"</div>
+        <p>8 years as a Court Appointed Special Advocate (CASA) taught me to read every file, show up to every hearing, and speak for someone who can't. Being Support hero sounds familiar.</p>
+      </div>
+      <div class="fit-card">
+        <h4>Enthusiastic driver</h4>
+        <div class="fit-ask">"'Are we there yet?' is the wrong question"</div>
+        <p>I own things to the end. Learning and implementing, all in one. I build a strong foundation in onboarding to set me up for success. I want my reputation to be built on delivering results, not just promises.</p>
+      </div>
+      <div class="fit-card">
+        <h4>Weird, on purpose</h4>
+        <div class="fit-ask">"Doing weird stuff is a competitive advantage"</div>
+        <p>A room of googly-eyed office supplies and two cats as exhibits. This page is my "objectively unnecessary developer toy."</p>
+      </div>
+      <div class="fit-card open" style="grid-column:1/-1">
+        <h4>Things agents actually use</h4>
+        <div class="fit-ask">"An API an agent can drive, an MCP server, evals, docs written for a machine"</div>
+        <p>Two things. A <strong>Clippy-themed RAG agent</strong> on this site, using the Anthropic API behind a Cloudflare Workers proxy so the key stays server-side. And the <strong>MCP server just below</strong>: six read-only tools with machine-oriented descriptions, plus an eval suite that checks the right tool answers each question. Scale and real-world usage are where PostHog would stretch me, and I'm after that.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MCP SERVER -->
+<section class="mcp-section">
+  <div class="mcp-inner">
+    <div class="people-eyebrow">Built for agents</div>
+    <h2 class="people-title">Ask my MCP server about me</h2>
+    <p class="people-sub">You asked if I've built something agents use. The public answer is a server you can connect to. I've built similar tools for businesses and nonprofits that I can't show you, so I built this just for you.</p>
+    <code class="mcp-url">https://posthog-mcp.sharlenatluyen.workers.dev/mcp</code>
+    <p class="mcp-note">Add it as a remote MCP server (Streamable HTTP) in your client, e.g. <code>claude mcp add --transport http sharlena https://posthog-mcp.sharlenatluyen.workers.dev/mcp</code>, then ask that agent about my work history, projects, skills, or why PostHog. It's read-only, written in TypeScript on Cloudflare Workers, and has an eval suite. <strong>Six tools, and each description is written for a machine.</strong> There's also a limit on spend amount, so please don't go too crazy. There's only so much you can learn about me!</p>
+  </div>
+</section>
+
 <!-- ABOUT ME -->
 <section class="people-section">
   <div class="people-inner">
-    <div class="people-eyebrow">Meet the Engineer</div>
+    <div class="people-eyebrow">Meet your next (hopeful!) Product Engineer</div>
     <h2 class="people-title">Sharlena Luyen</h2>
     <p class="people-sub">The human behind all the googly eyes and ice cream cakes.</p>
 
@@ -780,9 +856,9 @@ html,body{width:100%;overflow-x:hidden;font-family:'Fredoka',sans-serif;backgrou
 
       <div class="person-info">
         <h3 class="person-name">Sharlena Luyen</h3>
-        <p class="person-role">Software Engineer</p>
+        <p class="person-role">Software Engineer &rarr; Product Engineer</p>
         <p class="person-bio">
-          I've built backend infrastructure, advocated in court for children who need it, and swam next to a baby humpback whale in Tahiti. As a 7-year CASA volunteer, previous Multnomah County Citizens Review Board member, and proud servant to two very opinionated cats, I am currently looking for a team that ships things that actually matter with teammates who care about each other.
+          I've built backend infrastructure, advocated in court for children who need it, and swam next to a baby humpback whale in Tahiti. As an 8-year CASA volunteer, previous Multnomah County Citizens Review Board member, and proud servant to two very opinionated cats, I want to own a product end to end, talk to its users, and ship it fast with a small team that cares about each other. That's PostHog's Product Engineer role.
         </p>
         <div class="person-links">
           <a class="person-link" href="https://bit.ly/sharresume" target="_blank">Resume &#8599;</a>
@@ -876,18 +952,17 @@ document.addEventListener('DOMContentLoaded', () => {
       <div class="mhighlight">"An ice cream cake is basically a distributed system: multiple layers, independent state, only cohesive when everything comes together at exactly the right temperature. The only difference is that my ice cream cakes are usually ugly on the outside."</div>
       <div class="mtags"><span class="mtag">Ice cream cake architect</span><span class="mtag">Never uses a box mix</span><span class="mtag">Team morale up</span><span class="mtag">Will make your birthday special</span></div>`
     },
-    laptop:{chip:'The Big One 🦔',title:'Why PostHog?',icon:'💻',
-      html:`<p>I've been watching PostHog for a while, in the way you watch a company that's doing everything you wish more companies would do: <strong>radically transparent, genuinely open source, obsessively focused on the product and the people building it.</strong></p>
-      <p>Pineapple on pizza is a weird thing to center your company around, but I somehow love it.</p>
+    laptop:{chip:'The Big One 🦔',title:'Why PostHog, and why Product Engineer?',icon:'💻',
+      html:`<p>Your posting says engineers lead product teams and make product decisions. That's the job I want: <strong>own it, ship it, watch how it lands, iterate.</strong></p>
       <hr class="mdivider"/>
-      <p><strong>My engineering background:</strong> At HashiCorp, an IBM Company, I built backend infrastructure; specifically, cross-identity management between external identity providers and HashiCorp Cloud Platform. Before that, as a software consultant, I helped implement MoveHQ in Ruby on Rails and React, replacing legacy government systems for military family relocations.</p>
-      <div class="mhighlight info"><strong>Note on identity work:</strong> I am not an IAM specialist. My identity work at HashiCorp was specifically around <strong>SCIM (System for Cross-domain Identity Management)</strong> to build the infrastructure that lets enterprise customers provision and sync users between their identity providers (Okta, Azure AD, etc.) and HashiCorp Cloud Platform. I have a strong practical background in identity concepts, provisioning flows, and token-based auth, but I'm a backend engineer who touched identity deeply — not a dedicated IAM engineer.</div>
-      <p>I've built things used by real people under real pressure. <strong>Stakes make the engineering matter more.</strong></p>
-      <div class="mhighlight">PostHog is building the analytics infrastructure that helps every other company understand their users. That's leverage at a scale I find genuinely exciting. Something I miss about HashiCorp's previous dedication to open-source products.</div>
-      <p><strong>Why product engineering specifically:</strong> I want to be close to the user and close to the data at the same time. I want to ship a feature, watch how it lands, learn from it, and iterate. PostHog is where the tools for doing that are actually being built, and I want to be on that team to make mistakes and learn.</p>
-      <p>I also just genuinely love the culture. The transparency reports. The "here's what we got wrong" blog posts. You feel like a team that <strong>actually ships and actually cares.</strong> That combination is rare and I want to be part of it.</p>
-      <div class="mtags"><span class="mtag">HashiCorp / IBM</span><span class="mtag">Ruby on Rails</span><span class="mtag">React</span><span class="mtag">Distributed Systems</span><span class="mtag">SCIM / Identity</span><span class="mtag">Product Engineering</span></div>
-      <div class="mbtn-row"><a class="mbtn" href="https://bit.ly/sharresume" target="_blank">View R&eacute;sum&eacute; &#8599;</a><a class="mbtn outline" href="https://bit.ly/sharlinkedin" target="_blank">LinkedIn &#8599;</a></div>`
+      <p><strong>What I've built:</strong> At HashiCorp (an IBM Company), I built backend infrastructure for cross-identity management between external identity providers and HashiCorp Cloud Platform. Before that, as a software consultant, I helped implement MoveHQ in Ruby on Rails and React, replacing legacy government systems for military family relocations.</p>
+      <div class="mhighlight info"> My work was <strong>SCIM</strong>, the protocol that lets enterprise customers provision and sync users between their identity providers (Okta, Azure AD, etc.) and HCP. I'm a backend engineer who touched identity deeply, not a dedicated IAM engineer.</div>
+      <p><strong>Why Replay, APM, and Error Tracking:</strong> these teams help people understand "the why" behind what users did. That's what drew me to computer science in the first place: the desire to understand how systems work and how to improve them.</p>
+      <div class="mhighlight">On agents: I built a Clippy RAG agent and an MCP server with evals, linked on this page. Production scale for agents is the space that I would grow into.</div>
+      <p><strong>Culture:</strong> transparency, autonomy, heads-down time, and "here's what we got wrong" posts. I also missed HashiCorp's open-source roots, and PostHog is open to the core. I spend a lot of time building foundational relationships with colleagues to ensure the entire team <strong> has shared accountability, always assumes best intent, and continuously learns.</strong></p>
+      <p>Pineapple on pizza is a weird thing to rally around. I'm on team YES.</p>
+      <div class="mtags"><span class="mtag">HashiCorp / IBM</span><span class="mtag">Ruby on Rails</span><span class="mtag">React</span><span class="mtag">SCIM</span><span class="mtag">0 to 1</span><span class="mtag">MCP server</span><span class="mtag">Support hero material</span></div>
+      <div class="mbtn-row"><a class="mbtn" href="https://bit.ly/sharresume" target="_blank">View R&eacute;sum&eacute; &#8599;</a><a class="mbtn outline" href="https://posthog.com/careers/product-engineer" target="_blank">The posting &#8599;</a></div>`
     },
     travel:{chip:'Adventures',title:'Places my carry-on has been',icon:'✈️',afterRender:initCarousel,
       html:`<p>During my intentional work hiatus to grieve my aunt, I committed to experiencing the world. What followed was one of the most clarifying periods of my life: a masterclass in <strong>showing up somewhere unfamiliar and figuring it out.</strong></p>
@@ -994,5 +1069,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
 });
 </script>
+<script src="js/clippy-agent.js" defer></script>
 </body>
 </html>

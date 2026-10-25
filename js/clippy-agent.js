@@ -9,7 +9,7 @@
 (function () {
   var ENDPOINT = window.CLIPPY_ENDPOINT || "https://clippy-agent.sharlenatluyen.workers.dev/chat";
   var MAX_HISTORY = 10;
-  var SUGGESTIONS = ["What does she do at HashiCorp?", "Has she built anything agents use?", "How can I reach her?"];
+  var SUGGESTIONS = ["What is she up to right now?", "Has she built anything agents use?", "How can I reach her?"];
 
   var history = [];
   var busy = false;
