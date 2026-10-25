@@ -9,7 +9,7 @@ Independent Contractor - AI Applied Engineer, 2025 - Present, remote. Stack: Typ
 - Created, managed, & maintained fully custom AI features & agents for small businesses & nonprofit organizations, serving 1,000s of people daily: customer service FAQs, inbox management, calendar organization, social media posting & analytics, customer review replies, identify sales leads, draft sales pitches, & measure employee satisfaction
 - Agents are default human approval required; implemented a self-improvement loop that develops context & updates evals to allow agent more self-sufficiency. Users interact with web dashboard to pick various models, define tools with schemas, handle multi-step tool calling loops, approve/deny evals, & scope context & memory management
 
-HashiCorp, an IBM Company - Backend Software Engineer, 2025 - Present, remote, Cloud Enterprise Identity Team. Stack: Go, River Queue, Postgres.
+HashiCorp, an IBM Company - Backend Software Engineer, 2025, remote, Cloud Enterprise Identity Team. Stack: Go, River Queue, Postgres.
 - Implemented SCIM (System for Cross-Domain Identity Management) across external identity providers (Okta, Azure) and HashiCorp Cloud Platform.
 - Designed, prototyped, and implemented group functionality and group membership features.
 - Researched and proposed job solutions in River Queue to avoid a race condition between jobs, via an ADR document.
