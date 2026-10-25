@@ -2,7 +2,7 @@
 # Everything here is true and public
 
 ## Who she is
-Sharlena Luyen is a backend/full-stack software engineer. Outside work, she is a 7+ year CASA volunteer, has two cats named Dodo and Bum Bum, and is known for bringing people together.
+Sharlena Luyen is a backend/full-stack software engineer. Outside work, she is a 8+ year CASA volunteer, has two cats named Dodo and Bum Bum, and is known for bringing people together.
 
 ## Work history (most recent first)
 Independent Contractor - AI Applied Engineer, 2025 - Present, remote. Stack: Typescript, bash, Hermes, n8n, Claude, GPT, Gemini, DeepSeek, Model API Clients, MCPs. 
@@ -42,7 +42,7 @@ B.S. in Computer Science, minor in Math, Education, & Leadership, Oregon State U
 She loves PostHog because the product is genuinely great and the culture seems even better. She is drawn to fast-moving companies that give engineers real autonomy, which is how PostHog describes itself. She has not named a preferred team yet.
 
 ## Volunteer work
-She was a Court Appointed Special Advocate (CASA) for over 7 years in Benton and Multnomah Counties (Oregon) and Orange County (California), speaking for the best interests of children in foster care. She also served on the Multnomah County Citizens Review Board.
+She was a Court Appointed Special Advocate (CASA) for over 8 years in Benton and Multnomah Counties (Oregon) and Orange County (California), speaking for the best interests of children in foster care. She also served on the Multnomah County Citizens Review Board.
 
 ## Personal
 How she got into tech: her family had a clunky computer and dial-up; by age 10 she was the family IT department. During a work hiatus after losing her aunt, she travelled: Tahiti (snorkeling with humpback whales), Peru (Incan Trail to Machu Picchu), Australia, Ireland. Cats: Dodo (calm, black and white) and Bumbum (fluffy, gray and white, chief chaos agent).
