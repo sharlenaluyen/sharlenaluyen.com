@@ -244,8 +244,8 @@ if (svgEl) {
           if (!d) return;
           const path = document.createElementNS(SVG_NS, 'path');
           path.setAttribute('d', d);
-          path.setAttribute('fill', 'rgba(124,130,232,0.08)');
-          path.setAttribute('stroke', 'rgba(124,130,232,0.22)');
+          path.setAttribute('fill', 'rgba(80,86,192,0.10)');
+          path.setAttribute('stroke', 'rgba(80,86,192,0.28)');
           path.setAttribute('stroke-width', '0.3');
           svgEl.insertBefore(path, svgEl.firstChild);
         });
@@ -260,7 +260,7 @@ if (svgEl) {
       const pulse = document.createElementNS(SVG_NS, 'circle');
       pulse.setAttribute('cx', x); pulse.setAttribute('cy', y);
       pulse.setAttribute('r', '4'); pulse.setAttribute('fill', 'none');
-      pulse.setAttribute('stroke', 'rgba(144,200,248,0.3)');
+      pulse.setAttribute('stroke', 'rgba(47,111,176,0.35)');
       pulse.setAttribute('stroke-width', '1');
       pulse.style.animation = 'mpulse 2.4s ease-out infinite';
       svgEl.appendChild(pulse);
@@ -269,7 +269,7 @@ if (svgEl) {
     const c = document.createElementNS(SVG_NS, 'circle');
     c.setAttribute('cx', x); c.setAttribute('cy', y);
     c.setAttribute('r', '4');
-    c.setAttribute('fill', 'rgba(144,200,248,0.8)');
+    c.setAttribute('fill', 'rgba(47,111,176,0.85)');
     c.style.cursor = 'pointer';
     const title = document.createElementNS(SVG_NS, 'title');
     title.textContent = name;
@@ -278,7 +278,7 @@ if (svgEl) {
 
     c.addEventListener('mouseenter', () => {
       mapTTEl.textContent = name; mapTTEl.classList.add('show');
-      c.setAttribute('r', '6.5'); c.setAttribute('fill', '#90c8f8');
+      c.setAttribute('r', '6.5'); c.setAttribute('fill', '#2f6fb0');
     });
     c.addEventListener('mousemove', e => {
       const r = mapWrapEl.getBoundingClientRect();
@@ -287,7 +287,7 @@ if (svgEl) {
     });
     c.addEventListener('mouseleave', () => {
       mapTTEl.classList.remove('show');
-      c.setAttribute('r', '4'); c.setAttribute('fill', 'rgba(144,200,248,0.8)');
+      c.setAttribute('r', '4'); c.setAttribute('fill', 'rgba(47,111,176,0.85)');
     });
   });
 
