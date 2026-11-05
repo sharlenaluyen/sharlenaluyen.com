@@ -4,31 +4,23 @@ Source code for my personal website — [sharlenaluyen.com](https://sharlenaluye
 
 ## What this site is
 
-A personal brand & experience hub. The goal isn't a resume — it's a place that shows
-who I am: a creator, traveler, and storyteller who also happens to build backend
-systems for a living. It's the homepage for anything that isn't a 1:1 work inquiry —
-brand partnerships, media requests, collaborations, and the general "who is this
-person" question.
+The homepage (`index.html`) is written for recruiters and hiring managers first: in a
+few seconds they should see who I am (backend & AI engineer), what I've built, where
+I've worked, and how to reach me or get my resume. Hobbies, community work and the
+playful bits (travel map, trivia, terminal) still live on the page, but below the
+professional content.
 
-**Tone:** warm, personable, fun, approachable. Not corporate, not a pitch deck.
+The other pages are more of a personal brand & experience hub: brand partnerships,
+hotel/experience collaborations, media requests and company-specific pitches.
 
-**Audience:** general visitors, potential collaborators, brand partners, media.
-
-**Content pillars:**
-- Personal brand story & portfolio
-- Behind-the-scenes content & lifestyle blog
-- Photography, travel, and experiences
-- Games / interactive experiences (terminal easter egg, trivia)
-- Philanthropy & community work
-- Personality-driven projects
-
-**Monetization paths surfaced on the site:** brand partnerships, hotel/experience
-collaborations, sponsorships, affiliate links, merchandise.
+**Tone:** warm, personable and direct. Lead with real work and numbers, not slogans.
 
 ## Structure
 
-- `index.html` — the main hub: landing, about, brand pillars, philanthropy,
-  photography, events, travel, trivia, an interactive terminal, and contact.
+- `index.html` — the recruiter-facing homepage: hero with resume & contact links,
+  selected work, experience, skills & education, then "beyond work" (community,
+  photography, travel map, trivia, terminal) and contact. It also loads the Clippy
+  widget (`js/clippy-agent.js`).
 - `hotel.html` — standalone page for hotel & experience collaboration pitches.
 - `destination.html` — standalone page for tour & excursion collaboration pitches. Its
   SunStar Alaska section (`#hotel`) is the same as the case study section on

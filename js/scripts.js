@@ -1,277 +1,160 @@
 /* ════════════════════════════════════════════════════════════════
-   working_script.js
+   scripts.js — index.html
+   Plain vertical page. This file adds: nav state, scroll reveals,
+   the hero name animation, Clippy/copy buttons, photography grid,
+   travel map, trivia and the terminal.
 ════════════════════════════════════════════════════════════════ */
 
-/* ── Panel layout ───────────────────────────────────────────────
-   0-2 : Professional horizontal (pro-zone, 300vh)
-   3-5 : Personal vertical       (personal-zone, 300vh)
-   6-8 : Playground horizontal   (play-zone, 300vh)
-   9   : Contact vertical        (100vh)
-   Total: 1000vh, 10 panels
-──────────────────────────────────────────────────────────────── */
-const PRO_COUNT      = 3;   // Landing, About, Skills
-const PERSONAL_COUNT = 3;   // Philanthropy, Photography, Events
-const PLAY_COUNT     = 3;   // Travel, Trivia, Terminal
-const TOTAL          = PRO_COUNT + PERSONAL_COUNT + PLAY_COUNT + 1; // 10
+const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-const VH = () => window.innerHeight;
+/* ── Nav: border on scroll + active section link ────────────────── */
+const navEl = document.getElementById('site-nav');
+const onScroll = () => navEl.classList.toggle('scrolled', window.scrollY > 8);
+window.addEventListener('scroll', onScroll, { passive: true });
+onScroll();
 
-/* ── Size ───────────────────────────────────────────────────────── */
-const scrollWrap = document.getElementById('scroll-wrap');
-const proZone    = document.getElementById('pro-zone');
-const playZone   = document.getElementById('play-zone');
-const proTrack   = document.getElementById('pro-track');
-const playTrack  = document.getElementById('play-track');
-
-function setSize() {
-  scrollWrap.style.height = (TOTAL * 100) + 'vh';
-  proZone.style.height    = (PRO_COUNT      * 100) + 'vh';
-  playZone.style.height   = (PLAY_COUNT     * 100) + 'vh';
-  proTrack.style.width    = (PRO_COUNT      * 100) + 'vw';
-  playTrack.style.width   = (PLAY_COUNT     * 100) + 'vw';
-}
-setSize();
-window.addEventListener('resize', () => { setSize(); doUpdate(); });
-
-/* ── Scroll → horizontal transform ─────────────────────────────── */
-const progressEl = document.getElementById('progress');
-const counterEl  = document.getElementById('panel-counter');
-const chapterEl  = document.getElementById('chapter-label');
-
-let currentIdx = 0;
-
-function doUpdate() {
-  const y  = window.scrollY;
-  const vh = VH();
-
-  // Progress bar
-  const maxScroll = (TOTAL - 1) * vh;
-  progressEl.style.width = Math.min((y / maxScroll) * 100, 100) + '%';
-
-  // Active panel index
-  const idx = Math.min(Math.round(y / vh), TOTAL - 1);
-  counterEl.textContent = String(idx + 1).padStart(2,'0') + ' / ' + String(TOTAL).padStart(2,'0');
-
-  // Chapter label
-  if (idx <= 2) {
-    chapterEl.textContent = 'Professional';
-    chapterEl.style.color = 'rgba(124,130,232,0.58)';
-  } else if (idx <= 5) {
-    chapterEl.textContent = 'Personal';
-    chapterEl.style.color = 'rgba(192,173,245,0.58)';
-  } else if (idx <= 8) {
-    chapterEl.textContent = 'Playground';
-    chapterEl.style.color = 'rgba(240,144,184,0.58)';
-  } else {
-    chapterEl.textContent = '';
-  }
-
-  // Nav dots
-  document.querySelectorAll('.nav-dot').forEach((d, i) =>
-    d.classList.toggle('active', i === idx));
-
-  // Scale factor: each panel is 100vw wide but each scroll step is 100vh tall.
-  // Multiplying by this ratio converts scroll-pixels into translate-pixels.
-  const ratio = window.innerWidth / window.innerHeight;
-
-  // Pro track — panels 0-2
-  const proScrollMax = (PRO_COUNT - 1) * vh;
-  const proScroll    = Math.min(Math.max(y, 0), proScrollMax);
-  proTrack.style.transform = `translateX(${-(proScroll * ratio)}px)`;
-
-  // Play track — panels 6-8, starts at scroll position 6*vh
-  const playStart     = (PRO_COUNT + PERSONAL_COUNT) * vh;
-  const playScrollMax = (PLAY_COUNT - 1) * vh;
-  const playScroll    = Math.min(Math.max(y - playStart, 0), playScrollMax);
-  playTrack.style.transform = `translateX(${-(playScroll * ratio)}px)`;
-
-  // Trigger reveal on panel enter
-  if (idx !== currentIdx) {
-    currentIdx = idx;
-    triggerReveal(idx);
-  }
-}
-
-window.addEventListener('scroll', doUpdate, { passive: true });
-
-function scrollToPanel(idx) {
-  window.scrollTo({ top: idx * VH(), behavior: 'smooth' });
-}
-
-/* ── Nav dots ───────────────────────────────────────────────────── */
-const navDotsEl = document.getElementById('nav-dots');
-const navGroups = [
-  { cls: 'pro',      indices: [0,1,2]   },
-  { cls: 'personal', indices: [3,4,5]   },
-  { cls: 'play',     indices: [6,7,8]   },
-  { cls: 'contact',  indices: [9]       },
-];
-navGroups.forEach((g, gi) => {
-  const grp = document.createElement('div');
-  grp.className = 'nav-group';
-  g.indices.forEach(i => {
-    const d = document.createElement('div');
-    d.className = `nav-dot ${g.cls}`;
-    d.dataset.index = i;
-    d.addEventListener('click', () => scrollToPanel(i));
-    grp.appendChild(d);
+const navLinks = [...document.querySelectorAll('.nav-links a')];
+const sectionObserver = new IntersectionObserver(entries => {
+  entries.forEach(entry => {
+    if (!entry.isIntersecting) return;
+    navLinks.forEach(a => a.classList.toggle('active', a.getAttribute('href') === '#' + entry.target.id));
   });
-  navDotsEl.appendChild(grp);
-  if (gi < navGroups.length - 1) {
-    const sep = document.createElement('div');
-    sep.className = 'nav-sep';
-    navDotsEl.appendChild(sep);
-  }
+}, { rootMargin: '-45% 0px -50% 0px' });
+navLinks.forEach(a => {
+  const section = document.querySelector(a.getAttribute('href'));
+  if (section) sectionObserver.observe(section);
 });
 
-/* Keyboard navigation */
-document.addEventListener('keydown', e => {
-  if (e.target.tagName === 'INPUT') return;
-  if (e.key === 'ArrowRight' || e.key === 'ArrowDown') {
-    if (currentIdx < TOTAL - 1) scrollToPanel(currentIdx + 1);
-  }
-  if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') {
-    if (currentIdx > 0) scrollToPanel(currentIdx - 1);
-  }
-});
-
-/* ── Reveal ─────────────────────────────────────────────────────── */
-// Panel order: 0(landing) 1(about) 2(skills)
-//              3(philanthropy) 4(photography) 5(events)
-//              6(travel) 7(trivia) 8(terminal) 9(contact)
-const allPanels = document.querySelectorAll('.panel, .v-panel');
-const revealed  = new Set();
-
-function triggerReveal(idx) {
-  if (revealed.has(idx)) return;
-  revealed.add(idx);
-  const panel = allPanels[idx];
-  if (!panel) return;
-  panel.querySelectorAll('.reveal').forEach(el => el.classList.add('on'));
-  panel.querySelectorAll('.skill-card').forEach(el => el.classList.add('on'));
+/* ── Reveal on scroll ───────────────────────────────────────────── */
+const revealEls = document.querySelectorAll('.reveal');
+if (reduceMotion || !('IntersectionObserver' in window)) {
+  revealEls.forEach(el => el.classList.add('on'));
+} else {
+  const revealObserver = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (!entry.isIntersecting) return;
+      entry.target.classList.add('on');
+      revealObserver.unobserve(entry.target);
+    });
+  }, { rootMargin: '0px 0px -8% 0px' });
+  revealEls.forEach(el => revealObserver.observe(el));
 }
-triggerReveal(0);
 
-/* ── Custom cursor ──────────────────────────────────────────────── */
-const dot  = document.getElementById('cursor-dot');
-const ring = document.getElementById('cursor-ring');
-let mx = 0, my = 0, rx = 0, ry = 0;
-
-document.addEventListener('mousemove', e => { mx = e.clientX; my = e.clientY; });
-(function animCursor() {
-  dot.style.left  = mx + 'px'; dot.style.top  = my + 'px';
-  rx += (mx - rx) * 0.12;     ry += (my - ry) * 0.12;
-  ring.style.left = rx + 'px'; ring.style.top  = ry + 'px';
-  requestAnimationFrame(animCursor);
-})();
-
-function addHover(sel) {
-  document.querySelectorAll(sel).forEach(el => {
-    el.addEventListener('mouseenter', () => document.body.classList.add('ch'));
-    el.addEventListener('mouseleave', () => document.body.classList.remove('ch'));
+/* ── Hero name — per-character animation ────────────────────────── */
+const nameEl = document.getElementById('hero-name');
+if (nameEl && !reduceMotion) {
+  const text = nameEl.textContent;
+  nameEl.setAttribute('aria-label', text);
+  nameEl.textContent = '';
+  text.split('').forEach((c, i) => {
+    const s = document.createElement('span');
+    s.className = 'lch';
+    s.setAttribute('aria-hidden', 'true');
+    s.textContent = c === ' ' ? ' ' : c;
+    s.style.animationDelay = `${0.04 + i * 0.045}s`;
+    nameEl.appendChild(s);
   });
 }
 
-/* ── Landing name — per-character animation ─────────────────────── */
-const nameEl = document.getElementById('landing-name');
-'Sharlena Luyen'.split('').forEach((c, i) => {
-  const s = document.createElement('span');
-  s.className = 'lch';
-  s.textContent = c === ' ' ? '\u00A0' : c;
-  s.style.animationDelay = `${0.04 + i * 0.06}s`;
-  nameEl.appendChild(s);
-});
+/* ── Copy rag: make each block's last line ≈ 75% full ───────────────
+   For every multi-line block of copy, try widths from 100% down to 65%
+   of its column and keep the one whose last line lands closest to 75%
+   of the line width, with small penalties for each line it adds and for
+   narrowing the block. Re-runs
+   once fonts load and on resize. */
+const FIT_SELECTOR = [
+  '.hero-lead', '.section-sub', '.contact-sub', '.card-body', '.card-list li',
+  '.card-note', '.role-body', '.role-list li', '.mini p', '.edu-awards li',
+].join(',');
+const FIT_TARGET = 0.75;
 
-/* Landing parallax on mouse move */
-const lInner = document.querySelector('.landing-inner');
-document.addEventListener('mousemove', e => {
-  if (currentIdx !== 0) return;
-  const x = (e.clientX / window.innerWidth  - 0.5) * 10;
-  const y = (e.clientY / window.innerHeight - 0.5) * 6;
-  lInner.style.transform = `translate(${x * 0.22}px, ${y * 0.22}px)`;
-});
-
-/* ── Image banner — philanthropy page ──────────────────────────── */
-// Add your image URLs or local paths here. They loop seamlessly.
-const bannerImages = [
-  'assets/img/casa.jpg',
-  'assets/img/cozmos.jpg',
-  'assets/img/capstone.jpg',
-  'assets/img/menkids.jpg'
-];
-
-const bannerInner = document.getElementById('banner-inner');
-if (bannerInner) {
-  // Double the list for a seamless CSS loop
-  const doubled = [...bannerImages, ...bannerImages];
-  doubled.forEach(src => {
-    const item = document.createElement('div');
-    item.className = 'banner-img';
-    const img = document.createElement('img');
-    img.src = src;
-    img.alt = '';
-    item.appendChild(img);
-    bannerInner.appendChild(item);
-  });
+function measureLines(el, contentLeft) {
+  const range = document.createRange();
+  range.selectNodeContents(el);
+  const rects = [...range.getClientRects()].filter(r => r.width > 0);
+  if (!rects.length) return null;
+  const lineH = parseFloat(getComputedStyle(el).lineHeight) || 20;
+  const bottoms = [];
+  rects.forEach(r => { if (!bottoms.some(b => Math.abs(b - r.bottom) < lineH / 2)) bottoms.push(r.bottom); });
+  const lastBottom = Math.max(...bottoms);
+  const lastRight = Math.max(...rects.filter(r => r.bottom > lastBottom - lineH / 2).map(r => r.right));
+  return { lines: bottoms.length, lastWidth: lastRight - contentLeft };
 }
 
-/* ── Events ─────────────────────────────────────────────────────── */
-/*{ year:'201X', title:'XX',         tag:'Professional'  },*/
-const eventsData = [
-  { year:'2026', title:'Sworn in as a CASA in Orange County',                                                                                       tag:'Advocacy' },
-  { year:'2026', title:'Increased accessibility to AI agents & services for small businesses and non-profits',                                   tag:'Civic'   },
-  { year:'2025', title:'Hired as Backend Software Engineer at Hashicorp, an IBM company',                                                        tag:'Professional' },
-  { year:'2025', title:'Began community outreach & support for women & non-binary individuals',                                                  tag:'Civic' },
-  { year:'2023', title:'Fundraised $30k for Food for Lane County by coordinating Paella Fest',                                                   tag:'Civic'      },
-  { year:'2022', title:'Received $20k grant for volunteering efforts from Last Mile Education Fund',                                             tag:'Award'  },
-  { year:'2022', title:'Hired as Software Consultant at Stride Consulting',                                                                      tag:'Professional'  },
-  { year:'2020', title:'Began fostering cats & dogs for Northwest Animal Companions in Portland, Oregon',                                        tag:'Hobby'  },
-  { year:'2020', title:'Sworn onto Citizen Review Board to serve in Multnomah County',                                                           tag:'Advocacy'  },
-  { year:'2020', title:'Sworn in as a CASA in Multnomah County',                                                                                    tag:'Advocacy'  },
-  { year:'2020', title:'Hired as Software Engineer I at Optum',                                                                                  tag:'Professional'  },
-  { year:'2019', title:'Awarded Karena Dokken Award for mentorship by Oregon State College of Engineering',                                      tag:'Award'   },
-  { year:'2019', title:'Sworn in as a CASA in Benton County',                                                                                       tag:'Advocacy'  },
-  { year:'2019', title:'Received $100k Learning Innovation Grant to conduct experiential research in teaching Computer Science to K-12',         tag:'Civic'  },
-  { year:'2018', title:'Advocated, fundraised, & initiated university scholarship program for the Grace Hopper Conference',                      tag:'Civic'  },
-  { year:'2017', title:'Certified for Open Water Scuba Diving through PADI',                                                                     tag:'Hobby'  },
-  { year:'2017', title:'TEDxTalk: A Story, My Story',                                                                                            tag:'Public Speaking'  },
-];
-const evCountEl = document.getElementById('events-count');
-const evListEl  = document.getElementById('events-list');
-if (evCountEl) evCountEl.textContent = String(eventsData.length).padStart(2,'0');
-if (evListEl) eventsData.forEach(ev => {
-  const row = document.createElement('div');
-  row.className = 'event-row';
-  row.innerHTML = `
-    <span class="event-year">${ev.year}</span>
-    <span class="event-title">${ev.title}</span>
-    <span class="event-tag">${ev.tag}</span>
-  `;
-  evListEl.appendChild(row);
+function fitLastLine(el) {
+  el.style.maxWidth = '';
+  const cs = getComputedStyle(el);
+  const padX = parseFloat(cs.paddingLeft) + parseFloat(cs.paddingRight);
+  const full = el.clientWidth - padX;
+  if (full <= 0) return;
+  const left = () => el.getBoundingClientRect().left + parseFloat(cs.paddingLeft);
+  const base = measureLines(el, left());
+  if (!base || base.lines < 2) return;
+
+  let best = { w: null, score: Infinity };
+  for (let pct = 1; pct >= 0.65; pct -= 0.01) {
+    const w = Math.floor(full * pct);
+    el.style.maxWidth = (w + padX) + 'px';
+    const m = measureLines(el, left());
+    if (!m) continue;
+    const score = Math.abs(m.lastWidth / w - FIT_TARGET)
+      + 0.12 * Math.max(0, m.lines - base.lines)
+      + 0.15 * (1 - pct);
+    if (score < best.score) best = { w, score };
+  }
+  el.style.maxWidth = best.w === null || best.w === full ? '' : (best.w + padX) + 'px';
+}
+
+function fitAllLastLines() {
+  document.querySelectorAll(FIT_SELECTOR).forEach(fitLastLine);
+}
+
+let fitTimer;
+window.addEventListener('resize', () => {
+  clearTimeout(fitTimer);
+  fitTimer = setTimeout(fitAllLastLines, 150);
+});
+(document.fonts ? document.fonts.ready : Promise.resolve()).then(fitAllLastLines);
+
+/* ── Project card buttons ───────────────────────────────────────── */
+// "Ask Clippy" opens the chat widget that js/clippy-agent.js draws in the corner.
+document.querySelectorAll('.try-clippy').forEach(btn => {
+  btn.addEventListener('click', () => {
+    const clippy = document.querySelector('.sc-own');
+    if (clippy) clippy.click();
+  });
+});
+
+document.querySelectorAll('.copy-btn').forEach(btn => {
+  btn.addEventListener('click', async () => {
+    const label = btn.textContent;
+    try {
+      await navigator.clipboard.writeText(btn.dataset.copy);
+      btn.textContent = 'Copied ✓';
+    } catch {
+      btn.textContent = btn.dataset.copy;
+    }
+    setTimeout(() => { btn.textContent = label; }, 2200);
+  });
 });
 
 /* ── Photography grid ───────────────────────────────────────────── */
-// Use local paths, full URLs, or links from anywhere (Cloudinary, Google Photos, etc.)
-// Just paste the image URL as the src. 6 slots total.
+// Local paths or full URLs. 6 slots.
 const photoUrls = [
   'https://live.staticflickr.com/933/43011836814_56b118abed_k.jpg',
   'https://live.staticflickr.com/65535/51972900612_18438db3cf_k.jpg',
   'https://live.staticflickr.com/65535/51973992563_74b9420228_k.jpg',
   'https://live.staticflickr.com/856/41919257710_0852c8795f_k.jpg',
   'https://live.staticflickr.com/65535/51973981653_ce13787e72_k.jpg',
-  'https://live.staticflickr.com/1786/42336567544_52d423d77f_k.jpg'
+  'https://live.staticflickr.com/1786/42336567544_52d423d77f_k.jpg',
 ];
 
 const photoGridEl = document.getElementById('photo-grid');
 if (photoGridEl) {
-  photoUrls.forEach((src, i) => {
+  photoUrls.forEach(src => {
     const cell = document.createElement('div');
     cell.className = 'photo-cell';
-    cell.innerHTML = `
-      <div class="photo-cell-inner" style="background-image:url('${src}');background-size:cover;background-position:center;"></div>
-      <div class="photo-overlay"></div>
-      <span class="photo-num">0${i + 1}</span>
-    `;
+    cell.style.backgroundImage = `url('${src}')`;
     photoGridEl.appendChild(cell);
   });
 }
@@ -324,127 +207,92 @@ const travelData = [
 ];
 
 /* LAT_MAX/LAT_MIN chosen so (360 / (LAT_MAX - LAT_MIN)) ≈ SVG_W/SVG_H (3.4:1),
-   eliminating horizontal stretch. Clips Antarctica and Arctic but keeps all travel spots. */
+   so the map isn't stretched. Clips the poles but keeps every travel spot. */
 const LAT_MAX = 65, LAT_MIN = -40;
-function project(lat, lon, W, H) {
-  const x = ((lon + 180) / 360) * W;
-  const y = ((LAT_MAX - lat) / (LAT_MAX - LAT_MIN)) * H;
-  return { x, y };
+const SVG_W = 900, SVG_H = 265;
+const SVG_NS = 'http://www.w3.org/2000/svg';
+function project(lat, lon) {
+  return {
+    x: ((lon + 180) / 360) * SVG_W,
+    y: ((LAT_MAX - lat) / (LAT_MAX - LAT_MIN)) * SVG_H,
+  };
 }
 
 const svgEl     = document.getElementById('world-svg');
 const mapTTEl   = document.getElementById('map-tt');
 const mapWrapEl = document.getElementById('map-wrap');
-const SVG_W = 900, SVG_H = 265;
 
 if (svgEl) {
-  document.head.insertAdjacentHTML('beforeend',
-    '<style>@keyframes mpulse{0%{r:4;opacity:0.5}100%{r:22;opacity:0}}</style>');
-
-  // ── World land outlines ──────────────────────────────────────────
   function geoFeatureToPath(feature) {
     const geom = feature.geometry;
     if (!geom) return '';
-    function ringToD(ring) {
-      let d = '';
-      ring.forEach(([lon, lat], i) => {
-        const { x, y } = project(Math.max(-85, Math.min(85, lat)), lon, SVG_W, SVG_H);
-        d += (i === 0 ? 'M' : 'L') + x.toFixed(1) + ',' + y.toFixed(1);
-      });
-      return d + 'Z';
-    }
+    const ringToD = ring => ring.map(([lon, lat], i) => {
+      const { x, y } = project(Math.max(-85, Math.min(85, lat)), lon);
+      return (i === 0 ? 'M' : 'L') + x.toFixed(1) + ',' + y.toFixed(1);
+    }).join('') + 'Z';
     if (geom.type === 'Polygon') return geom.coordinates.map(ringToD).join(' ');
     if (geom.type === 'MultiPolygon') return geom.coordinates.flatMap(p => p.map(ringToD)).join(' ');
     return '';
   }
 
-  fetch('https://cdn.jsdelivr.net/npm/world-atlas@2/countries-110m.json')
-    .then(r => r.json())
-    .then(world => {
-      topojson.feature(world, world.objects.countries).features.forEach(feature => {
-        const d = geoFeatureToPath(feature);
-        if (!d) return;
-        const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
-        path.setAttribute('d', d);
-        path.setAttribute('fill', 'rgba(124,130,232,0.07)');
-        path.setAttribute('stroke', 'rgba(124,130,232,0.18)');
-        path.setAttribute('stroke-width', '0.3');
-        svgEl.insertBefore(path, svgEl.firstChild);
-      });
-    })
-    .catch(() => {});
-
-  for (let lon = -180; lon <= 180; lon += 30) {
-    const { x } = project(0, lon, SVG_W, SVG_H);
-    const l = document.createElementNS('http://www.w3.org/2000/svg','line');
-    l.setAttribute('x1',x); l.setAttribute('y1',0);
-    l.setAttribute('x2',x); l.setAttribute('y2',SVG_H);
-    l.setAttribute('stroke','rgba(144,200,248,0.05)');
-    l.setAttribute('stroke-width','0.5');
-    svgEl.appendChild(l);
-  }
-  for (let lat = -60; lat <= 80; lat += 30) {
-    const { y } = project(lat, 0, SVG_W, SVG_H);
-    const l = document.createElementNS('http://www.w3.org/2000/svg','line');
-    l.setAttribute('x1',0); l.setAttribute('y1',y);
-    l.setAttribute('x2',SVG_W); l.setAttribute('y2',y);
-    l.setAttribute('stroke','rgba(144,200,248,0.05)');
-    l.setAttribute('stroke-width','0.5');
-    svgEl.appendChild(l);
+  if (window.topojson) {
+    fetch('https://cdn.jsdelivr.net/npm/world-atlas@2.0.2/countries-110m.json')
+      .then(r => r.json())
+      .then(world => {
+        topojson.feature(world, world.objects.countries).features.forEach(feature => {
+          const d = geoFeatureToPath(feature);
+          if (!d) return;
+          const path = document.createElementNS(SVG_NS, 'path');
+          path.setAttribute('d', d);
+          path.setAttribute('fill', 'rgba(124,130,232,0.08)');
+          path.setAttribute('stroke', 'rgba(124,130,232,0.22)');
+          path.setAttribute('stroke-width', '0.3');
+          svgEl.insertBefore(path, svgEl.firstChild);
+        });
+      })
+      .catch(() => {});
   }
 
   travelData.forEach(([name, lat, lon]) => {
-    const { x, y } = project(lat, lon, SVG_W, SVG_H);
+    const { x, y } = project(lat, lon);
 
-    const pulse = document.createElementNS('http://www.w3.org/2000/svg','circle');
-    pulse.setAttribute('cx', x); pulse.setAttribute('cy', y);
-    pulse.setAttribute('r', '4'); pulse.setAttribute('fill', 'none');
-    pulse.setAttribute('stroke', 'rgba(144,200,248,0.3)');
-    pulse.setAttribute('stroke-width', '1');
-    pulse.style.animation = 'mpulse 2.4s ease-out infinite';
-    pulse.style.transformOrigin = `${x}px ${y}px`;
-    svgEl.appendChild(pulse);
+    if (!reduceMotion) {
+      const pulse = document.createElementNS(SVG_NS, 'circle');
+      pulse.setAttribute('cx', x); pulse.setAttribute('cy', y);
+      pulse.setAttribute('r', '4'); pulse.setAttribute('fill', 'none');
+      pulse.setAttribute('stroke', 'rgba(144,200,248,0.3)');
+      pulse.setAttribute('stroke-width', '1');
+      pulse.style.animation = 'mpulse 2.4s ease-out infinite';
+      svgEl.appendChild(pulse);
+    }
 
-    const g = document.createElementNS('http://www.w3.org/2000/svg','g');
-    g.style.cursor = 'pointer';
-    const c = document.createElementNS('http://www.w3.org/2000/svg','circle');
+    const c = document.createElementNS(SVG_NS, 'circle');
     c.setAttribute('cx', x); c.setAttribute('cy', y);
-    c.setAttribute('r', '3.5');
-    c.setAttribute('fill', 'rgba(144,200,248,0.75)');
-    c.style.transition = 'r 0.2s, fill 0.2s';
-    g.appendChild(c); svgEl.appendChild(g);
+    c.setAttribute('r', '4');
+    c.setAttribute('fill', 'rgba(144,200,248,0.8)');
+    c.style.cursor = 'pointer';
+    const title = document.createElementNS(SVG_NS, 'title');
+    title.textContent = name;
+    c.appendChild(title);
+    svgEl.appendChild(c);
 
-    g.addEventListener('mouseenter', () => {
-      document.body.classList.add('ch');
+    c.addEventListener('mouseenter', () => {
       mapTTEl.textContent = name; mapTTEl.classList.add('show');
-      c.setAttribute('r','6'); c.setAttribute('fill','#90c8f8');
+      c.setAttribute('r', '6.5'); c.setAttribute('fill', '#90c8f8');
     });
-    g.addEventListener('mousemove', e => {
+    c.addEventListener('mousemove', e => {
       const r = mapWrapEl.getBoundingClientRect();
-      mapTTEl.style.left = (e.clientX - r.left + 14) + 'px';
-      mapTTEl.style.top  = (e.clientY - r.top  - 12) + 'px';
+      mapTTEl.style.left = (e.clientX - r.left + 12) + 'px';
+      mapTTEl.style.top  = (e.clientY - r.top  - 28) + 'px';
     });
-    g.addEventListener('mouseleave', () => {
-      document.body.classList.remove('ch');
+    c.addEventListener('mouseleave', () => {
       mapTTEl.classList.remove('show');
-      c.setAttribute('r','3.5');
-      c.setAttribute('fill','rgba(144,200,248,0.75)');
+      c.setAttribute('r', '4'); c.setAttribute('fill', 'rgba(144,200,248,0.8)');
     });
   });
 
   const countLbl = document.getElementById('travel-count-lbl');
-  if (countLbl) {
-    countLbl.innerHTML =
-      `${travelData.length} countries &amp; territories<br>` +
-      `<span style="font-size:9px;opacity:0.5;">and counting</span>`;
-  }
-
-  const chipsEl = document.getElementById('travel-chips');
-  if (chipsEl) travelData.forEach(([name]) => {
-    const chip = document.createElement('span');
-    chip.className = 't-chip'; chip.textContent = name;
-    chipsEl.appendChild(chip);
-  });
+  if (countLbl) countLbl.textContent = `${travelData.length} countries & territories, and counting.`;
 }
 
 /* ════════════════════════════════════════════════════════════════
@@ -452,8 +300,8 @@ if (svgEl) {
 ════════════════════════════════════════════════════════════════ */
 const triviaQuestions = [
   {
-    q: 'What does Sharlena focus on creating content around?',
-    choices: ['Stories, travel & behind-the-scenes moments', 'Stock market analysis', 'Product unboxings', 'Tech tutorials only'],
+    q: 'What did Sharlena implement at HashiCorp?',
+    choices: ['SCIM provisioning with Okta & Azure', 'A billing system', 'A mobile app', 'A Kubernetes operator'],
     correct: 0,
   },
   {
@@ -462,13 +310,8 @@ const triviaQuestions = [
     correct: 0,
   },
   {
-    q: 'True civic engagement means showing up consistently, even without glory. Which best describes that commitment?',
-    choices: [
-      'Attending a single town hall meeting',
-      'Sharing political opinions on social media',
-      '8+ years of volunteer advocacy for foster youth in the court system',
-      'Voting once in a presidential election',
-    ],
+    q: 'How long has Sharlena volunteered as a CASA for kids in foster care?',
+    choices: ['One summer', '2 years', '8+ years', 'She hasn\'t yet'],
     correct: 2,
   },
   {
@@ -482,43 +325,28 @@ const triviaQuestions = [
     correct: 0,
   },
   {
-    q: "Which of the following is NOT one of Sharlena's hobbies in 2026?",
+    q: "Which of these is NOT one of Sharlena's hobbies in 2026?",
     choices: ['Painting', 'Gymnastics', 'Training for a marathon', 'Pickleball'],
     correct: 0,
   },
   {
-    q: 'About how much has Sharlena fundraised by cooking paellas for 10+ people at a time?',
+    q: 'About how much has Sharlena fundraised by cooking paella for 10+ people at a time?',
     choices: ['$5k', '$15k', '$30k+', '$100k'],
     correct: 2,
   },
   {
-    q: 'Sharlena has visited 35+ countries. Which of these is on her travel map?',
+    q: 'Which of these is on her travel map?',
     choices: ['Tahiti', 'Iceland', 'Morocco', 'New Zealand'],
     correct: 0,
   },
   {
-    q: "Which of the following are NOT career paths that Sharlena has considered pursuing at some point?",
-    choices: [
-      'Event planner',
-      'Teacher or professor',
-      'Dog trainer',
-      'Acrobatic performance art',
-    ],
+    q: 'Which of these is NOT a career Sharlena has considered?',
+    choices: ['Event planner', 'Teacher or professor', 'Dog trainer', 'Acrobatic performance art'],
     correct: 3,
   },
 ];
 
-function getShuffled(q) {
-  const correctText = q.choices[q.correct];
-  const shuffled = [...q.choices].sort(() => Math.random() - 0.5);
-  return { choices: shuffled, correct: shuffled.indexOf(correctText) };
-}
-
-let triviaIdx      = 0;
-let triviaScore    = 0;
-let triviaAnswered = false;
-let triviaShuffled = [];
-
+const LETTERS = ['A', 'B', 'C', 'D'];
 const triviaGameEl   = document.getElementById('trivia-game');
 const triviaResultEl = document.getElementById('trivia-result');
 const triviaQNum     = document.getElementById('trivia-q-num');
@@ -529,69 +357,62 @@ const triviaScoreEl  = document.getElementById('trivia-score');
 const triviaMsg      = document.getElementById('trivia-result-msg');
 const triviaSub      = document.getElementById('trivia-result-sub');
 
-const LETTERS = ['A', 'B', 'C', 'D'];
+let triviaIdx = 0, triviaScore = 0, triviaAnswered = false, triviaShuffled = null;
 
-function renderSteps() {
-  if (!triviaSteps) return;
-  triviaSteps.innerHTML = '';
-  triviaQuestions.forEach((_, i) => {
-    const dot = document.createElement('div');
-    dot.className = 'trivia-step' +
-      (i < triviaIdx ? ' done' : i === triviaIdx ? ' current' : '');
-    triviaSteps.appendChild(dot);
-  });
+function shuffle(q) {
+  const correctText = q.choices[q.correct];
+  const choices = [...q.choices];
+  for (let i = choices.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [choices[i], choices[j]] = [choices[j], choices[i]];
+  }
+  return { choices, correct: choices.indexOf(correctText) };
 }
 
 function renderTrivia() {
-  if (!triviaQText) return;
   const raw = triviaQuestions[triviaIdx];
-  triviaShuffled = getShuffled(raw);
-  triviaQNum.innerHTML = `Q ${triviaIdx + 1} <span>/</span> ${triviaQuestions.length}`;
+  triviaShuffled = shuffle(raw);
+  triviaAnswered = false;
+  triviaQNum.textContent = `Q ${triviaIdx + 1} / ${triviaQuestions.length}`;
   triviaQText.textContent = raw.q;
   triviaChoices.innerHTML = '';
-  triviaAnswered = false;
-
   triviaShuffled.choices.forEach((choice, i) => {
     const btn = document.createElement('button');
+    btn.type = 'button';
     btn.className = 'trivia-btn';
-    btn.innerHTML = `
-      <span class="trivia-btn-letter">${LETTERS[i]}</span>
-      <span class="trivia-btn-text">${choice}</span>
-    `;
+    const letter = document.createElement('span');
+    letter.className = 'trivia-btn-letter';
+    letter.textContent = LETTERS[i];
+    const label = document.createElement('span');
+    label.textContent = choice;
+    btn.append(letter, label);
     btn.addEventListener('click', () => handleAnswer(i));
     triviaChoices.appendChild(btn);
   });
-
-  renderSteps();
+  triviaSteps.innerHTML = '';
+  triviaQuestions.forEach((_, i) => {
+    const step = document.createElement('div');
+    step.className = 'trivia-step' + (i < triviaIdx ? ' done' : i === triviaIdx ? ' current' : '');
+    triviaSteps.appendChild(step);
+  });
 }
 
 function handleAnswer(chosen) {
   if (triviaAnswered) return;
   triviaAnswered = true;
   const correct = triviaShuffled.correct;
-
-  document.querySelectorAll('.trivia-btn').forEach((b, i) => {
+  triviaChoices.querySelectorAll('.trivia-btn').forEach((b, i) => {
     b.disabled = true;
     const letter = b.querySelector('.trivia-btn-letter');
-    if (i === correct) {
-      b.classList.add('correct');
-      letter.textContent = '✓';
-    } else if (i === chosen && i !== correct) {
-      b.classList.add('wrong');
-      letter.textContent = '✗';
-    }
+    if (i === correct) { b.classList.add('correct'); letter.textContent = '✓'; }
+    else if (i === chosen) { b.classList.add('wrong'); letter.textContent = '✗'; }
   });
-
   if (chosen === correct) triviaScore++;
-
   setTimeout(() => {
     triviaIdx++;
-    if (triviaIdx < triviaQuestions.length) {
-      renderTrivia();
-    } else {
-      showTriviaResult();
-    }
-  }, 1100);
+    if (triviaIdx < triviaQuestions.length) renderTrivia();
+    else showTriviaResult();
+  }, 1000);
 }
 
 function showTriviaResult() {
@@ -603,14 +424,14 @@ function showTriviaResult() {
     triviaMsg.textContent = 'You really know her.';
     triviaSub.textContent = 'Full marks. You might actually be Sharlena. Or her cat.';
   } else if (pct >= 0.7) {
-    triviaMsg.textContent = 'Pretty solid. Keep reading.';
+    triviaMsg.textContent = 'Pretty solid.';
     triviaSub.textContent = 'You clearly paid attention. She appreciates that.';
   } else if (pct >= 0.4) {
-    triviaMsg.textContent = 'Room to grow. Book a chat with her.';
-    triviaSub.textContent = 'A decent start, but she is disappointed, for sure.';
+    triviaMsg.textContent = 'Room to grow.';
+    triviaSub.textContent = 'Best fix: book a chat with her.';
   } else {
-    triviaMsg.textContent = 'Fresh start, then? Book a chat with her.';
-    triviaSub.textContent = "Scroll back through. There's a lot of good stuff here.";
+    triviaMsg.textContent = 'Fresh start, then?';
+    triviaSub.textContent = "Scroll back up. There's a lot of good stuff here.";
   }
 }
 
@@ -620,9 +441,11 @@ function restartTrivia() {
   triviaResultEl.classList.remove('show');
   renderTrivia();
 }
-window.restartTrivia = restartTrivia;
 
-if (triviaQText) renderTrivia();
+if (triviaQText) {
+  renderTrivia();
+  document.getElementById('trivia-restart').addEventListener('click', restartTrivia);
+}
 
 /* ════════════════════════════════════════════════════════════════
    TERMINAL
@@ -633,73 +456,77 @@ const termInput = document.getElementById('terminal-input');
 const COMMANDS = {
   help: () => [
     { cls: 'muted',  t: 'Available commands:' },
-    { cls: 'accent', t: '  about    → who is Sharlena?' },
-    { cls: 'accent', t: '  skills   → what does she do?' },
-    { cls: 'accent', t: '  cats     → the important stuff' },
-    { cls: 'accent', t: '  travel   → where has she been?' },
-    { cls: 'accent', t: '  hobbies  → life outside the terminal' },
-    { cls: 'accent', t: '  bake     → yes, she bakes' },
-    { cls: 'accent', t: '  hire     → let\'s talk' },
-    { cls: 'accent', t: '  clear    → clear screen' },
+    { cls: 'accent', t: '  about     who is Sharlena?' },
+    { cls: 'accent', t: '  projects  things she has built' },
+    { cls: 'accent', t: '  skills    the toolbox' },
+    { cls: 'accent', t: '  resume    open her resume' },
+    { cls: 'accent', t: '  cats      the important stuff' },
+    { cls: 'accent', t: '  travel    where has she been?' },
+    { cls: 'accent', t: '  hobbies   life outside the terminal' },
+    { cls: 'accent', t: '  hire      let\'s talk' },
+    { cls: 'accent', t: '  clear     clear screen' },
     { t: '' },
   ],
   about: () => [
-    { t: '┌──────────────────────────────────────────┐' },
-    { t: '│  Sharlena Luyen                          │' },
-    { t: '│  Creator & Experience Curator            │' },
-    { t: '│  CASA Volunteer                          │' },
-    { t: '│                                          │' },
-    { t: '│  Storytelling, travel & partnerships     │' },
-    { t: '│  Also: backend engineer (Go & Rails)     │' },
-    { t: '│  Also: runner, cat mom, traveler         │' },
-    { t: '└──────────────────────────────────────────┘' },
+    { t: 'Sharlena Luyen' },
+    { t: 'Backend & AI engineer. 5+ years in Go, Rails, TypeScript, & Java.' },
+    { t: 'Previously: HashiCorp, Stride Consulting, Optum.' },
+    { t: 'Now: building AI agents for small businesses & nonprofits.' },
+    { cls: 'muted', t: 'Also: 8+ year CASA volunteer, runner, cat mom, traveler.' },
+    { t: '' },
+  ],
+  projects: () => [
+    { cls: 'success', t: '✓  Google Workspace MCP servers (Gmail, Calendar, Drive, Docs/Sheets/Slides)' },
+    { cls: 'success', t: '✓  Leads dashboard: Gmail-synced outreach, Claude-drafted follow-ups' },
+    { cls: 'success', t: '✓  Dodgers & LAFC win alerts (Workers + self-hosted ntfy)' },
+    { cls: 'success', t: '✓  AI agents for SMBs & nonprofits (human-in-the-loop, self-updating evals)' },
+    { cls: 'success', t: '✓  SCIM provisioning for HashiCorp Cloud Platform (Go)' },
+    { cls: 'success', t: '✓  Remote MCP server about her candidacy (live)' },
+    { cls: 'success', t: '✓  Clippy RAG agent: click the paperclip, bottom-right' },
+    { cls: 'muted',   t: '△  Momo, a marketing agent (in progress)' },
     { t: '' },
   ],
   skills: () => [
-    { cls: 'success', t: '✓  Storytelling & content creation' },
-    { cls: 'success', t: '✓  Travel & experience curation' },
-    { cls: 'success', t: '✓  Brand partnerships & collabs' },
-    { cls: 'success', t: '✓  Photography & behind-the-scenes content' },
-    { cls: 'success', t: '✓  Backend engineering (Go & Ruby on Rails)' },
-    { cls: 'muted',   t: '△  Currently growing: video & long-form content' },
+    { t: 'backend   Go, Ruby on Rails, Java, Python, Node' },
+    { t: 'frontend  TypeScript, React' },
+    { t: 'ai        LLMs, RAG, MCP, tool calling, evals' },
+    { t: 'data      Postgres, MySQL, River Queue' },
+    { t: 'infra     AWS, Azure, GCP, Docker, Kubernetes, Terraform' },
     { t: '' },
   ],
+  resume: () => {
+    window.open('https://bit.ly/sharresume', '_blank', 'noopener');
+    return [{ cls: 'success', t: '→  Opening bit.ly/sharresume' }, { t: '' }];
+  },
   cats: () => [
-    { cls: 'rose',  t: '🐈  Bumbum — chief chaos officer' },
-    { cls: 'rose',  t: '🐈  Dodo   — head of nap strategy' },
+    { cls: 'rose',  t: '🐈  Bumbum: chief chaos officer' },
+    { cls: 'rose',  t: '🐈  Dodo: head of nap strategy' },
     { cls: 'muted', t: '    Both unavailable for comment.' },
     { t: '' },
   ],
   travel: () => [
-    { t: 'EUROPE: UK, Scotland, Ireland, Isle of Man,' },
-    { t: 'France, Belgium, Netherlands, Germany, Spain, Italy, Switzerland.' },
-    { t: 'CARIBBEAN: Bahamas, Turks & Caicos, Puerto Rico,' },
-    { t: 'Anguilla, St. Martin, St. Kitts, Antigua, St. Lucia, Barbados.' },
-    { t: 'AMERICAS: Mexico, Guatemala, Belize, Costa Rica, Peru, Canada.' },
-    { t: 'ASIA: Japan, South Korea, Taiwan, Vietnam, Philippines, India, Indonesia.' },
-    { t: 'PACIFIC: Australia, Fiji, Tonga, French Polynesia.' },
-    { cls: 'muted', t: `That's ${38} countries. Next target: New Zealand.` },
+    { t: 'EUROPE: UK, Scotland, Ireland, Isle of Man, France, Belgium,' },
+    { t: '        Netherlands, Germany, Spain, Italy, Switzerland' },
+    { t: 'CARIBBEAN: Bahamas, Turks & Caicos, Puerto Rico, Anguilla,' },
+    { t: '        St. Martin, St. Kitts, Antigua, St. Lucia, Barbados' },
+    { t: 'AMERICAS: Mexico, Guatemala, Belize, Costa Rica, Peru, Canada' },
+    { t: 'ASIA: Japan, South Korea, Taiwan, Vietnam, Philippines, India, Indonesia' },
+    { t: 'PACIFIC: Australia, Fiji, Tonga, French Polynesia' },
+    { cls: 'muted', t: `That's ${travelData.length}. Next target: New Zealand.` },
     { t: '' },
   ],
   hobbies: () => [
-    { t: 'Photography  — candid moments, real ones' },
-    { t: 'Travel       — always planning the next trip' },
-    { t: 'Gymnastics   — currently perfecting back handsprings' },
-    { t: 'Running      — just trying to finish (slowly)' },
-    { t: 'Plants       — the desk vine is thriving' },
-    { t: 'Cats         — see: cats' },
-    { t: '' },
-  ],
-  bake: () => [
-    { cls: 'accent', t: 'Specialty: ice cream cakes.' },
-    { cls: 'muted',  t: 'Yes, from scratch. Yes, they are good.' },
-    { cls: 'muted',  t: 'No, they are not pretty.' },
+    { t: 'Photography  candid moments, real ones' },
+    { t: 'Travel       always planning the next trip' },
+    { t: 'Gymnastics   perfecting back handsprings' },
+    { t: 'Running      training for a marathon (slowly)' },
+    { t: 'Baking       ice cream cakes. Good, not pretty.' },
     { t: '' },
   ],
   hire: () => [
     { cls: 'success', t: '→  calendly.com/sharlena/personal-meeting' },
-    { cls: 'muted',   t: '   Or scroll to the end of this page.' },
-    { cls: 'muted',   t: "   She replies fast. Except when she doesn't." },
+    { cls: 'success', t: '→  linkedin.com/in/sharlenaluyen' },
+    { cls: 'muted',   t: '   She replies fast.' },
     { t: '' },
   ],
 };
@@ -717,9 +544,11 @@ function termPrint(lines) {
 function termPrintInput(val) {
   const div = document.createElement('div');
   div.className = 't-line';
-  div.innerHTML = `<span class="t-prompt">sharlena@portfolio:~$ </span>${val}`;
+  const prompt = document.createElement('span');
+  prompt.className = 't-prompt';
+  prompt.textContent = '$ ';
+  div.append(prompt, document.createTextNode(val));
   termBody.appendChild(div);
-  termBody.scrollTop = termBody.scrollHeight;
 }
 
 if (termInput) {
@@ -741,17 +570,6 @@ if (termInput) {
       return;
     }
     const cmd = COMMANDS[val];
-    if (cmd) termPrint(cmd());
-    else termPrint([{ cls: 'muted', t: `command not found: ${val} — try "help"` }, { t: '' }]);
+    termPrint(cmd ? cmd() : [{ cls: 'muted', t: `command not found: ${val}. Try "help".` }, { t: '' }]);
   });
 }
-
-/* ── Hover cursor states ────────────────────────────────────────── */
-addHover([
-  'a', 'button', '.nav-dot', '.phil-card', '.skill-card',
-  '.event-row', '.tag', '.t-chip', '.trivia-btn',
-  '.banner-img', '.photo-cell', '.trivia-restart-btn',
-].join(', '));
-
-/* ── Initial update ─────────────────────────────────────────────── */
-doUpdate();

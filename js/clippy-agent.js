@@ -33,9 +33,27 @@
     ".sc-send:disabled{opacity:.5;cursor:default}",
     ".sc-own{position:fixed;right:24px;bottom:24px;width:46px;height:60px;cursor:pointer;z-index:900;border:0;background:none;padding:0}",
     ".sc-own .o{position:absolute;inset:0;background:linear-gradient(145deg,#D8D8E2,#B8B8C8);border:4px solid #9898A8;border-radius:24px 24px 9px 9px}",
-    ".sc-own .i{position:absolute;top:17px;left:8px;right:8px;bottom:6px;border:3.5px solid #9898A8;border-radius:15px 15px 5px 5px}",
-    ".sc-own .e{position:absolute;top:8px;width:5px;height:9px;background:#2a2a2a;border-radius:50%}",
+    ".sc-own .i{position:absolute;top:27px;left:8px;right:8px;bottom:6px;border:3.5px solid #9898A8;border-radius:13px 13px 5px 5px}",
+    ".sc-own .e{position:absolute;top:7px;width:5px;height:9px;background:#2a2a2a;border-radius:50%;animation:sc-blink 4.5s infinite}",
     ".sc-own .e.l{left:14px}.sc-own .e.r{right:14px}",
+    // Smile: the bottom half of a ring, with rosy cheeks either side.
+    ".sc-own .m{position:absolute;top:18px;left:50%;width:13px;height:6px;margin-left:-6.5px;border:2.5px solid #2a2a2a;border-top:0;border-radius:0 0 10px 10px;transition:height .2s,width .2s,margin-left .2s}",
+    ".sc-own .c{position:absolute;top:17px;width:6px;height:4px;border-radius:50%;background:#f4a0b8;opacity:.75}",
+    ".sc-own .c.l{left:6px}.sc-own .c.r{right:6px}",
+    // Idle bob, blink, and a wiggle + bigger grin on hover.
+    ".sc-own{animation:sc-bob 2.6s ease-in-out infinite;transform-origin:50% 100%}",
+    ".sc-own:hover,.sc-own:focus-visible{animation:sc-wiggle .6s ease-in-out 2}",
+    ".sc-own:hover .m,.sc-own:focus-visible .m{height:8px;width:15px;margin-left:-7.5px}",
+    "@keyframes sc-bob{0%,100%{transform:translateY(0)}50%{transform:translateY(-5px)}}",
+    "@keyframes sc-blink{0%,92%,100%{transform:scaleY(1)}95%{transform:scaleY(.1)}}",
+    "@keyframes sc-wiggle{0%,100%{transform:rotate(0)}25%{transform:rotate(-10deg)}75%{transform:rotate(10deg)}}",
+    // Word bubble: sits above Clippy, tail points down at him, bobs in step with him.
+    ".sc-bubble{position:fixed;right:18px;bottom:98px;z-index:900;background:#fff;color:#1a1a1a;border:2.5px solid #1a1a1a;border-radius:14px;box-shadow:3px 3px 0 #1a1a1a;padding:7px 13px;font:600 14px/1.3 'Fredoka','DM Sans',system-ui,sans-serif;white-space:nowrap;cursor:pointer;opacity:0;animation:sc-pop .45s cubic-bezier(.2,1.6,.4,1) .8s forwards,sc-bob 2.6s ease-in-out 1.25s infinite;transition:opacity .2s}",
+    ".sc-bubble::after{content:'';position:absolute;right:24px;bottom:-9px;width:12px;height:12px;background:#fff;border-right:2.5px solid #1a1a1a;border-bottom:2.5px solid #1a1a1a;transform:rotate(45deg)}",
+    ".sc-bubble:hover{background:#F9BD2B}.sc-bubble:hover::after{background:#F9BD2B}",
+    ".sc-bubble.hide{visibility:hidden}",
+    "@keyframes sc-pop{0%{opacity:0;transform:translateY(8px) scale(.7)}100%{opacity:1;transform:none}}",
+    "@media (prefers-reduced-motion:reduce){.sc-own,.sc-own .e,.sc-own:hover{animation:none}.sc-bubble{animation:none;opacity:1}}",
   ].join("");
 
   function el(tag, cls, text) {
@@ -154,13 +172,23 @@
     }
     var own = el("button", "sc-own");
     own.setAttribute("aria-label", "Ask Clippy about Sharlena");
-    ["o", "i", "e l", "e r"].forEach(function (c) { own.appendChild(el("div", c)); });
+    ["o", "i", "e l", "e r", "c l", "c r", "m"].forEach(function (c) { own.appendChild(el("div", c)); });
     own.addEventListener("click", toggle);
     document.body.appendChild(own);
+
+    // Word bubble above Clippy. Clicking it opens the chat too; it hides while the chat is open.
+    var bubble = el("button", "sc-bubble", "Hi! I'm Clippy");
+    bubble.setAttribute("aria-label", "Hi! I'm Clippy. Ask me about Sharlena");
+    bubble.addEventListener("click", toggle);
+    document.body.appendChild(bubble);
+
     // Keep the chat panel on the same side as the Clippy we drew.
     var p = document.querySelector(".sc-panel");
     p.style.left = "auto";
     p.style.right = "24px";
+    new MutationObserver(function () {
+      bubble.classList.toggle("hide", p.classList.contains("open"));
+    }).observe(p, { attributes: true, attributeFilter: ["class"] });
   }
 
   if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", init);
