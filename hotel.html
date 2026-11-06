@@ -344,16 +344,8 @@
   .grid-spec .grid-item:nth-child(6)  { grid-column: 1/6;  grid-row: 4 / span 2; }
   .grid-spec .grid-item:nth-child(7)  { grid-column: 6/13; grid-row: 4 / span 2; }
 
-  /* Photo placeholder backgrounds */
-  .grid-spec .grid-item:nth-child(1)  .photo { background-image: url('assets/img/hotel/interior-natural-light.jpg'); background-size: cover; background-position: center; }
-  .grid-spec .grid-item:nth-child(2)  .photo { background-image: url('assets/img/hotel/exterior-golden-hour.jpg'); background-size: cover; background-position: center; }
-  .grid-spec .grid-item:nth-child(3)  .photo { background-image: url('assets/img/hotel/detail-still-life.jpg'); background-size: cover; background-position: center 20%; }
-  .grid-spec .grid-item:nth-child(4)  .photo { background-image: url('assets/img/hotel/amenity-natural-context.jpg'); background-size: cover; background-position: center; }
-  .grid-spec .grid-item:nth-child(5)  .photo { background-image: url('assets/img/hotel/architecture-facade.jpg'); background-size: cover; background-position: center; }
-  .grid-spec .grid-item:nth-child(6)  .photo { background-image: url('assets/img/hotel/interior-atmosphere.jpg'); background-size: cover; background-position: center; }
-  .grid-spec .grid-item:nth-child(7)  .photo { background-image: url('assets/img/hotel/surroundings-destination.jpg'); background-size: cover; background-position: center; }
-
   /* Simulated photo content */
+  .grid-spec .grid-item:nth-child(3) .photo img { object-position: center 20%; }
   .grid-spec .grid-item:nth-child(1)  .photo::after { content:''; position:absolute; inset:0; background: radial-gradient(ellipse at 60% 40%, rgba(255,240,220,0.3) 0%, transparent 60%), radial-gradient(ellipse at 20% 70%, rgba(100,80,60,0.2) 0%, transparent 40%); }
   .grid-spec .grid-item:nth-child(2)  .photo::after { content:''; position:absolute; inset:0; background: radial-gradient(ellipse at 40% 30%, rgba(220,240,220,0.3) 0%, transparent 50%), radial-gradient(ellipse at 70% 80%, rgba(60,80,60,0.2) 0%, transparent 40%); }
   .grid-spec .grid-item:nth-child(3)  .photo::after { content:''; position:absolute; inset:0; background: radial-gradient(ellipse at 50% 50%, rgba(255,245,230,0.4) 0%, transparent 60%); }
@@ -743,6 +735,36 @@
   @media (prefers-reduced-motion: reduce) {
     * { animation: none !important; transition: none !important; }
   }
+
+  /* LIGHTBOX */
+  .shot, .grid-item, .photo, .plusone-photo { cursor: pointer; }
+  .lightbox {
+    position: fixed; inset: 0; z-index: 1000;
+    display: flex; align-items: center; justify-content: center;
+    padding: 48px 16px;
+    background: rgba(28, 43, 30, 0.92);
+    opacity: 0; visibility: hidden;
+    transition: opacity 0.25s ease, visibility 0.25s ease;
+    cursor: pointer;
+  }
+  .lightbox.open { opacity: 1; visibility: visible; }
+  .lightbox figure { display: flex; flex-direction: column; align-items: center; gap: 14px; max-width: 100%; max-height: 100%; }
+  .lightbox img {
+    max-width: min(92vw, 1400px); max-height: 82vh;
+    object-fit: contain; display: block;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.4);
+    cursor: default;
+  }
+  .lightbox figcaption { color: var(--sand); font-size: 0.85rem; text-align: center; max-width: 640px; line-height: 1.5; }
+  .lightbox button {
+    position: absolute; background: none; border: none; color: var(--sand);
+    font-size: 2.2rem; line-height: 1; cursor: pointer; padding: 12px; opacity: 0.8;
+  }
+  .lightbox button:hover, .lightbox button:focus-visible { opacity: 1; }
+  .lightbox .lb-close { top: 12px; right: 16px; }
+  .lightbox .lb-prev { left: 8px; top: 50%; transform: translateY(-50%); }
+  .lightbox .lb-next { right: 8px; top: 50%; transform: translateY(-50%); }
+  body.lb-lock { overflow: hidden; }
 </style>
 </head>
 <body>
@@ -883,7 +905,7 @@
   </div>
   <div class="grid grid-spec">
     <div class="grid-item">
-      <div class="photo"></div>
+      <div class="photo"><img src="assets/img/hotel/interior-natural-light.jpg" alt="A wooden balcony with camp chairs looking out over misty rice terraces" loading="lazy"></div>
       <div class="grid-overlay">
         <span class="overlay-tag">Interior · Natural Light</span>
         <p class="overlay-caption">"The afternoon finds its way in here every day at the same time. The guests never mind."</p>
@@ -891,7 +913,7 @@
       </div>
     </div>
     <div class="grid-item">
-      <div class="photo"></div>
+      <div class="photo"><img src="assets/img/hotel/exterior-golden-hour.jpg" alt="Gothic spires silhouetted against a cloudy sky above a canal and stone bridge" loading="lazy"></div>
       <div class="grid-overlay">
         <span class="overlay-tag">Exterior · Golden Hour</span>
         <p class="overlay-caption">"Some places look better at dusk. This is one of them."</p>
@@ -899,7 +921,7 @@
       </div>
     </div>
     <div class="grid-item">
-      <div class="photo"></div>
+      <div class="photo"><img src="assets/img/hotel/detail-still-life.jpg" alt="A hand holding an iced taro drink with a CH-YEAH! sticker on the cup" loading="lazy"></div>
       <div class="grid-overlay">
         <span class="overlay-tag">Detail · Still Life</span>
         <p class="overlay-caption">"The kind of cup you take a photo of before you pick it up."</p>
@@ -907,7 +929,7 @@
       </div>
     </div>
     <div class="grid-item">
-      <div class="photo"></div>
+      <div class="photo"><img src="assets/img/hotel/amenity-natural-context.jpg" alt="Feet in a hammock beside a puzzle book and banana, with a garden, a cat, and mountains beyond" loading="lazy"></div>
       <div class="grid-overlay">
         <span class="overlay-tag">Amenity · Natural Context</span>
         <p class="overlay-caption">"Just picked a banana off of a tree to sit by the gardens on the property, accompanied by volcanoes and a stray cat."</p>
@@ -915,7 +937,7 @@
       </div>
     </div>
     <div class="grid-item">
-      <div class="photo"></div>
+      <div class="photo"><img src="assets/img/hotel/architecture-facade.jpg" alt="A row of ornate guild-house facades on a sunny square" loading="lazy"></div>
       <div class="grid-overlay">
         <span class="overlay-tag">Architecture · Facade</span>
         <p class="overlay-caption">"First impressions. Make them count."</p>
@@ -923,7 +945,7 @@
       </div>
     </div>
     <div class="grid-item">
-      <div class="photo"></div>
+      <div class="photo"><img src="assets/img/hotel/interior-atmosphere.jpg" alt="A woman reading a menu at a candlelit table in a glass-walled restaurant" loading="lazy"></div>
       <div class="grid-overlay">
         <span class="overlay-tag">Interior · Atmosphere</span>
         <p class="overlay-caption">"You don't have to be a guest to feel at home in the lobby."</p>
@@ -931,7 +953,7 @@
       </div>
     </div>
     <div class="grid-item">
-      <div class="photo"></div>
+      <div class="photo"><img src="assets/img/hotel/surroundings-destination.jpg" alt="A passenger reflected in a bus window over green countryside at sunset" loading="lazy"></div>
       <div class="grid-overlay">
         <span class="overlay-tag">Surroundings · Destination</span>
         <p class="overlay-caption">"The neighborhood is part of the stay. This is why people choose location."</p>
@@ -1095,6 +1117,74 @@
     el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
     observer.observe(el);
   });
+</script>
+
+<!-- LIGHTBOX -->
+<div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Enlarged photo" aria-hidden="true">
+  <button class="lb-close" aria-label="Close">&times;</button>
+  <button class="lb-prev" aria-label="Previous photo">&#8249;</button>
+  <figure>
+    <img src="" alt="">
+    <figcaption></figcaption>
+  </figure>
+  <button class="lb-next" aria-label="Next photo">&#8250;</button>
+</div>
+
+<script>
+  // Lightbox: click a photo to enlarge it
+  (() => {
+    const lb = document.getElementById('lightbox');
+    const lbImg = lb.querySelector('img');
+    const lbCap = lb.querySelector('figcaption');
+    const imgs = [...document.querySelectorAll('.shot img, .photo img, .plusone-photo img')];
+    let index = 0, lastFocus = null;
+
+    const show = (i) => {
+      index = (i + imgs.length) % imgs.length;
+      const img = imgs[index];
+      lbImg.src = img.currentSrc || img.src;
+      lbImg.alt = img.alt;
+      const quote = img.closest('.shot, .grid-item')?.querySelector('.shot-caption, .overlay-caption');
+      lbCap.textContent = quote ? quote.textContent : img.alt;
+    };
+    const open = (i) => {
+      lastFocus = document.activeElement;
+      show(i);
+      lb.classList.add('open');
+      lb.setAttribute('aria-hidden', 'false');
+      document.body.classList.add('lb-lock');
+      lb.querySelector('.lb-close').focus();
+    };
+    const close = () => {
+      lb.classList.remove('open');
+      lb.setAttribute('aria-hidden', 'true');
+      document.body.classList.remove('lb-lock');
+      if (lastFocus) lastFocus.focus();
+    };
+
+    imgs.forEach((img, i) => {
+      const target = img.closest('.shot, .grid-item, .plusone-photo') || img.closest('.photo');
+      target.setAttribute('tabindex', '0');
+      target.setAttribute('role', 'button');
+      target.setAttribute('aria-label', 'Enlarge photo: ' + img.alt);
+      target.addEventListener('click', () => open(i));
+      target.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); open(i); }
+      });
+    });
+
+    lb.addEventListener('click', (e) => {
+      if (e.target.closest('.lb-prev')) return show(index - 1);
+      if (e.target.closest('.lb-next')) return show(index + 1);
+      if (e.target !== lbImg) close();
+    });
+    document.addEventListener('keydown', (e) => {
+      if (!lb.classList.contains('open')) return;
+      if (e.key === 'Escape') close();
+      else if (e.key === 'ArrowLeft') show(index - 1);
+      else if (e.key === 'ArrowRight') show(index + 1);
+    });
+  })();
 </script>
 </body>
 </html>
